@@ -1,6 +1,8 @@
+* linguist-vendored
+*.js linguist-vendored=false
+
+
 # Windows files should use crlf line endings
 # https://help.github.com/articles/dealing-with-line-endings/
 *.bat text eol=crlf
 
-* linguist-vendored
-*.js linguist-vendored=false
