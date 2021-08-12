@@ -7,7 +7,14 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+import Node from 'react';
+import realm, {
+    returnAllFish,
+    addFishData,
+    deleteAllFish
+
+} from "./Data";
+
 import {
   SafeAreaView,
   ScrollView,
@@ -26,7 +33,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
+const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -52,7 +59,7 @@ const Section = ({children, title}): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -69,7 +76,12 @@ const App: () => Node = () => {
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+         }}>
+
+         <Text onPress={() => { addFishData("fish1", "fish2", "fish3", "fish4") }}>{JSON.stringify(returnAllFish())}</Text>
+
+         <Text onPress={() => { deleteAllFish() }}>{JSON.stringify(returnAllFish()).length}</Text>
+
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.js</Text> to change this
             screen and then come back to see your edits.

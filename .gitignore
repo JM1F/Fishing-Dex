@@ -58,3 +58,4 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 /.vs
+/react-native run-android.bat
