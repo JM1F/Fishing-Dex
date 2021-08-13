@@ -36,12 +36,22 @@ let deleteAllFish = () => {
     })
 }
 
+let deleteLastFish = () => {
+    realm.write(() => {
+        if (returnAllFish()[returnAllFish.length] != null) {
+            realm.delete(returnAllFish()[returnAllFish.length]);
+        }
+        
+    })
+}
+
 export default realm;
 
 export {
     returnAllFish,
     addFishData,
-    deleteAllFish
+    deleteAllFish,
+    deleteLastFish,
 
 }
 

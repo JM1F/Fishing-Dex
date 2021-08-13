@@ -6,12 +6,15 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
+
 import Node from 'react';
+
 import realm, {
     returnAllFish,
     addFishData,
-    deleteAllFish
+    deleteAllFish,
+    deleteLastFish,
 
 } from "./Data";
 
@@ -59,8 +62,12 @@ const Section = ({children, title}) => {
   );
 };
 
+
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const [data, setData] = useState(returnAllFish());
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -78,9 +85,22 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
          }}>
 
-         <Text onPress={() => { addFishData("fish1", "fish2", "fish3", "fish4") }}>{JSON.stringify(returnAllFish())}</Text>
+        <Text onPress={() => {
+            addFishData("fish1", "fish2", "fish3", "fish4")
+            setData(returnAllFish())
+        }}> {JSON.stringify(returnAllFish())} </Text>
 
-         <Text onPress={() => { deleteAllFish() }}>{JSON.stringify(returnAllFish()).length}</Text>
+        <Text onPress={() => {
+            deleteLastFish()
+            setData(returnAllFish())
+        }}>{JSON.stringify(returnAllFish()).length}</Text>
+
+
+        <Text onPress={() => {
+            deleteAllFish()
+            setData(returnAllFish())
+                  
+        }}>Delete All</Text>
 
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.js</Text> to change this
