@@ -29,6 +29,13 @@ import {
 } from 'react-native';
 
 import {
+    scale,
+    moderateScale,
+    verticalScale
+
+} from './ScaleDevice';
+
+import {
   Colors,
   DebugInstructions,
   Header,
