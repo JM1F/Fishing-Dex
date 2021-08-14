@@ -43,34 +43,6 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-
-
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -89,27 +61,30 @@ const App = () => {
         
         <View
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            backgroundColor: isDarkMode ? Colors.black : Colors.white, flexDirection: 'row', justifyContent: 'flex-end'
          }}>
 
-        <Text onPress={() => {
+        <Text style={[styles.testTextStyle , { alignSelf: 'flex-start' }] } onPress={() => {
             addFishData("fish1", "fish2", "fish3", "fish4")
             setData(returnAllFish())
         }}> {JSON.stringify(returnAllFish())} </Text>
 
-        <Text onPress={() => {
+        <Text style={[styles.testTextStyle ]} onPress={() => {
+            addFishData("fish1", "fish2", "fish3", "fish4")
+            setData(returnAllFish())
+        }}> {JSON.stringify(returnAllFish())} </Text>
+
+        <Text style={ styles.testTextStyle } onPress={() => {
             deleteLastFish()
             setData(returnAllFish())
         }}>{JSON.stringify(returnAllFish()).length}</Text>
 
-
-        <Text onPress={() => {
+        <Text style={styles.testTextStyle } onPress={() => {
             deleteAllFish()
             setData(returnAllFish())
                   
         }}>Delete All</Text>
 
-         
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -117,8 +92,15 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-
-
+    
+    testTextStyle: {
+        fontSize: moderateScale(14),
+        backgroundColor: 'orange',
+        width: moderateScale(150),
+        margin: scale(10),
+        borderRadius: scale(10),
+        
+    },
 
 
 
