@@ -19,13 +19,15 @@ import realm, {
 } from "./Data";
 
 import {
+    Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+    View,
+    TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -35,57 +37,85 @@ import {
 
 } from './ScaleDevice';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+
 
 const App = () => {
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const [data, setData] = useState(returnAllFish());
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        >
         
         <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white, flexDirection: 'row', justifyContent: 'flex-end'
-         }}>
+            style={{
+                backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', flex: 1,
+        }}>
 
-        <Text style={[styles.testTextStyle , { alignSelf: 'flex-start' }] } onPress={() => {
-            addFishData("fish1", "fish2", "fish3", "fish4")
-            setData(returnAllFish())
-        }}> {JSON.stringify(returnAllFish())} </Text>
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
 
-        <Text style={[styles.testTextStyle ]} onPress={() => {
-            addFishData("fish1", "fish2", "fish3", "fish4")
-            setData(returnAllFish())
-        }}> {JSON.stringify(returnAllFish())} </Text>
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
 
-        <Text style={ styles.testTextStyle } onPress={() => {
-            deleteLastFish()
-            setData(returnAllFish())
-        }}>{JSON.stringify(returnAllFish()).length}</Text>
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
 
-        <Text style={styles.testTextStyle } onPress={() => {
-            deleteAllFish()
-            setData(returnAllFish())
-                  
-        }}>Delete All</Text>
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity >
+                    <Text>Click Me</Text>
+                </TouchableOpacity>
+            </View>
+
+
 
         </View>
+
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -97,6 +127,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(14),
         backgroundColor: 'orange',
         width: moderateScale(150),
+        height: verticalScale(150),
         margin: scale(10),
         borderRadius: scale(10),
         
