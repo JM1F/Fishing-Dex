@@ -43,7 +43,12 @@ const App = () => {
 
   const isDarkMode = useColorScheme() === 'dark';
 
-  const [data, setData] = useState(returnAllFish());
+    const [data, setData] = useState(returnAllFish());
+
+    const [load, set] = useState(0);
+
+    const dummyArray = ['one', 'two', 'three', 'four'];
+
 
   return (
     <SafeAreaView>
@@ -54,7 +59,7 @@ const App = () => {
         
         <View
             style={{
-                backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', flex: 1,
+                backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
 
             <View style={styles.testTextStyle}>
@@ -106,12 +111,20 @@ const App = () => {
             </View>
 
             <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
+                <TouchableOpacity>
+                    <Text>+</Text>
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.testTextStyle}>
+                <TouchableOpacity>
+                    <Text>Click ME</Text>
+                </TouchableOpacity>
+            </View>
 
+            {dummyArray.map((value, index) => {
+              return <Text key={index}>{value}</Text>
+            })}
 
         </View>
 
@@ -120,6 +133,14 @@ const App = () => {
     </SafeAreaView>
   );
 };
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
     
