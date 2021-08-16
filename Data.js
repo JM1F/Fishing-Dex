@@ -15,10 +15,6 @@ FishSchema.schema = {
 
 let realm = new Realm({ schema: [FishSchema], schemaVersion: 1 });
 
-
-
-
-
 let returnAllFish = () => {
     return realm.objects('Fish');
 }
