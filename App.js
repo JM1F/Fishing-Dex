@@ -37,18 +37,24 @@ import {
 
 } from './ScaleDevice';
 
-
-
 const App = () => {
 
-  const isDarkMode = useColorScheme() === 'dark';
+    const isDarkMode = useColorScheme() === 'dark';
+
 
     const [data, setData] = useState(returnAllFish());
 
-    const [load, set] = useState(0);
-
     const dummyArray = ['one', 'two', 'three', 'four'];
+    const varr = "hellllllo";
 
+    let arr = returnAllFish().map( (element) => { 
+        
+        return <View > 
+            <TouchableOpacity >
+                <Text style={styles.testTextStyle}>Hello, {element.family}</Text>
+            </TouchableOpacity>
+            </View>
+    } )
 
   return (
     <SafeAreaView>
@@ -56,91 +62,37 @@ const App = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         >
-        
         <View
             style={{
                 backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
+            
+            { arr }
 
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
+            <View >
+                <TouchableOpacity onPress={() => {
+                    deleteAllFish() 
+                    setData(returnAllFish()) 
+                    }}>
+                    <Text style={styles.testTextStyle}>-</Text>
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
+            <View >
+                <TouchableOpacity onPress={() => {
+                    addFishData('fish1', 'fish2', 'fish3', 'fish4')
+                    setData(returnAllFish()) 
+            }}>
+                    <Text style={styles.testTextStyle}>+</Text>
                 </TouchableOpacity>
             </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity >
-                    <Text>Click Me</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity>
-                    <Text>+</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.testTextStyle}>
-                <TouchableOpacity>
-                    <Text>Click ME</Text>
-                </TouchableOpacity>
-            </View>
-
-            {dummyArray.map((value, index) => {
-              return <Text key={index}>{value}</Text>
-            })}
 
         </View>
 
-        
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
     
@@ -151,10 +103,9 @@ const styles = StyleSheet.create({
         height: verticalScale(150),
         margin: scale(10),
         borderRadius: scale(10),
-        
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
-
-
 
 });
 
