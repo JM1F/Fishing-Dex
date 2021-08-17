@@ -15,6 +15,7 @@ import realm, {
     addFishData,
     deleteAllFish,
     deleteLastFish,
+    deleteSecondToLastFish,
 
 } from "./Data";
 
@@ -37,21 +38,22 @@ import {
 
 } from './ScaleDevice';
 
+let index = 0;
+
 const App = () => {
 
     const isDarkMode = useColorScheme() === 'dark';
-
-
+    
     const [data, setData] = useState(returnAllFish());
 
     const dummyArray = ['one', 'two', 'three', 'four'];
     const varr = "hellllllo";
 
     let arr = returnAllFish().map( (element) => { 
-        
+        console.log(element.family);
         return <View > 
             <TouchableOpacity >
-                <Text style={styles.testTextStyle}>Hello, {element.family}</Text>
+                <Text style={styles.testTextStyle}>Hello, {element.index}</Text>
             </TouchableOpacity>
             </View>
     } )
@@ -71,8 +73,10 @@ const App = () => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    deleteAllFish() 
-                    setData(returnAllFish()) 
+                    
+                    deleteSecondToLastFish()
+                    setData(returnAllFish())
+                    
                     }}>
                     <Text style={styles.testTextStyle}>-</Text>
                 </TouchableOpacity>
@@ -80,8 +84,9 @@ const App = () => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    addFishData('fish1', 'fish2', 'fish3', 'fish4')
-                    setData(returnAllFish()) 
+                    addFishData('1'+ index.toString(), 'fish2', 'fish3', 'fish4', index)
+                    setData(returnAllFish())
+                    index += 1;
             }}>
                     <Text style={styles.testTextStyle}>+</Text>
                 </TouchableOpacity>
