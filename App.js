@@ -16,6 +16,7 @@ import realm, {
     deleteAllFish,
     deleteLastFish,
     deleteSecondToLastFish,
+    deleteCurrentFish,
 
 } from "./Data";
 
@@ -38,7 +39,7 @@ import {
 
 } from './ScaleDevice';
 
-let index = 0;
+let index =  returnAllFish().length;
 
 const App = () => {
 
@@ -50,14 +51,36 @@ const App = () => {
     const varr = "hellllllo";
 
     let arr = returnAllFish().map( (element) => { 
-        console.log(element.family);
-        return <View > 
-            <TouchableOpacity >
-                <Text style={styles.testTextStyle}>Hello, {element.index}</Text>
+        return <TouchableOpacity style={styles.testTextStyle}  >
+                <Text style={{textAlign: 'center'}}>Hello, {element.family}</Text>
+
+                <TouchableOpacity style={{position: 'absolute', top: '80%', alignSelf: 'flex-end', right: '5%'}} onPress={() => {
+                deleteCurrentFish(element.index)
+                amendArray()
+                setData(returnAllFish())
+            }}>
+                    <Text>"DB"</Text>
+                </TouchableOpacity>
+                
+                <Text style={{position: 'absolute', top: '80%', alignSelf: 'flex-start', left: '5%'}}>"EB"</Text>
+                   
+                
+                
             </TouchableOpacity>
-            </View>
+            
     } )
 
+    let amendArray = () => { 
+        let count = 0;
+        returnAllFish().map ( (element) => {
+        
+        realm.write(() => {
+            element.index = count;
+            
+        })
+        count += 1;
+
+    })}
   return (
     <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -72,11 +95,10 @@ const App = () => {
             { arr }
 
             <View >
-                <TouchableOpacity onPress={() => {
-                    
+                <TouchableOpacity onPress={() => {               
                     deleteSecondToLastFish()
-                    setData(returnAllFish())
-                    
+                    amendArray()
+                    setData(returnAllFish())      
                     }}>
                     <Text style={styles.testTextStyle}>-</Text>
                 </TouchableOpacity>
@@ -84,8 +106,10 @@ const App = () => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    addFishData('1'+ index.toString(), 'fish2', 'fish3', 'fish4', index)
+                    addFishData('1'+index, 'fish2', 'fish3')
+                    amendArray()
                     setData(returnAllFish())
+                    console.log(returnAllFish());
                     index += 1;
             }}>
                     <Text style={styles.testTextStyle}>+</Text>
@@ -102,15 +126,22 @@ const App = () => {
 const styles = StyleSheet.create({
     
     testTextStyle: {
-        fontSize: moderateScale(14),
         backgroundColor: 'orange',
         width: moderateScale(150),
         height: verticalScale(150),
         margin: scale(10),
         borderRadius: scale(10),
-        textAlign: 'center',
-        textAlignVertical: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        
+        },
+    removeButtonStyle: {
+        alignSelf: 'flex-end'
     },
+    mainButtonTextStyle: {
+        alignSelf: 'center',
+        
+    }
 
 });
 

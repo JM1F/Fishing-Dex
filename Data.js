@@ -8,8 +8,8 @@ FishSchema.schema = {
         family: 'string',
         genus: 'string',
         species: 'string',
-        description: 'string',
-        index: 'int',
+        description: 'string?',
+        index: 'int?',
     }
 };
 
@@ -20,7 +20,7 @@ let returnAllFish = () => {
     return realm.objects('Fish');
 }
 
-let addFishData = (fishfamily, fishgenus, fishspecies, fishdescription = null, fishindex) => {
+let addFishData = (fishfamily, fishgenus, fishspecies, fishdescription = null, fishindex = null) => {
     
     realm.write(() => {
         const fishDetails = realm.create('Fish', { family: fishfamily, genus: fishgenus, species: fishspecies, description: fishdescription, index: fishindex })
@@ -48,7 +48,6 @@ let deleteLastFish = () => {
 }
 
 let deleteSecondToLastFish = () => {
-    console.log(returnAllFish());
     realm.write(() => {
         if (returnAllFish()[0] != null) {
             if (returnAllFish().length != 1) {
@@ -63,6 +62,16 @@ let deleteSecondToLastFish = () => {
         
     })
 }
+
+let deleteCurrentFish = (index) => {
+    realm.write(() => {
+        realm.delete(realm.objects('Fish')[index]); 
+
+    })
+
+}
+
+
 export default realm;
 
 export {
@@ -71,5 +80,6 @@ export {
     deleteAllFish,
     deleteLastFish,
     deleteSecondToLastFish,
+    deleteCurrentFish,
 }
 
