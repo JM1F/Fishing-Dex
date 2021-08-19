@@ -54,19 +54,18 @@ const App = () => {
 
     let arr = returnAllFish().map( (element) => { 
         return <TouchableOpacity style={styles.testTextStyle}  >
-                <Text style={{textAlign: 'center'}}>Hello, {element.family}</Text>
+                <Text style={styles.mainButtonTextStyle}>Hello, {element.family}</Text>
 
-                <TouchableOpacity style={{position: 'absolute', top: '80%', alignSelf: 'flex-end', right: '5%'}} onPress={() => {
+                <TouchableOpacity style={[styles.subButton, {right: '5%'}]} onPress={() => {
                 deleteCurrentFish(element.index)
                 amendArray()
                 setData(returnAllFish())
             }}>
-                    <Image style={styles.deleteImageStyle} source={require('./Images/trash.png')}/>
+                    <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
                 </TouchableOpacity>
-                
-                <Text style={{position: 'absolute', top: '80%', alignSelf: 'flex-start', left: '5%'}}>"EB"</Text>
-                   
-                
+                <TouchableOpacity style={[styles.subButton, {left: '5%'}]}>
+                    <Image style={styles.subButtonImageStyle} source={require('./Images/edit.png')}/> 
+                </TouchableOpacity>  
                 
             </TouchableOpacity>
             
@@ -136,17 +135,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         
-        },
-    removeButtonStyle: {
-        alignSelf: 'flex-end'
     },
     mainButtonTextStyle: {
         alignSelf: 'center',
-        
+        fontSize: scale(12),
     },
-    deleteImageStyle: {
+    subButtonImageStyle: {
         width: moderateScale(20),
         height: verticalScale(20),
+    },
+    subButton: {
+        position: 'absolute',
+        top: '80%', 
+        alignSelf: 'flex-end',
     }
 
 });
