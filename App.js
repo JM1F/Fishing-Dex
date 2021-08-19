@@ -30,6 +30,8 @@ import {
   useColorScheme,
     View,
     TouchableOpacity,
+    Image,
+
 } from 'react-native';
 
 import {
@@ -59,7 +61,7 @@ const App = () => {
                 amendArray()
                 setData(returnAllFish())
             }}>
-                    <Text>"DB"</Text>
+                    <Image style={styles.deleteImageStyle} source={require('./Images/trash.png')}/>
                 </TouchableOpacity>
                 
                 <Text style={{position: 'absolute', top: '80%', alignSelf: 'flex-start', left: '5%'}}>"EB"</Text>
@@ -141,6 +143,10 @@ const styles = StyleSheet.create({
     mainButtonTextStyle: {
         alignSelf: 'center',
         
+    },
+    deleteImageStyle: {
+        width: moderateScale(20),
+        height: verticalScale(20),
     }
 
 });
