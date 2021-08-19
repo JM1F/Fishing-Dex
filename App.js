@@ -22,16 +22,16 @@ import realm, {
 
 import {
     Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    useColorScheme,
     View,
     TouchableOpacity,
     Image,
-
+    Alert,
 } from 'react-native';
 
 import {
@@ -54,12 +54,11 @@ const App = () => {
 
     let arr = returnAllFish().map( (element) => { 
         return <TouchableOpacity style={styles.testTextStyle}  >
-                <Text style={styles.mainButtonTextStyle}>Hello, {element.family}</Text>
+                <Text style={styles.mainButtonTextStyle}>Test{element.family}</Text>
 
                 <TouchableOpacity style={[styles.subButton, {right: '5%'}]} onPress={() => {
-                deleteCurrentFish(element.index)
-                amendArray()
-                setData(returnAllFish())
+                generateYesNoAlert(element)
+                
             }}>
                     <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
                 </TouchableOpacity>
@@ -68,8 +67,23 @@ const App = () => {
                 </TouchableOpacity>  
                 
             </TouchableOpacity>
-            
     } )
+
+    const generateYesNoAlert = (element) => Alert.alert (
+        "Delete Notification",
+        "Are you sure you want to delete?",
+      [
+        {text: "Yes", onPress: () => {
+            deleteCurrentFish(element.index)
+            amendArray()
+            setData(returnAllFish())
+        } },
+        { text: "No"}
+      ]
+    );
+        
+    
+
 
     let amendArray = () => { 
         let count = 0;
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     },
     mainButtonTextStyle: {
         alignSelf: 'center',
-        fontSize: scale(12),
+        fontSize: scale(16),
     },
     subButtonImageStyle: {
         width: moderateScale(20),
