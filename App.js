@@ -32,6 +32,7 @@ import {
     TouchableOpacity,
     Image,
     Alert,
+    ImageBackground,
 } from 'react-native';
 
 import {
@@ -53,18 +54,21 @@ const App = () => {
     const varr = "hellllllo";
 
     let arr = returnAllFish().map( (element) => { 
-        return <TouchableOpacity style={styles.testTextStyle}  >
-                <Text style={styles.mainButtonTextStyle}>Test{element.family}</Text>
+        return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]}  >
+                <ImageBackground source={require('./DefaultImages/tester.jpg')} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
+                    <Text style={styles.mainButtonTextStyle}>European Bass</Text>
 
-                <TouchableOpacity style={[styles.subButton, {right: '5%'}]} onPress={() => {
-                generateYesNoAlert(element)
+                    <TouchableOpacity style={[styles.subButton, {right: '5%'}]} onPress={() => {
+                    generateYesNoAlert(element)
+                    }}>
+                        <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.subButton, {left: '5%'}]}>
+                        <Image style={styles.subButtonImageStyle} source={require('./Images/edit.png')}/> 
+                    </TouchableOpacity>  
+
+                </ImageBackground>
                 
-            }}>
-                    <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.subButton, {left: '5%'}]}>
-                    <Image style={styles.subButtonImageStyle} source={require('./Images/edit.png')}/> 
-                </TouchableOpacity>  
                 
             </TouchableOpacity>
     } )
@@ -110,16 +114,6 @@ const App = () => {
             { arr }
 
             <View >
-                <TouchableOpacity onPress={() => {               
-                    deleteSecondToLastFish()
-                    amendArray()
-                    setData(returnAllFish())      
-                    }}>
-                    <Text style={styles.testTextStyle}>-</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View >
                 <TouchableOpacity onPress={() => {
                     addFishData('1'+index, 'fish2', 'fish3')
                     amendArray()
@@ -141,18 +135,21 @@ const App = () => {
 const styles = StyleSheet.create({
     
     testTextStyle: {
-        backgroundColor: 'orange',
         width: moderateScale(150),
         height: verticalScale(150),
         margin: scale(10),
         borderRadius: scale(10),
         alignItems: 'center',
         justifyContent: 'center',
-        
+        backgroundColor: 'grey',
     },
     mainButtonTextStyle: {
+        color: 'white',
         alignSelf: 'center',
-        fontSize: scale(16),
+        fontSize: scale(20),
+        fontWeight: 'bold',
+        textAlign: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
     },
     subButtonImageStyle: {
         width: moderateScale(20),
@@ -162,7 +159,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '80%', 
         alignSelf: 'flex-end',
-    }
+    },
+    itemShadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+
+        elevation: 9,
+            }
+
 
 });
 
