@@ -110,14 +110,16 @@ const defualtPage = ({ navigation }) => {
 
 
     return ( 
-    <SafeAreaView>
-      <StatusBar />
-      <ScrollView
+    <SafeAreaView style={{ flex: 1,
+        backgroundColor: '#FF5236'}}>
+      <StatusBar barStyle='default' backgroundColor='rgb(43, 41, 44)'/>
+      <ScrollView 
         contentInsetAdjustmentBehavior="automatic"
+        backgroundColor='rgb(43, 41, 44)'
         >
         <View
             style={{
-                backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
+                backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
             
             { arr }
@@ -130,7 +132,7 @@ const defualtPage = ({ navigation }) => {
                     console.log(returnAllFish());
                     index += 1;
             }}>
-                    <Text style={styles.testTextStyle}>+</Text>
+                    <Text style={[styles.testTextStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
                 </TouchableOpacity>
             </View>
 
