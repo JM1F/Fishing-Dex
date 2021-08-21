@@ -34,7 +34,8 @@ import {
     Alert,
     ImageBackground,
 } from 'react-native';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
     scale,
     moderateScale,
@@ -44,27 +45,36 @@ import {
 
 let index =  returnAllFish().length;
 
-const App = () => {
+const testNavPage = ({ route, navigation}) => {
+    const {fishElement} = route.params;
 
-    const isDarkMode = useColorScheme() === 'dark';
-    
+    return (
+        <View>
+             <Text>
+                 {JSON.stringify(fishElement.index)}
+             </Text>
+        </View>
+    );
+};
+
+
+const defualtPage = ({ navigation }) => {
+
     const [data, setData] = useState(returnAllFish());
-
-    const dummyArray = ['one', 'two', 'three', 'four'];
-    const varr = "hellllllo";
-
     let arr = returnAllFish().map( (element) => { 
-        return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]}  >
+        return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
+            navigation.navigate('test', {fishElement: element});
+        }} >
                 <ImageBackground source={require('./DefaultImages/tester.jpg')} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
                     <Text style={styles.mainButtonTextStyle}>European Bass</Text>
 
-                    <TouchableOpacity style={[styles.subButton, {right: '5%'}]} onPress={() => {
+                    <TouchableOpacity style={[styles.subButton, {right: '5%'}, styles.itemShadow]} onPress={() => {
                     generateYesNoAlert(element)
                     }}>
                         <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.subButton, {left: '5%'}]}>
-                        <Image style={styles.subButtonImageStyle} source={require('./Images/edit.png')}/> 
+                    <TouchableOpacity style={[styles.subButton, {left: '5%'}, styles.itemShadow]}>
+                        <Image style={styles.subButtonImageStyle} source={require('./Images/writing.png')}/> 
                     </TouchableOpacity>  
 
                 </ImageBackground>
@@ -86,9 +96,6 @@ const App = () => {
       ]
     );
         
-    
-
-
     let amendArray = () => { 
         let count = 0;
         returnAllFish().map ( (element) => {
@@ -100,9 +107,11 @@ const App = () => {
         count += 1;
 
     })}
-  return (
+
+
+    return ( 
     <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         >
@@ -129,6 +138,22 @@ const App = () => {
 
       </ScrollView>
     </SafeAreaView>
+    );
+};
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+
+    
+  return (
+    <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name='DefaultScreen' component={defualtPage} options={{ headerShown: false }}/>
+            <Stack.Screen name='test' component={testNavPage} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+
+    </NavigationContainer>
   );
 };
 
