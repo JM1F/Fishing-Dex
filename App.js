@@ -20,6 +20,8 @@ import realm, {
 
 } from "./Data";
 
+import { SearchBar } from 'react-native-elements';
+
 import {
     Button,
     SafeAreaView,
