@@ -20,7 +20,7 @@ import realm, {
 
 } from "./Data";
 
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, CheckBox } from 'react-native-elements';
 
 import {
     Button,
@@ -63,6 +63,7 @@ const testNavPage = ({ route, navigation}) => {
 const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
+    
     let arr = returnAllFish().map( (element) => { 
         return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
             navigation.navigate('test', {fishElement: element});
@@ -110,7 +111,6 @@ const defualtPage = ({ navigation }) => {
 
     })}
 
-
     return ( 
     <SafeAreaView style={{ flex: 1,
         backgroundColor: '#FF5236'}}>
@@ -119,10 +119,12 @@ const defualtPage = ({ navigation }) => {
         contentInsetAdjustmentBehavior="automatic"
         backgroundColor='rgb(43, 41, 44)'
         >
+        
         <View
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
+            
             
             { arr }
 
