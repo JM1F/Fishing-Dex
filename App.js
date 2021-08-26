@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, { useState, setState } from 'react';
 
 import Node from 'react';
 
@@ -19,11 +19,8 @@ import realm, {
     deleteCurrentFish,
 
 } from "./Data";
-
-import { SearchBar, CheckBox } from 'react-native-elements';
-
+import { Button, SearchBar } from 'react-native-elements';
 import {
-    Button,
     SafeAreaView,
     ScrollView,
     StatusBar,
@@ -51,10 +48,8 @@ const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
 
     return (
-        <View>
-             <Text>
-                 {JSON.stringify(fishElement.index)}
-             </Text>
+        <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
+             <Image source={require('./DefaultImages/tester.jpg')} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
         </View>
     );
 };
@@ -63,6 +58,7 @@ const testNavPage = ({ route, navigation}) => {
 const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
+    
     
     let arr = returnAllFish().map( (element) => { 
         return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
@@ -110,10 +106,9 @@ const defualtPage = ({ navigation }) => {
         count += 1;
 
     })}
-
     return ( 
     <SafeAreaView style={{ flex: 1,
-        backgroundColor: '#FF5236'}}>
+        backgroundColor: '#2B292C'}}>
       <StatusBar barStyle='default' backgroundColor='rgb(43, 41, 44)'/>
       <ScrollView 
         contentInsetAdjustmentBehavior="automatic"
@@ -124,7 +119,6 @@ const defualtPage = ({ navigation }) => {
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
-            
             
             { arr }
 
