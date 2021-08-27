@@ -58,6 +58,7 @@ const testNavPage = ({ route, navigation}) => {
 const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
+    const [searchData, searchSetData] = useState('');
     
     
     let arr = returnAllFish().map( (element) => { 
@@ -119,7 +120,21 @@ const defualtPage = ({ navigation }) => {
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
-            
+            <View style={[{width: '100%', height: '10%', padding: 20}, styles.itemShadow]}>
+                <SearchBar  inputContainerStyle={{backgroundColor: 'white'}}
+                            leftIconContainerStyle={{backgroundColor: 'white'}}
+                            inputStyle={{backgroundColor: 'white'}}
+                            containerStyle={{
+                            backgroundColor: 'white',
+                            justifyContent: 'space-around',
+                            borderRadius: 10,
+                            }}
+                            onChangeText={text => searchSetData(text)}
+                            placeholder={'Type fish here...'}
+                            autoCapitalize='none'
+                            value={searchData}
+                            />    
+            </View>
             { arr }
 
             <View >
