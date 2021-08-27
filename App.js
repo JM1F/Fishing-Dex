@@ -32,6 +32,7 @@ import {
     Image,
     Alert,
     ImageBackground,
+    Platform,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -48,10 +49,11 @@ const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
 
     return (
+        
         <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
              <Image source={require('./DefaultImages/tester.jpg')} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
         </View>
-    );
+    );  
 };
 
 
@@ -107,6 +109,11 @@ const defualtPage = ({ navigation }) => {
         count += 1;
 
     })}
+    let checkCardName = (searchData) => {
+        console.log(searchData)
+        
+    }
+
     return ( 
     <SafeAreaView style={{ flex: 1,
         backgroundColor: '#2B292C'}}>
@@ -120,19 +127,20 @@ const defualtPage = ({ navigation }) => {
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
-            <View style={[{width: '100%', height: '10%', padding: 20}, styles.itemShadow]}>
+            <View style={[{width: '100%', height: '10%', padding: 20}]}>
                 <SearchBar  inputContainerStyle={{backgroundColor: 'white'}}
                             leftIconContainerStyle={{backgroundColor: 'white'}}
                             inputStyle={{backgroundColor: 'white'}}
-                            containerStyle={{
+                            containerStyle={[{
                             backgroundColor: 'white',
                             justifyContent: 'space-around',
                             borderRadius: 10,
-                            }}
+                            }, styles.itemShadow]}
                             onChangeText={text => searchSetData(text)}
                             placeholder={'Type fish here...'}
                             autoCapitalize='none'
                             value={searchData}
+                            onSubmitEditing={() => checkCardName(searchData)}
                             />    
             </View>
             { arr }
