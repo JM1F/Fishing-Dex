@@ -43,7 +43,36 @@ import {
 
 } from './ScaleDevice';
 
-let index =  returnAllFish().length;
+let amendArray = () => { 
+    let count = 0;
+    returnAllFish().map ( (element) => {
+    
+    realm.write(() => {
+        element.index = count;
+        
+    })
+    count += 1;
+
+})}
+
+const addFishEntryPage = ({route, navigation}) => {
+
+    return (
+        <View style={{backgroundColor: 'red', height: '100%', width: '100%'}}>
+            <TouchableOpacity style={{backgroundColor: 'blue', height: '10%', width: '10%' }} 
+            onPress={
+                addFishData("1", "2", "3"),
+                amendArray()
+                
+                
+            }>
+
+            </TouchableOpacity>
+
+        </View>
+    )
+}
+
 
 const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
@@ -98,17 +127,6 @@ const defualtPage = ({ navigation }) => {
       ]
     );
         
-    let amendArray = () => { 
-        let count = 0;
-        returnAllFish().map ( (element) => {
-        
-        realm.write(() => {
-            element.index = count;
-            
-        })
-        count += 1;
-
-    })}
     let checkCardName = (searchData) => {
         console.log(searchData)
         
@@ -127,7 +145,7 @@ const defualtPage = ({ navigation }) => {
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
-            <View style={[{width: '100%', height: '10%', padding: 20}]}>
+            <View style={[{width: '100%', padding: 20}]}>
                 <SearchBar  inputContainerStyle={{backgroundColor: 'white'}}
                             leftIconContainerStyle={{backgroundColor: 'white'}}
                             inputStyle={{backgroundColor: 'white'}}
@@ -135,6 +153,7 @@ const defualtPage = ({ navigation }) => {
                             backgroundColor: 'white',
                             justifyContent: 'space-around',
                             borderRadius: 10,
+                            height: 50
                             }, styles.itemShadow]}
                             onChangeText={text => searchSetData(text)}
                             placeholder={'Type fish here...'}
@@ -147,11 +166,7 @@ const defualtPage = ({ navigation }) => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    addFishData('1'+index, 'fish2', 'fish3')
-                    amendArray()
-                    setData(returnAllFish())
-                    console.log(returnAllFish());
-                    index += 1;
+                    navigation.navigate('addFormPage');
             }}>
                     <Text style={[styles.testTextStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
                 </TouchableOpacity>
@@ -165,7 +180,7 @@ const defualtPage = ({ navigation }) => {
 };
 
 const Stack = createNativeStackNavigator();
-
+ 
 const App = () => {
 
     
@@ -174,6 +189,7 @@ const App = () => {
         <Stack.Navigator>
             <Stack.Screen name='DefaultScreen' component={defualtPage} options={{ headerShown: false }}/>
             <Stack.Screen name='test' component={testNavPage} options={{ headerShown: false }}/>
+            <Stack.Screen name='addFormPage' component={addFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
 
     </NavigationContainer>
