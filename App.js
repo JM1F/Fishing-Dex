@@ -56,13 +56,15 @@ let amendArray = () => {
 })}
 
 const addFishEntryPage = ({route, navigation}) => {
-
+    
     return (
         <View style={{backgroundColor: 'red', height: '100%', width: '100%'}}>
             <TouchableOpacity style={{backgroundColor: 'blue', height: '10%', width: '10%' }} 
-            onPress={
+            onPress={ () => {
                 addFishData("1", "2", "3"),
-                amendArray()
+                amendArray(),
+                navigation.navigate('DefaultScreen')}
+
                 
                 
             }>
@@ -72,7 +74,6 @@ const addFishEntryPage = ({route, navigation}) => {
         </View>
     )
 }
-
 
 const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
@@ -90,6 +91,7 @@ const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
     const [searchData, searchSetData] = useState('');
+    console.log("tessssssssst")
     
     
     let arr = returnAllFish().map( (element) => { 
@@ -126,9 +128,11 @@ const defualtPage = ({ navigation }) => {
         { text: "No"}
       ]
     );
-        
-    let checkCardName = (searchData) => {
-        console.log(searchData)
+    
+
+    
+    let checkCardName = () => {
+        console.log("yooooooooo")
         
     }
 
@@ -166,7 +170,9 @@ const defualtPage = ({ navigation }) => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate('addFormPage');
+                    addFishData("1", "2", "3"),
+                    amendArray(),
+                    setData(returnAllFish())
             }}>
                     <Text style={[styles.testTextStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
                 </TouchableOpacity>
