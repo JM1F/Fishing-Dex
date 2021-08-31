@@ -148,7 +148,7 @@ const defualtPage = ({ navigation }) => {
     
     let checkCardName = () => {
         console.log("yooooooooo")
-        
+        console.log('test')
     }
 
     return ( 
