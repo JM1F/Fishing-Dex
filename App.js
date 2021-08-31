@@ -56,7 +56,7 @@ let amendArray = () => {
 })}
 
 const addFishEntryPage = ({route, navigation}) => {
-    
+    console.log('test');
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
             <Text>Add Fish Data</Text>
