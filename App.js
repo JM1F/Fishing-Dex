@@ -19,7 +19,7 @@ import realm, {
     deleteCurrentFish,
 
 } from "./Data";
-import { Button, SearchBar } from 'react-native-elements';
+import { Button, SearchBar, Divider } from 'react-native-elements';
 import {
     SafeAreaView,
     ScrollView,
@@ -59,8 +59,19 @@ const addFishEntryPage = ({route, navigation}) => {
     
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
-            <View style={{height: '10%', width: '10%', alignSelf: 'center'}} >
-                <TouchableOpacity style={{backgroundColor: 'blue', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center'}} 
+            <Text>Add Fish Data</Text>
+            <Divider orientation='horizontal' width={2} color={'#384955'}/>
+            <Text>Image</Text>
+            <Divider orientation='horizontal' width={2} color={'#384955'}/>
+            <Text>Name</Text>
+            <Divider orientation='horizontal' width={2} color={'#384955'}/>
+            <Text>Profile</Text>
+            <Divider orientation='horizontal' width={2} color={'#384955'}/>
+            <Text>Description</Text>
+            <Divider orientation='horizontal' width={2} color={'#384955'}/>
+            
+            <View style={{height: '10%', width: '50%', alignSelf: 'center', padding: 10}} >
+                <TouchableOpacity style={[{backgroundColor: '#367EA7', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: '#367EA7', borderRadius: 5}, styles.itemShadow]} 
                 onPress={ () => {
                     addFishData("1", "2", "3"),
                     amendArray(),
