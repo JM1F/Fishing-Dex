@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState, setState } from 'react';
+import React, { useState, setState, useEffect } from 'react';
 
 import Node from 'react';
 
@@ -58,20 +58,19 @@ let amendArray = () => {
 const addFishEntryPage = ({route, navigation}) => {
     
     return (
-        <View style={{backgroundColor: 'red', height: '100%', width: '100%'}}>
-            <TouchableOpacity style={{backgroundColor: 'blue', height: '10%', width: '10%' }} 
-            onPress={ () => {
-                addFishData("1", "2", "3"),
-                amendArray(),
-                navigation.navigate('DefaultScreen')}
-
-                
-                
-            }>
-
-            </TouchableOpacity>
-
-        </View>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
+            <View style={{height: '10%', width: '10%', alignSelf: 'center'}} >
+                <TouchableOpacity style={{backgroundColor: 'blue', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center'}} 
+                onPress={ () => {
+                    addFishData("1", "2", "3"),
+                    amendArray(),
+                    navigation.navigate('DefaultScreen')}
+                }>
+                    <Text style={{textAlignVertical: 'center', textAlign: 'center'}}>Save</Text>
+                </TouchableOpacity>
+            </View>
+            
+        </SafeAreaView>
     )
 }
 
@@ -91,8 +90,13 @@ const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
     const [searchData, searchSetData] = useState('');
-    console.log("tessssssssst")
-    
+
+    useEffect(() => {
+        const focusDefaultPage = navigation.addListener('focus', () => {
+          setData(returnAllFish());
+        });
+        return focusDefaultPage;
+      }, [navigation]);
     
     let arr = returnAllFish().map( (element) => { 
         return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
@@ -170,9 +174,7 @@ const defualtPage = ({ navigation }) => {
 
             <View >
                 <TouchableOpacity onPress={() => {
-                    addFishData("1", "2", "3"),
-                    amendArray(),
-                    setData(returnAllFish())
+                    navigation.navigate('addFormPage')
             }}>
                     <Text style={[styles.testTextStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
                 </TouchableOpacity>
