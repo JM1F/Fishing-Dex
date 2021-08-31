@@ -19,7 +19,7 @@ import realm, {
     deleteCurrentFish,
 
 } from "./Data";
-import { Button, SearchBar, Divider } from 'react-native-elements';
+import {SearchBar, Divider } from 'react-native-elements';
 import {
     SafeAreaView,
     ScrollView,
@@ -33,6 +33,8 @@ import {
     Alert,
     ImageBackground,
     Platform,
+    TextInput,
+    Button
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -42,6 +44,9 @@ import {
     verticalScale
 
 } from './ScaleDevice';
+
+import {useForm, Controller} from 'react-hook-form';
+
 
 let amendArray = () => { 
     let count = 0;
@@ -56,30 +61,78 @@ let amendArray = () => {
 })}
 
 const addFishEntryPage = ({route, navigation}) => {
+    const {
+        control, 
+        handleSubmit, 
+        formState: {errors, isValid}
+      } = useForm({mode: 'onBlur'})
+      
+    const onSubmit = data => {console.log(data.fishName)
+        
+        addFishData("1", "2", "3"),
+        amendArray(),
+        navigation.navigate('DefaultScreen')
+    }
+            
     
+
     return (
+        
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
             <Text>Add Fish Data</Text>
             <Divider orientation='horizontal' width={2} color={'#384955'}/>
             <Text>Image</Text>
             <Divider orientation='horizontal' width={2} color={'#384955'}/>
             <Text>Name</Text>
+            <Controller        
+                control={control}        
+                name="fishName"        
+                render={({field: {onChange, value, onBlur}}) => (            
+                <TextInput
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={{backgroundColor: 'white', margin: 10}}
+                />       
+                )}
+                rules={{
+                required: {
+                    value: true,
+                    message: 'Field is required!'
+                    
+                }
+                }}
+            />
+            <Controller        
+                control={control}        
+                name="familyName"        
+                render={({field: {onChange, value, onBlur}}) => (            
+                <TextInput
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={{backgroundColor: 'white', margin: 10}}
+                />       
+                )}
+                rules={{
+                required: {
+                    value: true,
+                    message: 'Field is required!'
+                    
+                }
+                }}
+            />
+            
+            
             <Divider orientation='horizontal' width={2} color={'#384955'}/>
             <Text>Profile</Text>
             <Divider orientation='horizontal' width={2} color={'#384955'}/>
             <Text>Description</Text>
             <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            
-            <View style={{height: '10%', width: '50%', alignSelf: 'center', padding: 10}} >
-                <TouchableOpacity style={[{backgroundColor: '#367EA7', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', borderWidth: 5, borderColor: '#367EA7', borderRadius: 5}, styles.itemShadow]} 
-                onPress={ () => {
-                    addFishData("1", "2", "3"),
-                    amendArray(),
-                    navigation.navigate('DefaultScreen')}
-                }>
-                    <Text style={{textAlignVertical: 'center', textAlign: 'center'}}>Save</Text>
-                </TouchableOpacity>
-            </View>
+            <Button disabled={!isValid} title='Submit' 
+            onPress={ 
+                    handleSubmit(onSubmit)
+            }/>
             
         </SafeAreaView>
     )
