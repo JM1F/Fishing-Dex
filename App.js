@@ -83,11 +83,11 @@ const addFishEntryPage = ({route, navigation}) => {
             >
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 28, fontWeight: '700'}}>Add Fish Data</Text>
 
-                <Divider orientation='horizontal' width={10} color={'#384955'} margin={10}/>
+                <Divider orientation='horizontal' width={10} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Image</Text>
 
-                <Divider orientation='horizontal' width={5} color={'#384955'} margin={10}/>
+                <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
 
@@ -131,16 +131,10 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={'Also known as...'}
                     />       
                     )}
-                    rules={{
-                    required: {
-                        value: true,
-                        message: 'Field is required!'
-                        
-                    }
-                    }}
+                    
                 />
                 
-                <Divider orientation='horizontal' width={4} color={'#384955'} margin={10}/>
+                <Divider orientation='horizontal' width={4} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Profile</Text>
 
@@ -190,15 +184,98 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
 
-                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10}/>
+                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Description</Text>
 
-                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10}/>
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Description</Text>
+                <Controller        
+                    control={control}        
+                    name="fishDescription"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10, height: 150, textAlignVertical: 'top'}}
+                    placeholder={'Enter fish description...'}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Size</Text>
+                <Controller        
+                    control={control}        
+                    name="fishSize"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish size...'}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Feeding (Bait)</Text>
+                <Controller        
+                    control={control}        
+                    name="fishFeeding"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish feeding habbits or bait...'}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Distribution</Text>
+                <Controller        
+                    control={control}        
+                    name="fishDistribution"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish distribution or location'}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+
+                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
                 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Notes</Text>
-
-                <Button disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} height={100}/>
+                
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Notes</Text>
+                <Controller        
+                    control={control}        
+                    name="fishNotes"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10, height: 150, textAlignVertical: 'top'}}
+                    placeholder={'Enter fish notes...'}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+                <TouchableOpacity disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} style={{marginTop: 50, backgroundColor: '#00BAFF', margin: 10, borderRadius: 10, height: 50, justifyContent: 'center'}} >
+                    <Text style={{ textAlign: 'center', color: 'white', fontSize: 18, fontWeight: '500'}}>Submit</Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
