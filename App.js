@@ -19,7 +19,7 @@ import realm, {
     deleteCurrentFish,
 
 } from "./Data";
-import {SearchBar, Divider } from 'react-native-elements';
+import {SearchBar, Divider, Icon } from 'react-native-elements';
 import {
     SafeAreaView,
     ScrollView,
@@ -67,7 +67,7 @@ const addFishEntryPage = ({route, navigation}) => {
         formState: {errors, isValid}
       } = useForm({mode: 'onBlur'})
       
-    const onSubmit = data => {console.log(data.fishName)
+    const onSubmit = data => {console.log(data)
         
         addFishData("1", "2", "3"),
         amendArray(),
@@ -77,61 +77,129 @@ const addFishEntryPage = ({route, navigation}) => {
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
-            <Text>Add Fish Data</Text>
-            <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            <Text>Image</Text>
-            <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            <Text>Name</Text>
-            <Controller        
-                control={control}        
-                name="fishName"        
-                render={({field: {onChange, value, onBlur}}) => (            
-                <TextInput
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-                style={{backgroundColor: 'white', margin: 10}}
-                />       
-                )}
-                rules={{
-                required: {
-                    value: true,
-                    message: 'Field is required!'
+            <ScrollView 
+            contentInsetAdjustmentBehavior="automatic"
+            backgroundColor='rgb(43, 41, 44)'
+            >
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 28, fontWeight: '700'}}>Add Fish Data</Text>
+
+                <Divider orientation='horizontal' width={10} color={'#384955'} margin={10}/>
+
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Image</Text>
+
+                <Divider orientation='horizontal' width={5} color={'#384955'} margin={10}/>
+
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
+
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Name *</Text>
+
+                <Controller        
+                    control={control}        
+                    name="fishName"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish name...'}
+                    />       
+                    )}
+                    rules={{
+                    required: {
+                        value: true,
+                    }
+                    }}
+                />
+
+                {errors.fishName?.type === "required" &&
+                
+                <Text style={{marginLeft: 10, color: 'red', fontWeight: '700', fontSize: 16, textAlignVertical: 'center'}}>
+                    <Icon size={scale(14)} name='exclamation-triangle'  type='font-awesome-5'  color='red' style={{marginRight: scale(10)}} />
+                    Field is required!
+                </Text>}
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Known As</Text>
+                <Controller        
+                    control={control}        
+                    name="knownAsName"        
+                    render={({field: {onChange, value, onBlur}}) => (            
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Also known as...'}
+                    />       
+                    )}
+                    rules={{
+                    required: {
+                        value: true,
+                        message: 'Field is required!'
+                        
+                    }
+                    }}
+                />
+                
+                <Divider orientation='horizontal' width={4} color={'#384955'} margin={10}/>
+
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Profile</Text>
+
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Family</Text>
+                <Controller        
+                    control={control}        
+                    name="fishFamily"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish family...'}
+                    />       
+                    )}
                     
-                }
-                }}
-            />
-            <Controller        
-                control={control}        
-                name="familyName"        
-                render={({field: {onChange, value, onBlur}}) => (            
-                <TextInput
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-                style={{backgroundColor: 'white', margin: 10}}
-                />       
-                )}
-                rules={{
-                required: {
-                    value: true,
-                    message: 'Field is required!'
+                />
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Genus</Text>
+                <Controller        
+                    control={control}        
+                    name="fishGenus"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish genus...'}
+                    />       
+                    )}
                     
-                }
-                }}
-            />
-            
-            
-            <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            <Text>Profile</Text>
-            <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            <Text>Description</Text>
-            <Divider orientation='horizontal' width={2} color={'#384955'}/>
-            <Button disabled={!isValid} title='Submit' 
-            onPress={ 
-                    handleSubmit(onSubmit)
-            }/>
-            
+                />
+                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Species</Text>
+                <Controller        
+                    control={control}        
+                    name="fishSpecies"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    placeholder={'Enter fish species...'}
+                    />       
+                    )}
+                    
+                />
+
+                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10}/>
+
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Description</Text>
+
+                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10}/>
+                
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Notes</Text>
+
+                <Button disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} height={100}/>
+            </ScrollView>
         </SafeAreaView>
     )
 }
