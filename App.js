@@ -81,12 +81,23 @@ const addFishEntryPage = ({route, navigation}) => {
             contentInsetAdjustmentBehavior="automatic"
             backgroundColor='rgb(43, 41, 44)'
             >
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 28, fontWeight: '700'}}>Add Fish Data</Text>
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 28, fontWeight: '700'}}>Fish Entry</Text>
 
                 <Divider orientation='horizontal' width={10} color={'#384955'} margin={10} borderRadius={10}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Image</Text>
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700', marginBottom: 25}}>Image</Text>
 
+                <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
+                    <TouchableOpacity style={{right: '100%'}}>
+                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
+                        <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{left: '100%'}}>
+                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
+                        <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
+                    </TouchableOpacity>
+                </View>
                 <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
