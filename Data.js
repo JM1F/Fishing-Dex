@@ -5,10 +5,17 @@ class FishSchema extends Realm.Object { }
 FishSchema.schema = {
     name: 'Fish',
     properties: {
-        family: 'string',
-        genus: 'string',
-        species: 'string',
+        image: 'string',
+        name: 'string',
+        knowasName: 'string?',
+        family: 'string?',
+        genus: 'string?',
+        species: 'string?',
         description: 'string?',
+        size: 'string?',
+        feeding: 'string?',
+        distribution: 'string?',
+        notes: 'string?',
         index: 'int?',
     }
 };
@@ -20,10 +27,23 @@ let returnAllFish = () => {
     return realm.objects('Fish');
 }
 
-let addFishData = (fishfamily, fishgenus, fishspecies, fishdescription = null, fishindex = null) => {
+let addFishData = (fishImage, fishName, fishKnownAsName = null, fishFamily = null, fishGenus = null, fishSpecies = null, fishDescription = null, fishSize = null, fishFeeding = null, fishDistribution = null, fishNotes = null, fishIndex = null) => {
     
     realm.write(() => {
-        const fishDetails = realm.create('Fish', { family: fishfamily, genus: fishgenus, species: fishspecies, description: fishdescription, index: fishindex })
+        const fishDetails = realm.create('Fish', {
+            image: fishImage, 
+            name: fishName, 
+            knowasName: fishKnownAsName, 
+            family: fishFamily, 
+            genus: fishGenus, 
+            species: fishSpecies, 
+            description: fishDescription, 
+            size: fishSize,
+            feeding: fishFeeding,
+            distribution: fishDistribution,
+            notes: fishNotes,
+            index: fishIndex
+         })
     })
     
 }

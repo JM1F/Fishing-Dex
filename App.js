@@ -49,6 +49,7 @@ import {useForm, Controller} from 'react-hook-form';
 
 import ImagePicker from 'react-native-image-crop-picker';
 
+import defautFishImage from './Images/defaultFishProfile.png';
 let amendArray = () => { 
     let count = 0;
     returnAllFish().map ( (element) => {
@@ -65,7 +66,8 @@ let amendArray = () => {
 
 const addFishEntryPage = ({route, navigation}) => {
     
-    const [image, setImage] = useState(' ');
+    const defaultImage = Image.resolveAssetSource(defautFishImage).uri;
+    const [image, setImage] = useState(defaultImage);
 
     const {
         control, 
@@ -74,14 +76,27 @@ const addFishEntryPage = ({route, navigation}) => {
       } = useForm({ mode: 'onBlur'})
       
     const onSubmit = data => {console.log(data)
-        addFishData(image, "2", "3"),
+        console.log(image),
+        addFishData(
+            image, 
+            data.fishName, 
+            data.knownAsName, 
+            data.fishFamily, 
+            data.fishGenus, 
+            data.fishSpecies,
+            data.fishDescription,
+            data.fishSize,
+            data.fishFeeding,
+            data.fishDistribution,
+            data.fishNotes
+            ),
         amendArray(),
         navigation.navigate('DefaultScreen')
     }
     const takeImage = () => {
         ImagePicker.openCamera({
             width: 300,
-            height: 400,
+            height: 300,
             cropping: true,
           }).then(image => {
             setImage(image.path);
@@ -91,7 +106,7 @@ const addFishEntryPage = ({route, navigation}) => {
     const selectImage = () => {
         ImagePicker.openPicker({
             width: 300,
-            height: 400,
+            height: 300,
             cropping: true
           }).then(image => {
             setImage(image.path);
@@ -122,8 +137,11 @@ const addFishEntryPage = ({route, navigation}) => {
                         <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
                     </TouchableOpacity>
                 </View>
-            
+
+                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen image</Text>
                 
+                <Image source={{ uri : image }} style={{width: 300, height: 300, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
+
                 <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
@@ -283,7 +301,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
-                    placeholder={'Enter fish distribution or location'}
+                    placeholder={'Enter fish distribution or location...'}
                     multiline={true}
                     />       
                     )}
@@ -324,7 +342,7 @@ const testNavPage = ({ route, navigation}) => {
     return (
         
         <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
-             <Image source={{ uri :'file:///storage/emulated/0/Android/data/com.fishingdex/files/Pictures/4ada0eb1-9127-45ac-947e-0597b981e48a.jpg'}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
+             <Image source={{ uri :'./DefaultImages/tester.jpg'}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
         </View>
     );  
 };
@@ -338,6 +356,7 @@ const defualtPage = ({ navigation }) => {
     useEffect(() => {
         const focusDefaultPage = navigation.addListener('focus', () => {
           setData(returnAllFish());
+          
         });
         return focusDefaultPage;
       }, [navigation]);
@@ -346,8 +365,8 @@ const defualtPage = ({ navigation }) => {
         return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
             navigation.navigate('test', {fishElement: element});
         }} >
-                <ImageBackground source={require('./DefaultImages/tester.jpg')} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
-                    <Text style={styles.mainButtonTextStyle}>European Bass</Text>
+                <ImageBackground source={{uri : element.image}} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
+                    <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
 
                     <TouchableOpacity style={[styles.subButton, {right: '5%'}, styles.itemShadow]} onPress={() => {
                     generateYesNoAlert(element)
