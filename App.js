@@ -66,8 +66,11 @@ let amendArray = () => {
 
 const addFishEntryPage = ({route, navigation}) => {
     
-    const defaultImage = Image.resolveAssetSource(defautFishImage).uri;
-    const [image, setImage] = useState(defaultImage);
+    const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
+    const [profileImage, setProfileImage] = useState(defaultProfileImage);
+
+    const defaultCoverPicImage = Image.resolveAssetSource(defautFishImage).uri;
+    const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
 
     const {
         control, 
@@ -76,9 +79,9 @@ const addFishEntryPage = ({route, navigation}) => {
       } = useForm({ mode: 'onBlur'})
       
     const onSubmit = data => {console.log(data)
-        console.log(image),
         addFishData(
-            image, 
+            coverPicImage,
+            profileImage, 
             data.fishName, 
             data.knownAsName, 
             data.fishFamily, 
@@ -93,26 +96,44 @@ const addFishEntryPage = ({route, navigation}) => {
         amendArray(),
         navigation.navigate('DefaultScreen')
     }
-    const takeImage = () => {
+    const takeProfileImage = () => {
         ImagePicker.openCamera({
             width: 300,
             height: 300,
             cropping: true,
           }).then(image => {
-            setImage(image.path);
+            setProfileImage(image.path);
           });
     
     }
-    const selectImage = () => {
+    const selectProfileImage = () => {
         ImagePicker.openPicker({
             width: 300,
             height: 300,
             cropping: true
           }).then(image => {
-            setImage(image.path);
+            setProfileImage(image.path);
           });
     }
+    const takeCoverPicImage = () => {
+        ImagePicker.openCamera({
+            width: 600,
+            height: 300,
+            cropping: true,
+          }).then(image => {
+            setCoverPicImage(image.path);
+          });
     
+    }
+    const selectCoverPicImage = () => {
+        ImagePicker.openPicker({
+            width: 600,
+            height: 300,
+            cropping: true
+          }).then(image => {
+            setCoverPicImage(image.path);
+          });
+    }
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
@@ -124,24 +145,46 @@ const addFishEntryPage = ({route, navigation}) => {
 
                 <Divider orientation='horizontal' width={10} color={'#384955'} margin={10} borderRadius={10}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700', marginBottom: 25}}>Image</Text>
-                      
+                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700', marginBottom: 25}}>Images</Text>
+                    
+                <Text style={{margin: 10, fontSize: 20, fontWeight: '700', color: '#367EA7', textDecorationLine: 'underline'}}>Profile Image</Text>
+
                 <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
-                    <TouchableOpacity style={{right: '100%'}} onPress={takeImage}>
+                    <TouchableOpacity style={{right: '100%'}} onPress={takeProfileImage}>
                         <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
                         <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{left: '100%'}} onPress={selectImage}>
+                    <TouchableOpacity style={{left: '100%'}} onPress={selectProfileImage}>
                         <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
                         <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen image</Text>
+                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen profile image</Text>
                 
-                <Image source={{ uri : image }} style={{width: 300, height: 300, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
+                <Image source={{ uri : profileImage }} style={{width: 150, height: 150, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
 
+                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
+
+                <Text style={{margin: 10, fontSize: 20, fontWeight: '700', color: '#367EA7', textDecorationLine: 'underline'}}>Cover Photo Image</Text>
+
+                <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
+                    <TouchableOpacity style={{right: '100%'}} onPress={takeCoverPicImage}>
+                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
+                        <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{left: '100%'}} onPress={selectCoverPicImage}>
+                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
+                        <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen cover photo image</Text>
+                
+                <Image source={{ uri : coverPicImage }} style={{width: 300, height: 150, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
+            
                 <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
@@ -270,7 +313,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
                     placeholder={'Enter fish size...'}
-                    multiline={true}
                     />       
                     )}
                     
@@ -286,7 +328,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
                     placeholder={'Enter fish feeding habbits or bait...'}
-                    multiline={true}
                     />       
                     )}
                     
@@ -302,7 +343,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
                     placeholder={'Enter fish distribution or location...'}
-                    multiline={true}
                     />       
                     )}
                     
@@ -323,7 +363,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={{backgroundColor: 'white', margin: 10, borderRadius: 10, height: 150, textAlignVertical: 'top'}}
                     placeholder={'Enter fish notes...'}
-                    multiline={true}
                     />       
                     )}
                     
@@ -342,7 +381,7 @@ const testNavPage = ({ route, navigation}) => {
     return (
         
         <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
-             <Image source={{ uri :'./DefaultImages/tester.jpg'}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
+             <Image source={{ uri : fishElement.coverImage}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
         </View>
     );  
 };
@@ -365,7 +404,7 @@ const defualtPage = ({ navigation }) => {
         return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
             navigation.navigate('test', {fishElement: element});
         }} >
-                <ImageBackground source={{uri : element.image}} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
+                <ImageBackground source={{uri : element.profileImage}} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
                     <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
 
                     <TouchableOpacity style={[styles.subButton, {right: '5%'}, styles.itemShadow]} onPress={() => {

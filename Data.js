@@ -5,7 +5,8 @@ class FishSchema extends Realm.Object { }
 FishSchema.schema = {
     name: 'Fish',
     properties: {
-        image: 'string',
+        coverImage: 'string',
+        profileImage: 'string',
         name: 'string',
         knowasName: 'string?',
         family: 'string?',
@@ -27,11 +28,12 @@ let returnAllFish = () => {
     return realm.objects('Fish');
 }
 
-let addFishData = (fishImage, fishName, fishKnownAsName = null, fishFamily = null, fishGenus = null, fishSpecies = null, fishDescription = null, fishSize = null, fishFeeding = null, fishDistribution = null, fishNotes = null, fishIndex = null) => {
+let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName = null, fishFamily = null, fishGenus = null, fishSpecies = null, fishDescription = null, fishSize = null, fishFeeding = null, fishDistribution = null, fishNotes = null, fishIndex = null) => {
     
     realm.write(() => {
         const fishDetails = realm.create('Fish', {
-            image: fishImage, 
+            coverImage: fishCoverPicImage,
+            profileImage: fishProfileImage, 
             name: fishName, 
             knowasName: fishKnownAsName, 
             family: fishFamily, 
