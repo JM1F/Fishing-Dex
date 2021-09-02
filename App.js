@@ -6,10 +6,11 @@
  * @flow strict-local
  */
 
-import React, { useState, setState, useEffect } from 'react';
-
-import Node from 'react';
-
+import React, { 
+    useState, 
+    setState, 
+    useEffect 
+} from 'react';
 import realm, {
     returnAllFish,
     addFishData,
@@ -17,9 +18,12 @@ import realm, {
     deleteLastFish,
     deleteSecondToLastFish,
     deleteCurrentFish,
-
 } from "./Data";
-import {SearchBar, Divider, Icon } from 'react-native-elements';
+import {
+    SearchBar,
+    Divider, 
+    Icon 
+} from 'react-native-elements';
 import {
     SafeAreaView,
     ScrollView,
@@ -36,20 +40,18 @@ import {
     TextInput,
     Button
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
     scale,
     moderateScale,
     verticalScale
-
 } from './ScaleDevice';
-
+import Node from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {useForm, Controller} from 'react-hook-form';
-
 import ImagePicker from 'react-native-image-crop-picker';
-
 import defautFishImage from './Images/defaultFishProfile.png';
+
 let amendArray = () => { 
     let count = 0;
     returnAllFish().map ( (element) => {
@@ -61,7 +63,6 @@ let amendArray = () => {
     count += 1;
 
 })}
-
 
 
 const addFishEntryPage = ({route, navigation}) => {
@@ -98,8 +99,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeProfileImage = () => {
         ImagePicker.openCamera({
-            width: 300,
-            height: 300,
+            width: moderateScale(300),
+            height: verticalScale(300),
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
@@ -108,8 +109,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectProfileImage = () => {
         ImagePicker.openPicker({
-            width: 300,
-            height: 300,
+            width: moderateScale(300),
+            height: verticalScale(300),
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
@@ -117,8 +118,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: 600,
-            height: 300,
+            width: moderateScale(600),
+            height: verticalScale(300),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -127,8 +128,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: 600,
-            height: 300,
+            width: moderateScale(600),
+            height: verticalScale(300),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -141,55 +142,55 @@ const addFishEntryPage = ({route, navigation}) => {
             contentInsetAdjustmentBehavior="automatic"
             backgroundColor='rgb(43, 41, 44)'
             >
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 28, fontWeight: '700'}}>Fish Entry</Text>
+                <Text style={styles.entryFromPageTitle}>Fish Entry</Text>
 
-                <Divider orientation='horizontal' width={10} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(10)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700', marginBottom: 25}}>Images</Text>
+                <Text style={styles.entryFormSubHeader1}>Images</Text>
                     
-                <Text style={{margin: 10, fontSize: 20, fontWeight: '700', color: '#367EA7', textDecorationLine: 'underline'}}>Profile Image</Text>
+                <Text style={styles.entryFormSubHeader2}>Profile Image</Text>
 
-                <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
+                <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: '100%'}} onPress={takeProfileImage}>
-                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
+                        <Text style={styles.textViewPictureEntry}>Take a photo</Text>
                         <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{left: '100%'}} onPress={selectProfileImage}>
-                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
+                        <Text style={styles.textViewPictureEntry}>Add a photo</Text>
                         <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen profile image</Text>
+                <Text style={ [styles.textViewPictureEntry, {alignSelf: 'center'}]}>Chosen profile image</Text>
                 
-                <Image source={{ uri : profileImage }} style={{width: 150, height: 150, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
+                <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
 
-                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
 
-                <Text style={{margin: 10, fontSize: 20, fontWeight: '700', color: '#367EA7', textDecorationLine: 'underline'}}>Cover Photo Image</Text>
+                <Text style={styles.entryFormSubHeader2}>Cover Photo Image</Text>
 
-                <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
+                <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: '100%'}} onPress={takeCoverPicImage}>
-                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
+                        <Text style={styles.textViewPictureEntry}>Take a photo</Text>
                         <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{left: '100%'}} onPress={selectCoverPicImage}>
-                        <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
+                        <Text style={styles.textViewPictureEntry}>Add a photo</Text>
                         <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{ color: '#367EA7', fontWeight: '700', alignSelf: 'center'}}>Chosen cover photo image</Text>
+                <Text style={[styles.textViewPictureEntry, {alignSelf: 'center'}]}>Chosen cover photo image</Text>
                 
-                <Image source={{ uri : coverPicImage }} style={{width: 300, height: 150, alignSelf: 'center', borderRadius: 10, margin: 10, borderWidth: 2, borderColor: 'white'}}></Image>
+                <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
             
-                <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(5)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
+                <Text style={styles.entryFormSubHeader1}>Name</Text>
 
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Name *</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Name *</Text>
 
                 <Controller        
                     control={control}        
@@ -199,8 +200,9 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish name...'}
+
                     />       
                     )}
                     rules={{
@@ -212,11 +214,14 @@ const addFishEntryPage = ({route, navigation}) => {
 
                 {errors.fishName?.type === "required" &&
                 
-                <Text style={{marginLeft: 10, color: 'red', fontWeight: '700', fontSize: 16, textAlignVertical: 'center'}}>
+                <Text style={styles.errorFormText}>
                     <Icon size={scale(14)} name='exclamation-triangle'  type='font-awesome-5'  color='red' style={{marginRight: scale(10)}} />
                     Field is required!
-                </Text>}
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Known As</Text>
+                </Text>
+                }
+
+                <Text style={styles.entryFormInputTitle}>Known As</Text>
+
                 <Controller        
                     control={control}        
                     name="knownAsName"        
@@ -225,18 +230,19 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Also known as...'}
                     />       
                     )}
                     
                 />
                 
-                <Divider orientation='horizontal' width={4} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(4)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Profile</Text>
+                <Text style={styles.entryFormSubHeader1}>Profile</Text>
 
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Family</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Family</Text>
+
                 <Controller        
                     control={control}        
                     name="fishFamily"        
@@ -245,13 +251,13 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish family...'}
                     />       
                     )}
                     
                 />
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Genus</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
                 <Controller        
                     control={control}        
                     name="fishGenus"        
@@ -260,13 +266,13 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish genus...'}
                     />       
                     )}
                     
                 />
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Species</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Species</Text>
                 <Controller        
                     control={control}        
                     name="fishSpecies"        
@@ -275,18 +281,18 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish species...'}
                     />       
                     )}
                     
                 />
 
-                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Description</Text>
+                <Text style={styles.entryFormSubHeader1}>Description</Text>
 
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Description</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Description</Text>
                 <Controller        
                     control={control}        
                     name="fishDescription"        
@@ -295,14 +301,14 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10, height: 150, textAlignVertical: 'top'}}
+                    style={styles.largeInputForm}
                     placeholder={'Enter fish description...'}
                     multiline={true}
                     />       
                     )}
                     
                 />
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Size</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Size</Text>
                 <Controller        
                     control={control}        
                     name="fishSize"        
@@ -311,13 +317,13 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish size...'}
                     />       
                     )}
                     
                 />
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Feeding (Bait)</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
                 <Controller        
                     control={control}        
                     name="fishFeeding"        
@@ -326,13 +332,13 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish feeding habbits or bait...'}
                     />       
                     )}
                     
                 />
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Distribution</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
                 <Controller        
                     control={control}        
                     name="fishDistribution"        
@@ -341,18 +347,18 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10}}
+                    style={styles.normalInputForm}
                     placeholder={'Enter fish distribution or location...'}
                     />       
                     )}
                     
                 />
 
-                <Divider orientation='horizontal' width={3} color={'#384955'} margin={10} borderRadius={10}/>
+                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
                 
-                <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Notes</Text>
+                <Text style={styles.entryFormSubHeader1}>Notes</Text>
                 
-                <Text style={{color: '#367EA7', margin: 10, marginBottom: 0, fontWeight: '700'}}>Fish Notes</Text>
+                <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
                 <Controller        
                     control={control}        
                     name="fishNotes"        
@@ -361,19 +367,24 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={{backgroundColor: 'white', margin: 10, borderRadius: 10, height: 150, textAlignVertical: 'top'}}
+                    style={styles.largeInputForm}
                     placeholder={'Enter fish notes...'}
                     />       
                     )}
                     
                 />
-                <TouchableOpacity disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} style={{marginTop: 50, backgroundColor: '#00BAFF', margin: 10, borderRadius: 10, height: 50, justifyContent: 'center'}} >
-                    <Text style={{ textAlign: 'center', color: 'white', fontSize: 18, fontWeight: '500'}}>Submit</Text>
+                <TouchableOpacity disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} style={styles.submitButton} >
+                    <Text style={styles.submitButtonText}>Submit</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
 }
+
+
+
+
+
 
 const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
@@ -381,10 +392,13 @@ const testNavPage = ({ route, navigation}) => {
     return (
         
         <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
-             <Image source={{ uri : fishElement.coverImage}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
+             <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={'cover'}/>
         </View>
     );  
 };
+
+
+
 
 
 const defualtPage = ({ navigation }) => {
@@ -401,10 +415,10 @@ const defualtPage = ({ navigation }) => {
       }, [navigation]);
     
     let arr = returnAllFish().map( (element) => { 
-        return <TouchableOpacity style={[styles.testTextStyle, styles.itemShadow]} onPress={() => {
+        return <TouchableOpacity style={[styles.fishButtonStyle, styles.itemShadow]} onPress={() => {
             navigation.navigate('test', {fishElement: element});
         }} >
-                <ImageBackground source={{uri : element.profileImage}} style={{height: '100%' , width:'100%' , borderRadius: 10, alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}} resizeMode={'cover'}>
+                <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={'cover'}>
                     <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
 
                     <TouchableOpacity style={[styles.subButton, {right: '5%'}, styles.itemShadow]} onPress={() => {
@@ -435,8 +449,6 @@ const defualtPage = ({ navigation }) => {
       ]
     );
     
-
-    
     let checkCardName = () => {
         console.log("yooooooooo")
         
@@ -450,20 +462,23 @@ const defualtPage = ({ navigation }) => {
         contentInsetAdjustmentBehavior="automatic"
         backgroundColor='rgb(43, 41, 44)'
         >
-        
         <View
             style={{
                 backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
         }}>
-            <View style={[{width: '100%', padding: 20}]}>
+            <View style={[{width: '100%', padding: scale(20)}]}>
                 <SearchBar  inputContainerStyle={{backgroundColor: 'white'}}
                             leftIconContainerStyle={{backgroundColor: 'white'}}
-                            inputStyle={{backgroundColor: 'white'}}
+                            searchIcon={{size: scale(16)}}
+                            clearIcon={{size: scale(16)}}
+                            inputStyle={{
+                            backgroundColor: 'white', 
+                            fontSize: scale(12)}}
                             containerStyle={[{
                             backgroundColor: 'white',
                             justifyContent: 'space-around',
-                            borderRadius: 10,
-                            height: 50
+                            borderRadius: scale(10),
+                            height: verticalScale(50),
                             }, styles.itemShadow]}
                             onChangeText={text => searchSetData(text)}
                             placeholder={'Type fish here...'}
@@ -478,7 +493,7 @@ const defualtPage = ({ navigation }) => {
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('addFormPage')
             }}>
-                    <Text style={[styles.testTextStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
+                    <Text style={[styles.fishButtonStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
                 </TouchableOpacity>
             </View>
 
@@ -491,9 +506,7 @@ const defualtPage = ({ navigation }) => {
 
 const Stack = createNativeStackNavigator();
  
-const App = () => {
-
-    
+const App = () => {   
   return (
     <NavigationContainer>
         <Stack.Navigator>
@@ -508,7 +521,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
     
-    testTextStyle: {
+    fishButtonStyle: {
         width: moderateScale(150),
         height: verticalScale(150),
         margin: scale(10),
@@ -516,6 +529,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'grey',
+    },
+    fishButtonImageBackgroundStyle: {
+        height: '100%', 
+        width:'100%', 
+        borderRadius: scale(10), 
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden'
+    },
+    coverImageStyle: {
+        width: '100%',
+        height: '50%', 
+        borderBottomLeftRadius: scale(30), 
+        borderBottomRightRadius: scale(30)
     },
     mainButtonTextStyle: {
         color: 'white',
@@ -534,6 +561,86 @@ const styles = StyleSheet.create({
         top: '80%', 
         alignSelf: 'flex-end',
     },
+    entryFromPageTitle: {
+        alignSelf: 'center', 
+        color: '#00BAFF', 
+        fontSize: scale(28), 
+        fontWeight: '700'
+    },
+    entryFormSubHeader1: {alignSelf: 'center', 
+        color: '#00BAFF', 
+        fontSize: scale(24), 
+        fontWeight: '700', 
+        marginBottom: scale(25)
+    },
+    entryFormSubHeader2: {
+        margin: scale(10), 
+        fontSize: scale(20), 
+        fontWeight: '700', 
+        color: '#367EA7', 
+        textDecorationLine: 'underline'
+    },
+    containerViewPictureEntry: {
+        flexDirection: 'row', 
+        alignSelf: 'center', 
+        margin: scale(10)
+    },
+    textViewPictureEntry : {
+        color: '#367EA7', 
+        fontWeight: '700',
+        fontSize: scale(12)
+    },
+    entryFormImage: {
+        alignSelf: 'center', 
+        borderRadius: scale(10), 
+        margin: scale(10), 
+        borderWidth: scale(2), 
+        borderColor: 'white'
+    },
+    entryFormInputTitle: {
+        color: '#367EA7', 
+        margin: scale(10), 
+        marginBottom: 0, 
+        fontWeight: '700',
+        fontSize: scale(12)
+    },
+    normalInputForm: {
+        backgroundColor: 'white', 
+        margin: scale(10), 
+        borderRadius: scale(10),
+        height: scale(35),
+        textAlignVertical: 'top',
+        fontSize: scale(12)
+    },
+    largeInputForm: {
+        backgroundColor: 'white', 
+        margin: scale(10), 
+        borderRadius: scale(10), 
+        height: verticalScale(150), 
+        textAlignVertical: 'top',
+        fontSize: scale(12)
+    },
+    errorFormText : {
+        marginLeft: scale(10), 
+        color: 'red', 
+        fontWeight: '700', 
+        fontSize: scale(16), 
+        textAlignVertical: 'center'
+    },
+    submitButton: {
+        marginTop: scale(50), 
+        backgroundColor: '#00BAFF', 
+        margin: scale(10), 
+        borderRadius: scale(10), 
+        height: verticalScale(50), 
+        justifyContent: 'center'
+    },
+    submitButtonText: {
+        textAlign: 'center', 
+        color: 'white', 
+        fontSize: scale(18), 
+        fontWeight: '500'
+    },
     itemShadow: {
         shadowColor: "#000",
         shadowOffset: {
@@ -542,9 +649,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.32,
         shadowRadius: 5.46,
-
         elevation: 9,
-            }
+    }
 
 
 });
