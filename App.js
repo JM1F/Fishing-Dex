@@ -47,6 +47,7 @@ import {
 
 import {useForm, Controller} from 'react-hook-form';
 
+import ImagePicker from 'react-native-image-crop-picker';
 
 let amendArray = () => { 
     let count = 0;
@@ -60,20 +61,43 @@ let amendArray = () => {
 
 })}
 
+
+
 const addFishEntryPage = ({route, navigation}) => {
+    
+    const [image, setImage] = useState(' ');
+
     const {
         control, 
         handleSubmit, 
         formState: {errors, isValid}
-      } = useForm({mode: 'onBlur'})
+      } = useForm({ mode: 'onBlur'})
       
     const onSubmit = data => {console.log(data)
-        
-        addFishData("1", "2", "3"),
+        addFishData(image, "2", "3"),
         amendArray(),
         navigation.navigate('DefaultScreen')
     }
-            
+    const takeImage = () => {
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+          }).then(image => {
+            setImage(image.path);
+          });
+    
+    }
+    const selectImage = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+          }).then(image => {
+            setImage(image.path);
+          });
+    }
+    
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
@@ -86,18 +110,20 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Divider orientation='horizontal' width={10} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700', marginBottom: 25}}>Image</Text>
-
+                      
                 <View style={{flexDirection: 'row', alignSelf: 'center', margin: 10}}>
-                    <TouchableOpacity style={{right: '100%'}}>
+                    <TouchableOpacity style={{right: '100%'}} onPress={takeImage}>
                         <Text style={{ color: '#367EA7', fontWeight: '700'}}>Take a photo</Text>
                         <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{left: '100%'}}>
+                    <TouchableOpacity style={{left: '100%'}} onPress={selectImage}>
                         <Text style={{ color: '#367EA7', fontWeight: '700'}}>Add a photo</Text>
                         <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
                     </TouchableOpacity>
                 </View>
+            
+                
                 <Divider orientation='horizontal' width={5} color={'#384955'} margin={10} borderRadius={10}/>
 
                 <Text style={{alignSelf: 'center', color: '#00BAFF', fontSize: 24, fontWeight: '700'}}>Name</Text>
@@ -298,7 +324,7 @@ const testNavPage = ({ route, navigation}) => {
     return (
         
         <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
-             <Image source={require('./DefaultImages/tester.jpg')} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
+             <Image source={{ uri :'file:///storage/emulated/0/Android/data/com.fishingdex/files/Pictures/4ada0eb1-9127-45ac-947e-0597b981e48a.jpg'}} style={{width: '100%', height: '50%', borderBottomLeftRadius: 30, borderBottomRightRadius: 30}} resizeMode={'cover'}/>
         </View>
     );  
 };
