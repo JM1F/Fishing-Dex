@@ -455,10 +455,10 @@ const defualtPage = ({ navigation }) => {
     }
 
     return ( 
-    <SafeAreaView style={{ flex: 1,
-        backgroundColor: '#2B292C'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
       <StatusBar barStyle='default' backgroundColor='rgb(43, 41, 44)'/>
-      <ScrollView 
+      
+    <ScrollView 
         contentInsetAdjustmentBehavior="automatic"
         backgroundColor='rgb(43, 41, 44)'
         >
@@ -489,18 +489,21 @@ const defualtPage = ({ navigation }) => {
             </View>
             { arr }
 
-            <View >
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate('addFormPage')
-            }}>
-                    <Text style={[styles.fishButtonStyle, {textAlign: 'center', textAlignVertical: 'center'}, styles.itemShadow]}>+</Text>
-                </TouchableOpacity>
-            </View>
+            
 
         </View>
-
-      </ScrollView>
+        
+    </ScrollView>
+    <View>
+            <TouchableOpacity style={[styles.addButton, styles.itemShadow]} onPress={() => {
+                navigation.navigate('addFormPage')
+            }}>
+                <Icon size={scale(32)} name='add-outline'  type='ionicon'  color='white' />
+            </TouchableOpacity>
+    </View>
+      
     </SafeAreaView>
+    
     );
 };
 
@@ -520,7 +523,17 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-    
+    addButton: {
+        width: scale(50),  
+        height: scale(50),   
+        borderRadius: scale(100),            
+        backgroundColor: '#00BAFF',                                    
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',                                    
+        bottom: scale(25),                                                    
+        right: scale(25), 
+    },
     fishButtonStyle: {
         width: moderateScale(150),
         height: verticalScale(150),
