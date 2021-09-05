@@ -10,7 +10,7 @@ import React, {
     useState, 
     setState, 
     useEffect 
-} from 'react';
+} from "react";
 import realm, {
     returnAllFish,
     addFishData,
@@ -23,7 +23,7 @@ import {
     SearchBar,
     Divider, 
     Icon 
-} from 'react-native-elements';
+} from "react-native-elements";
 import {
     SafeAreaView,
     ScrollView,
@@ -39,18 +39,18 @@ import {
     Platform,
     TextInput,
     Button
-} from 'react-native';
+} from "react-native";
 import {
     scale,
     moderateScale,
     verticalScale
-} from './ScaleDevice';
-import Node from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {useForm, Controller} from 'react-hook-form';
-import ImagePicker from 'react-native-image-crop-picker';
-import defautFishImage from './Images/defaultFishProfile.png';
+} from "./ScaleDevice";
+import Node from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {useForm, Controller} from "react-hook-form";
+import ImagePicker from "react-native-image-crop-picker";
+import defautFishImage from "./Images/defaultFishProfile.png";
 
 let amendArray = () => { 
     let count = 0;
@@ -65,6 +65,7 @@ let amendArray = () => {
 })}
 
 
+
 const addFishEntryPage = ({route, navigation}) => {
     
     const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
@@ -77,7 +78,7 @@ const addFishEntryPage = ({route, navigation}) => {
         control, 
         handleSubmit, 
         formState: {errors, isValid}
-      } = useForm({ mode: 'onBlur'})
+      } = useForm({ mode: "onBlur"})
       
     const onSubmit = data => {console.log(data)
         addFishData(
@@ -95,7 +96,16 @@ const addFishEntryPage = ({route, navigation}) => {
             data.fishNotes
             ),
         amendArray(),
-        navigation.navigate('DefaultScreen')
+        navigation.navigate("DefaultScreen")
+    }
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
+            
+            
+        )
     }
     const takeProfileImage = () => {
         ImagePicker.openCamera({
@@ -137,56 +147,60 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     return (
         
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView 
             contentInsetAdjustmentBehavior="automatic"
-            backgroundColor='rgb(43, 41, 44)'
-            >
-                <Text style={styles.entryFromPageTitle}>Fish Entry</Text>
+            backgroundColor="rgb(43, 41, 44)"
+            >    
+                <BackNavigateButton/>
 
-                <Divider orientation='horizontal' width={scale(10)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <Text style={styles.entryFromPageTitle}>Fish Entry</Text>
+            
+                <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
 
                 <Text style={styles.entryFormSubHeader1}>Images</Text>
                     
                 <Text style={styles.entryFormSubHeader2}>Profile Image</Text>
 
                 <View style={styles.containerViewPictureEntry}>
-                    <TouchableOpacity style={{right: '100%'}} onPress={takeProfileImage}>
+                    <TouchableOpacity style={{right: "100%"}} onPress={takeProfileImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
-                        <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
+                        <Icon size={scale(64)} name="camera"  type="evilicon"  color="white" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{left: '100%'}} onPress={selectProfileImage}>
+                    <TouchableOpacity style={{left: "100%"}} onPress={selectProfileImage}>
                         <Text style={styles.textViewPictureEntry}>Add a photo</Text>
-                        <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
+                        <Icon size={scale(64)} name="image"  type="evilicon"  color="white" />
                     </TouchableOpacity>
                 </View>
 
-                <Text style={ [styles.textViewPictureEntry, {alignSelf: 'center'}]}>Chosen profile image</Text>
-                
-                <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
 
-                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
+                    <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                </View>
+
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader2}>Cover Photo Image</Text>
 
                 <View style={styles.containerViewPictureEntry}>
-                    <TouchableOpacity style={{right: '100%'}} onPress={takeCoverPicImage}>
+                    <TouchableOpacity style={{right: "100%"}} onPress={takeCoverPicImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
-                        <Icon size={scale(64)} name='camera'  type='evilicon'  color='white' />
+                        <Icon size={scale(64)} name="camera"  type="evilicon"  color="white" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{left: '100%'}} onPress={selectCoverPicImage}>
+                    <TouchableOpacity style={{left: "100%"}} onPress={selectCoverPicImage}>
                         <Text style={styles.textViewPictureEntry}>Add a photo</Text>
-                        <Icon size={scale(64)} name='image'  type='evilicon'  color='white' />
+                        <Icon size={scale(64)} name="image"  type="evilicon"  color="white" />
                     </TouchableOpacity>
                 </View>
 
-                <Text style={[styles.textViewPictureEntry, {alignSelf: 'center'}]}>Chosen cover photo image</Text>
-                
-                <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
-            
-                <Divider orientation='horizontal' width={scale(5)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
+                <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
+                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                </View>
+                <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader1}>Name</Text>
 
@@ -200,8 +214,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish name...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish name..."}
 
                     />       
                     )}
@@ -215,7 +229,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 {errors.fishName?.type === "required" &&
                 
                 <Text style={styles.errorFormText}>
-                    <Icon size={scale(14)} name='exclamation-triangle'  type='font-awesome-5'  color='red' style={{marginRight: scale(10)}} />
+                    <Icon size={scale(14)} name="exclamation-triangle"  type="font-awesome-5"  color="red" style={{marginRight: scale(10)}} />
                     Field is required!
                 </Text>
                 }
@@ -230,14 +244,14 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Also known as...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Also known as..."}
                     />       
                     )}
                     
                 />
                 
-                <Divider orientation='horizontal' width={scale(4)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <Divider orientation="horizontal" width={scale(4)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader1}>Profile</Text>
 
@@ -251,8 +265,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish family...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish family..."}
                     />       
                     )}
                     
@@ -266,8 +280,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish genus...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish genus..."}
                     />       
                     )}
                     
@@ -281,14 +295,14 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish species...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish species..."}
                     />       
                     )}
                     
                 />
 
-                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader1}>Description</Text>
 
@@ -301,8 +315,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.largeInputForm}
-                    placeholder={'Enter fish description...'}
+                    style={[styles.largeInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish description..."}
                     multiline={true}
                     />       
                     )}
@@ -317,8 +331,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish size...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish size..."}
                     />       
                     )}
                     
@@ -332,8 +346,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish feeding habbits or bait...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish feeding habbits or bait..."}
                     />       
                     )}
                     
@@ -347,14 +361,14 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.normalInputForm}
-                    placeholder={'Enter fish distribution or location...'}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish distribution or location..."}
                     />       
                     )}
                     
                 />
 
-                <Divider orientation='horizontal' width={scale(3)} color={'#384955'} margin={scale(10)} borderRadius={scale(10)}/>
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
                 
                 <Text style={styles.entryFormSubHeader1}>Notes</Text>
                 
@@ -367,13 +381,13 @@ const addFishEntryPage = ({route, navigation}) => {
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
-                    style={styles.largeInputForm}
-                    placeholder={'Enter fish notes...'}
+                    style={[styles.largeInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish notes..."}
                     />       
                     )}
                     
                 />
-                <TouchableOpacity disabled={!isValid} title='Submit'  onPress={ handleSubmit(onSubmit)} style={styles.submitButton} >
+                <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
                     <Text style={styles.submitButtonText}>Submit</Text>
                 </TouchableOpacity>
             </ScrollView>
@@ -389,13 +403,22 @@ const addFishEntryPage = ({route, navigation}) => {
 const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
 
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
+            
+            
+        )
+    }
     return (
-        
-        <View style={[{backgroundColor: '#2B292C'}, styles.itemShadow]}>
-             <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={'cover'}/>
-        </View>
-    );  
-};
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <View style={[{backgroundColor: "#2B292C"}, styles.mediumItemShadow]}>
+                <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
+            </View>
+        </SafeAreaView> 
+    )};
 
 
 
@@ -404,10 +427,10 @@ const testNavPage = ({ route, navigation}) => {
 const defualtPage = ({ navigation }) => {
 
     const [data, setData] = useState(returnAllFish());
-    const [searchData, searchSetData] = useState('');
+    const [searchData, searchSetData] = useState("");
 
     useEffect(() => {
-        const focusDefaultPage = navigation.addListener('focus', () => {
+        const focusDefaultPage = navigation.addListener("focus", () => {
           setData(returnAllFish());
           
         });
@@ -415,19 +438,19 @@ const defualtPage = ({ navigation }) => {
       }, [navigation]);
     
     let arr = returnAllFish().map( (element) => { 
-        return <TouchableOpacity style={[styles.fishButtonStyle, styles.itemShadow]} onPress={() => {
-            navigation.navigate('test', {fishElement: element});
+        return <TouchableOpacity style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
+            navigation.navigate("test", {fishElement: element});
         }} >
-                <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={'cover'}>
+                <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={"cover"}>
                     <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
 
-                    <TouchableOpacity style={[styles.subButton, {right: '5%'}, styles.itemShadow]} onPress={() => {
+                    <TouchableOpacity style={[styles.subButton, {right: "5%"}, styles.mediumItemShadow]} onPress={() => {
                     generateYesNoAlert(element)
                     }}>
-                        <Image style={styles.subButtonImageStyle} source={require('./Images/trash.png')}/>
+                        <Image style={styles.subButtonImageStyle} source={require("./Images/trash.png")}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.subButton, {left: '5%'}, styles.itemShadow]}>
-                        <Image style={styles.subButtonImageStyle} source={require('./Images/writing.png')}/> 
+                    <TouchableOpacity style={[styles.subButton, {left: "5%"}, styles.mediumItemShadow]}>
+                        <Image style={styles.subButtonImageStyle} source={require("./Images/writing.png")}/> 
                     </TouchableOpacity>  
 
                 </ImageBackground>
@@ -455,50 +478,48 @@ const defualtPage = ({ navigation }) => {
     }
 
     return ( 
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#2B292C'}}>
-      <StatusBar barStyle='default' backgroundColor='rgb(43, 41, 44)'/>
-      
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+      <StatusBar barStyle="default" backgroundColor="rgb(43, 41, 44)"/>
+    
+
     <ScrollView 
         contentInsetAdjustmentBehavior="automatic"
-        backgroundColor='rgb(43, 41, 44)'
+        backgroundColor="rgb(43, 41, 44)"
         >
         <View
             style={{
-                backgroundColor: '#2B292C', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap',
+                backgroundColor: "#2B292C", flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap",
         }}>
-            <View style={[{width: '100%', padding: scale(20)}]}>
-                <SearchBar  inputContainerStyle={{backgroundColor: 'white'}}
-                            leftIconContainerStyle={{backgroundColor: 'white'}}
+            <View style={[{width: "100%", padding: scale(20)}]}>
+                <SearchBar  inputContainerStyle={{backgroundColor: "white"}}
+                            leftIconContainerStyle={{backgroundColor: "white"}}
                             searchIcon={{size: scale(16)}}
                             clearIcon={{size: scale(16)}}
                             inputStyle={{
-                            backgroundColor: 'white', 
+                            backgroundColor: "white", 
                             fontSize: scale(12)}}
                             containerStyle={[{
-                            backgroundColor: 'white',
-                            justifyContent: 'space-around',
+                            backgroundColor: "white",
+                            justifyContent: "space-around",
                             borderRadius: scale(10),
                             height: verticalScale(50),
-                            }, styles.itemShadow]}
+                            }, styles.mediumItemShadow]}
                             onChangeText={text => searchSetData(text)}
-                            placeholder={'Type fish here...'}
-                            autoCapitalize='none'
+                            placeholder={"Type fish here..."}
+                            autoCapitalize="none"
                             value={searchData}
                             onSubmitEditing={() => checkCardName(searchData)}
                             />    
             </View>
             { arr }
-
-            
-
         </View>
         
     </ScrollView>
     <View>
-            <TouchableOpacity style={[styles.addButton, styles.itemShadow]} onPress={() => {
-                navigation.navigate('addFormPage')
+            <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} onPress={() => {
+                navigation.navigate("addFormPage")
             }}>
-                <Icon size={scale(32)} name='add-outline'  type='ionicon'  color='white' />
+                <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
     </View>
       
@@ -512,25 +533,51 @@ const Stack = createNativeStackNavigator();
 const App = () => {   
   return (
     <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen name='DefaultScreen' component={defualtPage} options={{ headerShown: false }}/>
-            <Stack.Screen name='test' component={testNavPage} options={{ headerShown: false }}/>
-            <Stack.Screen name='addFormPage' component={addFishEntryPage} options={{ headerShown: false }}/>
+        <Stack.Navigator initialRouteName="DefaultScreen">
+            <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
+            <Stack.Screen name="test" component={testNavPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
 
     </NavigationContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
+    coverImageContainer: {
+        width: moderateScale(300), 
+        height: verticalScale(150),
+        margin: scale(10),
+        alignSelf: "center", 
+        borderRadius: scale(10),
+        
+
+    },
+    profileImageContainer: {
+        alignSelf: "center", 
+        borderRadius: scale(10),
+        width: moderateScale(150), 
+        height: verticalScale(150),
+        margin: scale(10),
+    },
+    backButtonEntryScreen: {
+        width: scale(40), 
+        height: scale(40), 
+        borderRadius: scale(100), 
+        backgroundColor: "#00BAFF", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        marginLeft: scale(10),
+        marginTop: scale(10)
+    },
     addButton: {
         width: scale(50),  
         height: scale(50),   
         borderRadius: scale(100),            
-        backgroundColor: '#00BAFF',                                    
-        position: 'absolute',
-        alignItems: 'center',
-        justifyContent: 'center',                                    
+        backgroundColor: "#00BAFF",                                    
+        position: "absolute",
+        alignItems: "center",
+        justifyContent: "center",                                    
         bottom: scale(25),                                                    
         right: scale(25), 
     },
@@ -539,132 +586,154 @@ const styles = StyleSheet.create({
         height: verticalScale(150),
         margin: scale(10),
         borderRadius: scale(10),
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'grey',
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "grey",
     },
     fishButtonImageBackgroundStyle: {
-        height: '100%', 
-        width:'100%', 
+        height: "100%", 
+        width:"100%", 
         borderRadius: scale(10), 
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden'
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden"
     },
     coverImageStyle: {
-        width: '100%',
-        height: '50%', 
+        width: "100%",
+        height: "50%", 
         borderBottomLeftRadius: scale(30), 
         borderBottomRightRadius: scale(30)
     },
     mainButtonTextStyle: {
-        color: 'white',
-        alignSelf: 'center',
+        color: "white",
+        alignSelf: "center",
         fontSize: scale(20),
-        fontWeight: 'bold',
-        textAlign: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        fontWeight: "bold",
+        textAlign: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.25)",
     },
     subButtonImageStyle: {
         width: moderateScale(20),
         height: verticalScale(20),
     },
     subButton: {
-        position: 'absolute',
-        top: '80%', 
-        alignSelf: 'flex-end',
+        position: "absolute",
+        top: "80%", 
+        alignSelf: "flex-end",
     },
     entryFromPageTitle: {
-        alignSelf: 'center', 
-        color: '#00BAFF', 
+        alignSelf: "center", 
+        color: "#00BAFF", 
         fontSize: scale(28), 
-        fontWeight: '700'
+        fontWeight: "700",
+        
     },
-    entryFormSubHeader1: {alignSelf: 'center', 
-        color: '#00BAFF', 
+    entryFormSubHeader1: {alignSelf: "center", 
+        color: "#00BAFF", 
         fontSize: scale(24), 
-        fontWeight: '700', 
+        fontWeight: "700", 
         marginBottom: scale(25)
     },
     entryFormSubHeader2: {
         margin: scale(10), 
         fontSize: scale(20), 
-        fontWeight: '700', 
-        color: '#367EA7', 
-        textDecorationLine: 'underline'
+        fontWeight: "700", 
+        color: "#367EA7", 
+        textDecorationLine: "underline"
     },
     containerViewPictureEntry: {
-        flexDirection: 'row', 
-        alignSelf: 'center', 
+        flexDirection: "row", 
+        alignSelf: "center", 
         margin: scale(10)
     },
     textViewPictureEntry : {
-        color: '#367EA7', 
-        fontWeight: '700',
+        color: "#367EA7", 
+        fontWeight: "700",
         fontSize: scale(12)
     },
     entryFormImage: {
-        alignSelf: 'center', 
+        alignSelf: "center", 
         borderRadius: scale(10), 
-        margin: scale(10), 
         borderWidth: scale(2), 
-        borderColor: 'white'
+        borderColor: "white"
     },
     entryFormInputTitle: {
-        color: '#367EA7', 
+        color: "#367EA7", 
         margin: scale(10), 
         marginBottom: 0, 
-        fontWeight: '700',
+        fontWeight: "700",
         fontSize: scale(12)
     },
     normalInputForm: {
-        backgroundColor: 'white', 
+        backgroundColor: "white", 
         margin: scale(10), 
         borderRadius: scale(10),
         height: scale(35),
-        textAlignVertical: 'top',
+        textAlignVertical: "top",
         fontSize: scale(12)
     },
     largeInputForm: {
-        backgroundColor: 'white', 
+        backgroundColor: "white", 
         margin: scale(10), 
         borderRadius: scale(10), 
         height: verticalScale(150), 
-        textAlignVertical: 'top',
+        textAlignVertical: "top",
         fontSize: scale(12)
     },
     errorFormText : {
         marginLeft: scale(10), 
-        color: 'red', 
-        fontWeight: '700', 
+        color: "red", 
+        fontWeight: "700", 
         fontSize: scale(16), 
-        textAlignVertical: 'center'
+        textAlignVertical: "center"
     },
     submitButton: {
         marginTop: scale(50), 
-        backgroundColor: '#00BAFF', 
+        backgroundColor: "#00BAFF", 
         margin: scale(10), 
         borderRadius: scale(10), 
         height: verticalScale(50), 
-        justifyContent: 'center'
+        justifyContent: "center"
     },
     submitButtonText: {
-        textAlign: 'center', 
-        color: 'white', 
+        textAlign: "center", 
+        color: "white", 
         fontSize: scale(18), 
-        fontWeight: '500'
+        fontWeight: "500"
     },
-    itemShadow: {
+    smallItemShadow: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4,
+            height: 1,
         },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        elevation: 9,
-    }
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
 
+        elevation: 3,
+    },
+    mediumItemShadow: {
+            shadowColor: "#000",
+            shadowOffset: {
+            width: 0,
+            height: 3,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 4.65,
+            elevation: 6,
+    },
+    largeItemShadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+
+        elevation: 12,      
+    }
+    
 
 });
 
