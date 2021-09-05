@@ -64,10 +64,7 @@ let amendArray = () => {
 
 })}
 
-
-
-const addFishEntryPage = ({route, navigation}) => {
-    
+const editFishEntryPage = ({route, navigation}) => {
     const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
     const [profileImage, setProfileImage] = useState(defaultProfileImage);
 
@@ -77,9 +74,9 @@ const addFishEntryPage = ({route, navigation}) => {
     const {
         control, 
         handleSubmit, 
-        formState: {errors, isValid}
+        formState: {errors, isValid},
       } = useForm({ mode: "onBlur"})
-      
+
     const onSubmit = data => {console.log(data)
         addFishData(
             coverPicImage,
@@ -105,6 +102,319 @@ const addFishEntryPage = ({route, navigation}) => {
             </TouchableOpacity>
             
             
+        )
+    }
+    const takeProfileImage = () => {
+        ImagePicker.openCamera({
+            width: moderateScale(300),
+            height: verticalScale(300),
+            cropping: true,
+          }).then(image => {
+            setProfileImage(image.path);
+          });
+    
+    }
+    const selectProfileImage = () => {
+        ImagePicker.openPicker({
+            width: moderateScale(300),
+            height: verticalScale(300),
+            cropping: true
+          }).then(image => {
+            setProfileImage(image.path);
+          });
+    }
+    const takeCoverPicImage = () => {
+        ImagePicker.openCamera({
+            width: moderateScale(600),
+            height: verticalScale(300),
+            cropping: true,
+          }).then(image => {
+            setCoverPicImage(image.path);
+          });
+    
+    }
+    const selectCoverPicImage = () => {
+        ImagePicker.openPicker({
+            width: moderateScale(600),
+            height: verticalScale(300),
+            cropping: true
+          }).then(image => {
+            setCoverPicImage(image.path);
+          });
+    }
+    return (
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">    
+                <BackNavigateButton/>
+
+                <Text style={styles.entryFromPageTitle}>Edit Fish Entry</Text>
+            
+                <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
+
+                <Text style={styles.entryFormSubHeader1}>Images</Text>
+                    
+                <Text style={styles.entryFormSubHeader2}>Edit Profile Image</Text>
+
+                <View style={styles.containerViewPictureEntry}>
+                    <TouchableOpacity style={{right: "100%"}} onPress={takeProfileImage}>
+                        <Text style={styles.textViewPictureEntry}>Take a photo</Text>
+                        <Icon size={scale(64)} name="camera"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{left: "100%"}} onPress={selectProfileImage}>
+                        <Text style={styles.textViewPictureEntry}>Add a photo</Text>
+                        <Icon size={scale(64)} name="image"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
+
+                <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
+                    <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                </View>
+
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+
+                <Text style={styles.entryFormSubHeader2}>Edit Cover Photo Image</Text>
+
+                <View style={styles.containerViewPictureEntry}>
+                    <TouchableOpacity style={{right: "100%"}} onPress={takeCoverPicImage}>
+                        <Text style={styles.textViewPictureEntry}>Take a photo</Text>
+                        <Icon size={scale(64)} name="camera"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{left: "100%"}} onPress={selectCoverPicImage}>
+                        <Text style={styles.textViewPictureEntry}>Add a photo</Text>
+                        <Icon size={scale(64)} name="image"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
+                <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
+                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                </View>
+                <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+
+                <Text style={styles.entryFormSubHeader1}>Name</Text>
+
+                <Text style={styles.entryFormInputTitle}>Fish Name *</Text>
+
+                <Controller        
+                    control={control}        
+                    name="fishName"        
+                    render={({field: {onChange, value , onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish name..."}
+                    />       
+                    )}
+                    rules={{
+                    required: {
+                        value: true,
+                    }
+                    }}
+                />
+
+                {errors.fishName?.type === "required" &&
+                
+                <Text style={styles.errorFormText}>
+                    <Icon size={scale(14)} name="exclamation-triangle"  type="font-awesome-5"  color="red" style={{marginRight: scale(10)}} />
+                    Field is required!
+                </Text>
+                }
+
+                <Text style={styles.entryFormInputTitle}>Known As</Text>
+
+                <Controller        
+                    control={control}        
+                    name="knownAsName"        
+                    render={({field: {onChange, value, onBlur}}) => (            
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Also known as..."}
+                    />       
+                    )}
+                    
+                />
+                
+                <Divider orientation="horizontal" width={scale(4)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+
+                <Text style={styles.entryFormSubHeader1}>Profile</Text>
+
+                <Text style={styles.entryFormInputTitle}>Fish Family</Text>
+
+                <Controller        
+                    control={control}        
+                    name="fishFamily"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish family..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
+                <Controller        
+                    control={control}        
+                    name="fishGenus"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish genus..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Species</Text>
+                <Controller        
+                    control={control}        
+                    name="fishSpecies"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish species..."}
+                    />       
+                    )}
+                    
+                />
+
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+
+                <Text style={styles.entryFormSubHeader1}>Description</Text>
+
+                <Text style={styles.entryFormInputTitle}>Fish Description</Text>
+                <Controller        
+                    control={control}        
+                    name="fishDescription"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.largeInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish description..."}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Size</Text>
+                <Controller        
+                    control={control}        
+                    name="fishSize"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish size..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
+                <Controller        
+                    control={control}        
+                    name="fishFeeding"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish feeding habbits or bait..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
+                <Controller        
+                    control={control}        
+                    name="fishDistribution"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish distribution or location..."}
+                    />       
+                    )}
+                    
+                />
+
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+                
+                <Text style={styles.entryFormSubHeader1}>Notes</Text>
+                
+                <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
+                <Controller        
+                    control={control}        
+                    name="fishNotes"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.largeInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish notes..."}
+                    />       
+                    )}
+                    
+                />
+                <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
+                    <Text style={styles.submitButtonText}>Submit</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </SafeAreaView>
+    )
+    
+}
+
+
+
+const addFishEntryPage = ({route, navigation}) => {
+    
+    const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
+    const [profileImage, setProfileImage] = useState(defaultProfileImage);
+
+    const defaultCoverPicImage = Image.resolveAssetSource(defautFishImage).uri;
+    const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
+
+    const {
+        control, 
+        handleSubmit, 
+        formState: {errors, isValid},
+      } = useForm({ mode: "onBlur"})
+
+    const onSubmit = data => {
+        console.log(data),
+        
+        navigation.navigate("DefaultScreen")
+    }
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
         )
     }
     const takeProfileImage = () => {
@@ -209,14 +519,13 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Controller        
                     control={control}        
                     name="fishName"        
-                    render={({field: {onChange, value, onBlur}}) => (        
+                    render={({field: {onChange, value , onBlur}}) => (        
                     <TextInput
                     onBlur={onBlur}
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Enter fish name..."}
-
                     />       
                     )}
                     rules={{
@@ -449,7 +758,9 @@ const defualtPage = ({ navigation }) => {
                     }}>
                         <Image style={styles.subButtonImageStyle} source={require("./Images/trash.png")}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.subButton, {left: "5%"}, styles.mediumItemShadow]}>
+                    <TouchableOpacity style={[styles.subButton, {left: "5%"}, styles.mediumItemShadow]} onPress={ () => {
+                        navigation.navigate("editFormPage", {fishElement: element})
+                    }}>
                         <Image style={styles.subButtonImageStyle} source={require("./Images/writing.png")}/> 
                     </TouchableOpacity>  
 
@@ -537,6 +848,7 @@ const App = () => {
             <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
             <Stack.Screen name="test" component={testNavPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="editFormPage" component={editFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
 
     </NavigationContainer>
