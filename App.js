@@ -396,16 +396,12 @@ const addFishEntryPage = ({route, navigation}) => {
 }
 
 
-
-
-
-
 const testNavPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
 
     const BackNavigateButton = () => {
         return (
-            <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
+            <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonDataScreen}>
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
             
@@ -414,9 +410,13 @@ const testNavPage = ({ route, navigation}) => {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
-            <View style={[{backgroundColor: "#2B292C"}, styles.mediumItemShadow]}>
-                <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
+            <View>
+                <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
+                    <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
+                    <BackNavigateButton/>
+                </View>
             </View>
+            
         </SafeAreaView> 
     )};
 
@@ -560,6 +560,17 @@ const styles = StyleSheet.create({
         height: verticalScale(150),
         margin: scale(10),
     },
+    backButtonDataScreen: {
+        width: scale(40), 
+        height: scale(40), 
+        borderRadius: scale(100), 
+        backgroundColor: "#00BAFF", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        marginLeft: scale(10),
+        marginTop: scale(10),
+        position: 'absolute'  
+    },
     backButtonEntryScreen: {
         width: scale(40), 
         height: scale(40), 
@@ -600,7 +611,13 @@ const styles = StyleSheet.create({
     },
     coverImageStyle: {
         width: "100%",
-        height: "50%", 
+        height: "100%", 
+        borderBottomLeftRadius: scale(30), 
+        borderBottomRightRadius: scale(30)
+    },
+    coverImageContainerDataPage: {
+        width: "100%",
+        height: verticalScale(200),
         borderBottomLeftRadius: scale(30), 
         borderBottomRightRadius: scale(30)
     },
