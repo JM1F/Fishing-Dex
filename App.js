@@ -120,6 +120,8 @@ const editFishEntryPage = ({route, navigation}) => {
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     
     }
@@ -130,6 +132,8 @@ const editFishEntryPage = ({route, navigation}) => {
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     }
     const takeCoverPicImage = () => {
@@ -139,6 +143,8 @@ const editFishEntryPage = ({route, navigation}) => {
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     
     }
@@ -149,6 +155,8 @@ const editFishEntryPage = ({route, navigation}) => {
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     }
     return (
@@ -445,6 +453,8 @@ const addFishEntryPage = ({route, navigation}) => {
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     
     }
@@ -455,6 +465,8 @@ const addFishEntryPage = ({route, navigation}) => {
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     }
     const takeCoverPicImage = () => {
@@ -464,6 +476,8 @@ const addFishEntryPage = ({route, navigation}) => {
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     
     }
@@ -474,6 +488,8 @@ const addFishEntryPage = ({route, navigation}) => {
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
           });
     }
     return (
