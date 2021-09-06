@@ -89,8 +89,21 @@ const editFishEntryPage = ({route, navigation}) => {
         }})
 
     const onSubmit = data => {
-        console.log(fishElement.index),
-        updateFishAtIndex(fishElement.index),
+        updateFishAtIndex(
+            fishElement.index,
+            coverPicImage,
+            profileImage, 
+            data.fishName, 
+            data.knownAsName, 
+            data.fishFamily, 
+            data.fishGenus, 
+            data.fishSpecies,
+            data.fishDescription,
+            data.fishSize,
+            data.fishFeeding,
+            data.fishDistribution,
+            data.fishNotes,
+            ),
         navigation.navigate("DefaultScreen")
     }
     const BackNavigateButton = () => {
@@ -98,8 +111,6 @@ const editFishEntryPage = ({route, navigation}) => {
             <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
-            
-            
         )
     }
     const takeProfileImage = () => {
@@ -207,7 +218,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish name..."}
+                    placeholder={"Edit fish name..."}
                     />       
                     )}
                     rules={{
@@ -236,7 +247,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Also known as..."}
+                    placeholder={"Edit also known as..."}
                     />       
                     )}
                     
@@ -257,7 +268,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish family..."}
+                    placeholder={"Edit fish family..."}
                     />       
                     )}
                     
@@ -272,7 +283,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish genus..."}
+                    placeholder={"Edit fish genus..."}
                     />       
                     )}
                     
@@ -287,7 +298,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish species..."}
+                    placeholder={"Edit fish species..."}
                     />       
                     )}
                     
@@ -307,7 +318,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.largeInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish description..."}
+                    placeholder={"Edit fish description..."}
                     multiline={true}
                     />       
                     )}
@@ -323,7 +334,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish size..."}
+                    placeholder={"Edit fish size..."}
                     />       
                     )}
                     
@@ -338,7 +349,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish feeding habbits or bait..."}
+                    placeholder={"Edit fish feeding habbits or bait..."}
                     />       
                     )}
                     
@@ -353,7 +364,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish distribution or location..."}
+                    placeholder={"Edit fish distribution or location..."}
                     />       
                     )}
                     
@@ -373,7 +384,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     onChangeText={value => onChange(value)}
                     value={value}
                     style={[styles.largeInputForm, styles.mediumItemShadow]}
-                    placeholder={"Enter fish notes..."}
+                    placeholder={"Edit fish notes..."}
                     />       
                     )}
                     
@@ -386,8 +397,6 @@ const editFishEntryPage = ({route, navigation}) => {
     )
     
 }
-
-
 
 const addFishEntryPage = ({route, navigation}) => {
     
@@ -404,7 +413,6 @@ const addFishEntryPage = ({route, navigation}) => {
       } = useForm({ mode: "onBlur"})
 
     const onSubmit = data => {
-        console.log(data),
         addFishData(
         coverPicImage,
         profileImage, 

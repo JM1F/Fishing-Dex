@@ -21,7 +21,6 @@ FishSchema.schema = {
     }
 };
 
-
 let realm = new Realm({ schema: [FishSchema], schemaVersion: 1 });
 
 let returnAllFish = () => {
@@ -49,18 +48,26 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
     })
     
 }
-let updateFishAtIndex = (Elementindex) => {
+let updateFishAtIndex = (Elementindex, fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName, fishFamily, fishGenus, fishSpecies, fishDescription, fishSize, fishFeeding, fishDistribution, fishNotes) => {
     const fishData = realm.objects('Fish');
-    const indexedFishElement = realm.objects('Fish').filtered('index == $0', Elementindex);
-    console.log(indexedFishElement)
+    const indexedFishElement = realm.objects('Fish').filtered('index == $0', Elementindex)[0];
     
     realm.write(() => {
-        indexedFishElement[0].name = "te123123"
+        indexedFishElement.coverImage = fishCoverPicImage;
+        indexedFishElement.profileImage = fishProfileImage;
+        indexedFishElement.name = fishName;
+        indexedFishElement.knowasName = fishKnownAsName;
+        indexedFishElement.family = fishFamily;
+        indexedFishElement.genus = fishGenus;
+        indexedFishElement.species = fishSpecies;
+        indexedFishElement.description = fishDescription;
+        indexedFishElement.size = fishSize;
+        indexedFishElement.feeding = fishFeeding;
+        indexedFishElement.distribution = fishDistribution;
+        indexedFishElement.notes = fishNotes;
     })
     
 }
-
-
 
 let deleteAllFish = () => {
     realm.write(() => {
@@ -73,11 +80,8 @@ let deleteLastFish = () => {
         if (returnAllFish()[0] != null) {
             
             realm.delete(realm.objects('Fish')[returnAllFish().length - 1]);
-        }
-            
-            
-        }
-        
+        }   
+        }  
     )
 }
 
@@ -104,7 +108,6 @@ let deleteCurrentFish = (index) => {
     })
 
 }
-
 
 export default realm;
 
