@@ -49,6 +49,18 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
     })
     
 }
+let updateFishAtIndex = (Elementindex) => {
+    const fishData = realm.objects('Fish');
+    const indexedFishElement = realm.objects('Fish').filtered('index == $0', Elementindex);
+    console.log(indexedFishElement)
+    
+    realm.write(() => {
+        indexedFishElement[0].name = "te123123"
+    })
+    
+}
+
+
 
 let deleteAllFish = () => {
     realm.write(() => {
@@ -103,5 +115,6 @@ export {
     deleteLastFish,
     deleteSecondToLastFish,
     deleteCurrentFish,
+    updateFishAtIndex
 }
 

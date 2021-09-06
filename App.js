@@ -18,6 +18,7 @@ import realm, {
     deleteLastFish,
     deleteSecondToLastFish,
     deleteCurrentFish,
+    updateFishAtIndex
 } from "./Data";
 import {
     SearchBar,
@@ -65,34 +66,31 @@ let amendArray = () => {
 })}
 
 const editFishEntryPage = ({route, navigation}) => {
-    const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
-    const [profileImage, setProfileImage] = useState(defaultProfileImage);
 
-    const defaultCoverPicImage = Image.resolveAssetSource(defautFishImage).uri;
-    const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
+    const {fishElement} = route.params;
+    const [profileImage, setProfileImage] = useState(fishElement.profileImage);
+    const [coverPicImage, setCoverPicImage] = useState(fishElement.coverImage);
 
     const {
         control, 
         handleSubmit, 
         formState: {errors, isValid},
-      } = useForm({ mode: "onBlur"})
+      } = useForm({ mode: "onBlur", defaultValues: {
+          knownAsName: fishElement.knowasName, 
+          fishName: fishElement.name,
+          fishFamily: fishElement.family,
+          fishGenus: fishElement.genus,
+          fishSpecies: fishElement.species,
+          fishDescription: fishElement.description,
+          fishSize: fishElement.size,
+          fishFeeding: fishElement.feeding,
+          fishDistribution: fishElement.distribution,
+          fishNotes: fishElement.notes
+        }})
 
-    const onSubmit = data => {console.log(data)
-        addFishData(
-            coverPicImage,
-            profileImage, 
-            data.fishName, 
-            data.knownAsName, 
-            data.fishFamily, 
-            data.fishGenus, 
-            data.fishSpecies,
-            data.fishDescription,
-            data.fishSize,
-            data.fishFeeding,
-            data.fishDistribution,
-            data.fishNotes
-            ),
-        amendArray(),
+    const onSubmit = data => {
+        console.log(fishElement.index),
+        updateFishAtIndex(fishElement.index),
         navigation.navigate("DefaultScreen")
     }
     const BackNavigateButton = () => {
@@ -196,7 +194,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 </View>
                 <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
-                <Text style={styles.entryFormSubHeader1}>Name</Text>
+                <Text style={styles.entryFormSubHeader1}>Edit Names</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Name *</Text>
 
@@ -246,7 +244,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 
                 <Divider orientation="horizontal" width={scale(4)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
-                <Text style={styles.entryFormSubHeader1}>Profile</Text>
+                <Text style={styles.entryFormSubHeader1}>Edit Profile</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Family</Text>
 
@@ -297,7 +295,7 @@ const editFishEntryPage = ({route, navigation}) => {
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
-                <Text style={styles.entryFormSubHeader1}>Description</Text>
+                <Text style={styles.entryFormSubHeader1}>Edit Description</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Description</Text>
                 <Controller        
@@ -363,7 +361,7 @@ const editFishEntryPage = ({route, navigation}) => {
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
                 
-                <Text style={styles.entryFormSubHeader1}>Notes</Text>
+                <Text style={styles.entryFormSubHeader1}>Edit Notes</Text>
                 
                 <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
                 <Controller        
@@ -407,6 +405,21 @@ const addFishEntryPage = ({route, navigation}) => {
 
     const onSubmit = data => {
         console.log(data),
+        addFishData(
+        coverPicImage,
+        profileImage, 
+        data.fishName, 
+        data.knownAsName, 
+        data.fishFamily, 
+        data.fishGenus, 
+        data.fishSpecies,
+        data.fishDescription,
+        data.fishSize,
+        data.fishFeeding,
+        data.fishDistribution,
+        data.fishNotes,
+        ),
+        amendArray(),
         
         navigation.navigate("DefaultScreen")
     }
