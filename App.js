@@ -479,10 +479,7 @@ const addFishEntryPage = ({route, navigation}) => {
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
-            <ScrollView 
-            contentInsetAdjustmentBehavior="automatic"
-            backgroundColor="rgb(43, 41, 44)"
-            >    
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">    
                 <BackNavigateButton/>
 
                 <Text style={styles.entryFromPageTitle}>Fish Entry</Text>
@@ -547,6 +544,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Enter fish name..."}
+                    multiline={true}
                     />       
                     )}
                     rules={{
@@ -713,6 +711,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={[styles.largeInputForm, styles.mediumItemShadow]}
                     placeholder={"Enter fish notes..."}
+                    multiline={true}
                     />       
                     )}
                     
@@ -726,27 +725,81 @@ const addFishEntryPage = ({route, navigation}) => {
 }
 
 
-const testNavPage = ({ route, navigation}) => {
+const fishDataPage = ({ route, navigation}) => {
     const {fishElement} = route.params;
 
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonDataScreen}>
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
-            </TouchableOpacity>
-            
-            
+            </TouchableOpacity> 
         )
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
-            <View>
-                <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
-                    <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
-                    <BackNavigateButton/>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)"> 
+                <View>
+                    <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
+                        <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
+                        <BackNavigateButton/>
+                    </View>
+
+                    <Text style={styles.fishTextTitle} >{fishElement.name}</Text>
+
+                    <Text style={styles.knownAsSubHeader}>Known As</Text>
+                    <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
+
+                    <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
+                    
+                    <Text style={styles.entryFormSubHeader1}>Profile</Text>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Family</Text>
+                        <Text style={styles.dataPageLargeText}>{fishElement.family ? fishElement.family : "N/A" }</Text>
+                    </View>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Genus</Text>
+                        <Text style={styles.dataPageLargeText}>{fishElement.genus ? fishElement.genus : "N/A" }</Text>
+                    </View>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Species</Text>
+                        <Text style={styles.dataPageLargeText}>{fishElement.species ? fishElement.species : "N/A" }</Text>
+                    </View>
+
+                    <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
+
+                    <Text style={styles.entryFormSubHeader1}>Description</Text>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Description</Text>
+                        <Text style={styles.dataPageMediumText}>{fishElement.description ? fishElement.description : "N/A" }</Text>
+                    </View>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Size</Text>
+                        <Text style={styles.dataPageMediumText}>{fishElement.size ? fishElement.size : "N/A" }</Text>
+                    </View>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Feeding</Text>
+                        <Text style={styles.dataPageMediumText}>{fishElement.feeding ? fishElement.feeding : "N/A" }</Text>
+                    </View>
+
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Distribution</Text>
+                        <Text style={styles.dataPageMediumText}>{fishElement.distribution ? fishElement.distribution : "N/A" }</Text>
+                    </View>
+
+                    <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
+
+                    <Text style={styles.entryFormSubHeader1}>Extra Notes</Text>
+
+                    <Text style={[styles.dataPageMediumText, {marginBottom: scale(20)}]}>{fishElement.notes ? fishElement.notes : "N/A" }</Text>
+                    
                 </View>
-            </View>
-            
+            </ScrollView>
         </SafeAreaView> 
     )};
 
@@ -769,7 +822,7 @@ const defualtPage = ({ navigation }) => {
     
     let arr = data.map(  (element) => { 
         return <TouchableOpacity key={element.index} style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
-            navigation.navigate("test", {fishElement: element});
+            navigation.navigate("dataPage", {fishElement: element});
         }} >
                 <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={"cover"}>
                     <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
@@ -874,7 +927,7 @@ const App = () => {
     <NavigationContainer>
         <Stack.Navigator initialRouteName="DefaultScreen">
             <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
-            <Stack.Screen name="test" component={testNavPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="dataPage" component={fishDataPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="editFormPage" component={editFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
@@ -884,6 +937,53 @@ const App = () => {
 }
 
 const styles = StyleSheet.create({
+    dataPageViewContainer: {
+        margin: scale(10), 
+        marginBottom: scale(20) 
+    },
+    dataPageMediumText: {
+        alignSelf: 'center', 
+        color: "white", 
+        fontWeight: '700',
+        fontSize: scale(18),
+        textAlign: 'center',
+    },
+    dataPageLargeText: {
+        alignSelf: 'center', 
+        color: "white", 
+        fontWeight: '700',
+        fontSize: scale(20),
+        textAlign: 'center',
+    },
+    dataPageHeaderTitle: {
+        alignSelf: 'center', 
+        color: "#367EA7", 
+        fontWeight: '700',
+        fontSize: scale(18),
+    },
+    knownAsNameStyle: {
+        alignSelf: 'center', 
+        color: "grey", 
+        fontWeight: '700',
+        fontSize: scale(12),
+        textAlign: 'center',
+        marginLeft: scale(10),
+        marginRight: scale(10)
+    },
+    knownAsSubHeader: {
+        alignSelf: 'center', 
+        color: "#367EA7", 
+        fontWeight: '700',
+        fontSize: scale(14),
+    },
+    fishTextTitle: {
+        margin: scale(20),
+        marginBottom: scale(10),
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: scale(32),
+        fontWeight: '700'
+    },
     coverImageContainer: {
         width: moderateScale(300), 
         height: verticalScale(150),
