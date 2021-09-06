@@ -767,8 +767,8 @@ const defualtPage = ({ navigation }) => {
         return focusDefaultPage;
       }, [navigation]);
     
-    let arr = data.map( (element) => { 
-        return <TouchableOpacity style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
+    let arr = data.map(  (element) => { 
+        return <TouchableOpacity key={element.index} style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
             navigation.navigate("test", {fishElement: element});
         }} >
                 <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={"cover"}>
@@ -807,11 +807,10 @@ const defualtPage = ({ navigation }) => {
     let checkCardName = (data) => {
         
         returnAllFish().map( (element) => {
-            if (element.name.includes(data)) {
+            if (element.name.toUpperCase().includes(data.toUpperCase())) {
                 dataArray.push(element)
             }
         })
-        console.log(dataArray)
         setData(dataArray);        
     }
 
@@ -831,6 +830,7 @@ const defualtPage = ({ navigation }) => {
             <View style={[{width: "100%", padding: scale(20)}]}>
                 <SearchBar  inputContainerStyle={{backgroundColor: "white"}}
                             leftIconContainerStyle={{backgroundColor: "white"}}
+                            rightIconContainerStyle={{backgroundColor: 'white', width: moderateScale(40), height: verticalScale(40)}}
                             searchIcon={{size: scale(16)}}
                             clearIcon={{size: scale(16)}}
                             inputStyle={{
@@ -890,8 +890,6 @@ const styles = StyleSheet.create({
         margin: scale(10),
         alignSelf: "center", 
         borderRadius: scale(10),
-        
-
     },
     profileImageContainer: {
         alignSelf: "center", 
