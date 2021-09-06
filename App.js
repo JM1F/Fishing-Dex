@@ -755,7 +755,7 @@ const testNavPage = ({ route, navigation}) => {
 
 
 const defualtPage = ({ navigation }) => {
-
+    const dataArray = [];
     const [data, setData] = useState(returnAllFish());
     const [searchData, searchSetData] = useState("");
 
@@ -767,7 +767,7 @@ const defualtPage = ({ navigation }) => {
         return focusDefaultPage;
       }, [navigation]);
     
-    let arr = returnAllFish().map( (element) => { 
+    let arr = data.map( (element) => { 
         return <TouchableOpacity style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
             navigation.navigate("test", {fishElement: element});
         }} >
@@ -804,9 +804,15 @@ const defualtPage = ({ navigation }) => {
       ]
     );
     
-    let checkCardName = () => {
-        console.log("yooooooooo")
+    let checkCardName = (data) => {
         
+        returnAllFish().map( (element) => {
+            if (element.name.includes(data)) {
+                dataArray.push(element)
+            }
+        })
+        console.log(dataArray)
+        setData(dataArray);        
     }
 
     return ( 
@@ -841,6 +847,7 @@ const defualtPage = ({ navigation }) => {
                             autoCapitalize="none"
                             value={searchData}
                             onSubmitEditing={() => checkCardName(searchData)}
+                            onClear={() => checkCardName("")}
                             />    
             </View>
             { arr }
