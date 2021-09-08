@@ -23,7 +23,8 @@ import realm, {
 import {
     SearchBar,
     Divider, 
-    Icon 
+    Icon,
+    Tooltip
 } from "react-native-elements";
 import {
     SafeAreaView,
