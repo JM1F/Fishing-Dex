@@ -786,11 +786,11 @@ const fishDataPage = ({ route, navigation}) => {
                     <Text style={styles.knownAsSubHeader}>Known As</Text>
                     <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
 
-                    <TouchableOpacity style={{margin: scale(10), backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(100), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(10)}} 
+                    <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(10)}} 
                     onPress={ () => {
                         navigation.navigate("catchPage", {fishcatch: fishElement.catch, fishindex: fishElement.index})
                     }}>
-                        <Text style={{color: "white", fontWeight: '700'}}>Catches</Text>
+                        <Text style={{color: "white", fontWeight: '700', fontSize: scale(16)}}>Catches</Text>
                     </TouchableOpacity>
 
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
@@ -1014,12 +1014,19 @@ const catchFishPage = ({route, navigation}) => {
     let catchArr = data.map(  (element) => {
         return(
             <View key={element.index}>
-                <TouchableOpacity style={[{width: "90%", height: verticalScale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: 'center', justifyContent: 'center', borderRadius: scale(10)}, styles.mediumItemShadow]}>
+                <TouchableOpacity style={[{width: "90%", height: verticalScale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: 'center', justifyContent: 'center', borderRadius: scale(10)}, styles.mediumItemShadow]} 
+                onPress={() => {
+                    navigation.navigate("catchDataPage", {catchElement: element})
+                }}>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end'}}>
-                        <View style={{alignSelf: 'center', alignContent: 'center', right: scale(20)}}>
-                            <Text style={{margin: scale(10), fontSize: scale(24), color: 'white', fontWeight: '700'}}>{element.date}</Text>
+                        <View style={{alignSelf: 'center', alignContent: 'center'}}>
+                            <Text style={{marginRight: scale(50), fontSize: scale(20), color: 'white', fontWeight: '700'}}>{element.date}</Text>
                         </View>
-                        <TouchableOpacity style={{alignSelf: 'center', margin: scale(10),  marginRight: scale(5)}} >
+                        <TouchableOpacity style={{alignSelf: 'center', margin: scale(10),  marginRight: scale(5)}}
+                        onPress={() => {
+                            navigation.navigate("editFormCatchPage", {catchElement: element})
+                        }}
+                        >
                             <Image style={styles.subButtonCatchPage} source={require("./Images/writing.png")}/>
                         </TouchableOpacity>
 
@@ -1327,8 +1334,38 @@ const addCatchEntryPage = ({route, navigation}) => {
         </SafeAreaView>
     )
 }
+const editCatchEntryPage = ({route, navigation}) => {
+    const {catchElement} = route.params;
+    return(
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                
+            </ScrollView>
+        </SafeAreaView>
+    )
+}
+const catchDataPage = ({route, navigation}) => {
+    const {catchElement} = route.params;
+    console.log(catchElement)
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.goBack()}} style={[styles.backButtonDataScreen, styles.mediumItemShadow]}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity> 
+        )
+    }
+    return(
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
+                    <Image source={{ uri : catchElement.image}} style={styles.coverImageStyle} resizeMode={"cover"}/>
+                    <BackNavigateButton/>
+                </View>
 
-
+            </ScrollView>  
+        </SafeAreaView>
+    )
+}
 
 
 const Stack = createNativeStackNavigator();
@@ -1340,7 +1377,9 @@ const App = () => {
             <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
             <Stack.Screen name="dataPage" component={fishDataPage} options={{ headerShown: false }}/>
             <Stack.Screen name="catchPage" component={catchFishPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="catchDataPage" component={catchDataPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormCatchPage" component={addCatchEntryPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="editFormCatchPage" component={editCatchEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="editFormPage" component={editFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
