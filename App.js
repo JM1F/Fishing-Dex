@@ -44,7 +44,8 @@ import {
     Platform,
     TextInput,
     Button,
-    LogBox
+    LogBox,
+    TextComponent
 } from "react-native";
 import {
     scale,
@@ -1084,10 +1085,68 @@ const addCatchEntryPage = ({route, navigation}) => {
         navigation.goBack()
         
     }
+    var currentDate = new Date().getTime()
+
+
+    const [date, setDate] = useState(new Date(currentDate));
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+
+    const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    };
+
+    const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+    };
+
+    const showDatepicker = () => {
+    showMode('date');
+    };
+
+    const showTimepicker = () => {
+    showMode('time');
+    };
+
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
+        )
+    }
+
+    console.log(date)
 
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <BackNavigateButton/>
+            
+            <Text style={styles.entryFromPageTitle}>Catch Entry</Text>
+            <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
+            <View>
+                <Button onPress={showDatepicker} title="Show date picker!" />
+                <Text style={{color: 'white'}}>{date.toLocaleDateString()}</Text>
+            </View>
+            <View>
+                <Button onPress={showTimepicker} title="Show time picker!" />
+                <Text style={{color: 'white'}}>{date.toLocaleTimeString()}</Text>
+            </View>
 
+            {show && (
+            <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+                
+            />
+            )}
 
             <TouchableOpacity disabled={!isValid} title="Submit"  
             onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
