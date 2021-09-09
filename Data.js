@@ -1,5 +1,4 @@
 import Realm from "realm";
-import fs from 'react-native-fs'
 
 // Declare Schema
 class FishSchema extends Realm.Object { }
@@ -22,10 +21,7 @@ FishSchema.schema = {
     }
 };
 
-fs.copyFileAssets("default.realm", fs.DocumentDirectoryPath + "/test.realm")
-let realm = new Realm({ schema: [FishSchema], schemaVersion: 1, path: fs.DocumentDirectoryPath + "/test1.realm"});
-
-console.log(fs.DocumentDirectoryPath + "/test.realm")
+let realm = new Realm({ schema: [FishSchema], schemaVersion: 1 });
 
 let returnAllFish = () => {
     return realm.objects('Fish');
@@ -124,4 +120,3 @@ export {
     deleteCurrentFish,
     updateFishAtIndex
 }
-

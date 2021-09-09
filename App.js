@@ -1,3 +1,4 @@
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -23,8 +24,7 @@ import realm, {
 import {
     SearchBar,
     Divider, 
-    Icon,
-    Tooltip
+    Icon 
 } from "react-native-elements";
 import {
     SafeAreaView,
