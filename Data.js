@@ -28,6 +28,7 @@ CatchSchema.schema = {
     embedded: true,
     properties: {
         date: 'string',
+        time: 'string',
         image: 'string',
         location: 'string?',
         bait: 'string?',
@@ -74,9 +75,9 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
     })
     
 }
-let addCatchData = (defaultishIndex, dateCaught, coverImage, locationCaught = null, baitUsed = null, weatherWhenCaught = null, fishLength = null,  fishWeight = null, fishNotes = null, catchIndex = null) => {
+let addCatchData = (defaultishIndex, dateCaught, timeCaught, coverImage, locationCaught = null, baitUsed = null, weatherWhenCaught = null, fishLength = null,  fishWeight = null, fishNotes = null, catchIndex = null) => {
     realm.write(() => {
-        returnAllCatches(defaultishIndex).push({date: dateCaught, image: coverImage, location: locationCaught, bait: baitUsed, weather: weatherWhenCaught, length: fishLength, weight: fishWeight, notes: fishNotes, index: catchIndex});
+        returnAllCatches(defaultishIndex).push({date: dateCaught, time: timeCaught, image: coverImage, location: locationCaught, bait: baitUsed, weather: weatherWhenCaught, length: fishLength, weight: fishWeight, notes: fishNotes, index: catchIndex});
     })
 }
 let updateFishAtIndex = (Elementindex, fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName, fishFamily, fishGenus, fishSpecies, fishDescription, fishSize, fishFeeding, fishDistribution, fishNotes) => {
