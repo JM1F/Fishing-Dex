@@ -27,8 +27,15 @@ CatchSchema.schema = {
     name: 'Catches',
     embedded: true,
     properties: {
-        size: 'string?',
-        name: 'string'
+        date: 'string',
+        image: 'string',
+        location: 'string?',
+        bait: 'string?',
+        weather: 'string?',
+        length: 'string?',
+        weight: 'string?',
+        notes: 'string?',
+        index: 'int?'
     }
 };
 
@@ -62,9 +69,15 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
             notes: fishNotes,
             index: fishIndex,
          })
+         //fishDetails.catch.push({size: "test", name: "test"})
 
     })
     
+}
+let addCatchData = (defaultishIndex, dateCaught, coverImage, locationCaught = null, baitUsed = null, weatherWhenCaught = null, fishLength = null,  fishWeight = null, fishNotes = null, catchIndex = null) => {
+    realm.write(() => {
+        returnAllCatches(defaultishIndex).push({date: dateCaught, image: coverImage, location: locationCaught, bait: baitUsed, weather: weatherWhenCaught, length: fishLength, weight: fishWeight, notes: fishNotes, index: catchIndex});
+    })
 }
 let updateFishAtIndex = (Elementindex, fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName, fishFamily, fishGenus, fishSpecies, fishDescription, fishSize, fishFeeding, fishDistribution, fishNotes) => {
     const fishData = realm.objects('Fish');
@@ -125,8 +138,14 @@ let deleteCurrentFish = (index) => {
 
     })
 
-}
-
+};
+let deleteCurrentCatch = (elementIndex, fishIndex) => {
+    console.log(elementIndex)
+    realm.write(() => {
+        returnAllCatches(fishIndex).splice(elementIndex, 1);
+    })
+    
+};
 export default realm;
 
 export {
@@ -137,5 +156,7 @@ export {
     deleteSecondToLastFish,
     deleteCurrentFish,
     updateFishAtIndex,
-    returnAllCatches
+    returnAllCatches,
+    addCatchData,
+    deleteCurrentCatch
 }

@@ -20,7 +20,9 @@ import realm, {
     deleteSecondToLastFish,
     deleteCurrentFish,
     updateFishAtIndex,
-    returnAllCatches
+    returnAllCatches,
+    addCatchData,
+    deleteCurrentCatch
 } from "./Data";
 import {
     SearchBar,
@@ -41,7 +43,8 @@ import {
     ImageBackground,
     Platform,
     TextInput,
-    Button
+    Button,
+    LogBox
 } from "react-native";
 import {
     scale,
@@ -55,6 +58,10 @@ import {useForm, Controller} from "react-hook-form";
 import ImagePicker from "react-native-image-crop-picker";
 import defautFishImage from "./Images/defaultFishProfile.png";
 
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
 let amendArray = () => { 
     let count = 0;
     returnAllFish().map ( (element) => {
@@ -65,7 +72,17 @@ let amendArray = () => {
     })
     count += 1;
 
-})}
+})};
+let amendCatchArray = (fishIndex) => {
+    let count = 0;
+    returnAllCatches(fishIndex).map( (element) => {
+        realm.write(() => {
+            element.index = count;
+        })
+        count += 1;
+    })
+};
+
 
 const editFishEntryPage = ({route, navigation}) => {
 
@@ -947,33 +964,96 @@ const defualtPage = ({ navigation }) => {
 
 const catchFishPage = ({route, navigation}) => {
     const {fishcatch, fishindex} = route.params
+
     console.log(returnAllCatches(fishindex));
+
+    let colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
+
+    const [data, setData] = useState(returnAllCatches(fishindex));
+
+    const generateYesNoAlertCatchPage = (elementIndex) => Alert.alert (
+        "Delete Notification",
+        "Are you sure you want to delete?",
+      [
+        {text: "Yes", onPress: () => {
+            deleteCurrentCatch(elementIndex, fishindex)
+            amendCatchArray(fishindex)
+            setData(returnAllCatches(fishindex))
+        } },
+        { text: "No"}
+      ]
+    );
 
     const BackNavigateButton = () => {
         return (
-            <TouchableOpacity onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
+            <TouchableOpacity  onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity> 
         )
     }
-    let catchArr = fishcatch.map(  (element) => {
+    let generateColour = () => {
+        if (colourSchemeColours.length == 0) {
+            colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
+        }
+        const currentColour = colourSchemeColours[(colourSchemeColours.length - 1)]
+        colourSchemeColours.pop();
+    
+        return currentColour;
+    };
+
+    let catchArr = data.map(  (element) => {
         return(
-            <Text>{element.name}</Text>
+            <View key={element.index}>
+                <TouchableOpacity style={[{width: "90%", height: verticalScale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: 'center', justifyContent: 'center', borderRadius: scale(10)}, styles.mediumItemShadow]}>
+                    <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end'}}>
+                        <View style={{alignSelf: 'center', alignContent: 'center', right: scale(150)}}>
+                            <Text style={{margin: scale(10), fontSize: scale(24), color: 'white', fontWeight: '700'}}>{element.date}</Text>
+                        </View>
+                        <TouchableOpacity style={{alignSelf: 'center', margin: scale(10),  marginRight: scale(5)}} >
+                            <Image style={styles.subButtonCatchPage} source={require("./Images/writing.png")}/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{alignSelf: 'center', margin: scale(10), marginLeft: scale(5)}} 
+                        onPress={() => {
+                            generateYesNoAlertCatchPage(element.index)
+                        }} >
+                            <Image style={styles.subButtonCatchPage} source={require("./Images/trash.png")}/>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+
+                <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow} />
+            </View>
         )
         
     });
+    let noCatchData = () => {
+        return (
+            <Text style={{alignSelf: 'center', fontSize: scale(20), fontWeight: '700', color: 'grey', margin: scale(10)}}>No current catches</Text> 
+        )
+    };
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
                 <BackNavigateButton/>
-                {catchArr}
+                <Text style={styles.entryFromPageTitle}>Catches</Text>
+            
+                <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
+
+                {fishcatch.length ? catchArr : noCatchData()}
 
             
                 
 
             </ScrollView>
 
-            <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} >
+            <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} 
+            onPress={() => {
+                addCatchData(fishindex, "12/11/21", "img"),
+                amendCatchArray(fishindex),
+                setData(returnAllCatches(fishindex))
+
+            }}>
                 <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
 
@@ -1004,6 +1084,12 @@ const App = () => {
 }
 
 const styles = StyleSheet.create({
+    subButtonCatchPage: {
+        width: moderateScale(30),
+        height: verticalScale(30),
+        alignSelf: 'center',
+        justifyContent: 'center'
+    },
     dataPageViewContainer: {
         margin: scale(10), 
         marginBottom: scale(20) 
