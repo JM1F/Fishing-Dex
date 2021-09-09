@@ -57,6 +57,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {useForm, Controller} from "react-hook-form";
 import ImagePicker from "react-native-image-crop-picker";
 import defautFishImage from "./Images/defaultFishProfile.png";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -971,6 +972,14 @@ const catchFishPage = ({route, navigation}) => {
 
     const [data, setData] = useState(returnAllCatches(fishindex));
 
+    useEffect(() => {
+        const focusDefaultCatchPage = navigation.addListener("focus", () => {
+          setData(returnAllCatches(fishindex));
+          
+        });
+        return focusDefaultCatchPage;
+      }, [navigation]);
+
     const generateYesNoAlertCatchPage = (elementIndex) => Alert.alert (
         "Delete Notification",
         "Are you sure you want to delete?",
@@ -1016,7 +1025,7 @@ const catchFishPage = ({route, navigation}) => {
                         <TouchableOpacity style={{alignSelf: 'center', margin: scale(10), marginLeft: scale(5)}} 
                         onPress={() => {
                             generateYesNoAlertCatchPage(element.index)
-                        }} >
+                        }}>
                             <Image style={styles.subButtonCatchPage} source={require("./Images/trash.png")}/>
                         </TouchableOpacity>
                     </View>
@@ -1049,9 +1058,7 @@ const catchFishPage = ({route, navigation}) => {
 
             <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} 
             onPress={() => {
-                addCatchData(fishindex, "12/11/21", "img"),
-                amendCatchArray(fishindex),
-                setData(returnAllCatches(fishindex))
+                navigation.navigate("addFormCatchPage", {catchIndex: fishindex});
 
             }}>
                 <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
@@ -1061,7 +1068,34 @@ const catchFishPage = ({route, navigation}) => {
     )
 }
 
+const addCatchEntryPage = ({route, navigation}) => {
 
+    const {catchIndex} = route.params;
+    console.log(catchIndex)
+    const {
+        control, 
+        handleSubmit, 
+        formState: {errors, isValid},
+    } = useForm({ mode: "onBlur"});
+    
+    const onSubmit = data => {
+        addCatchData(catchIndex, "12/11/21", "img"),
+        amendCatchArray(catchIndex),
+        navigation.goBack()
+        
+    }
+
+    return(
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+
+
+            <TouchableOpacity disabled={!isValid} title="Submit"  
+            onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
+                    <Text style={styles.submitButtonText}>Submit</Text>
+                </TouchableOpacity>
+        </SafeAreaView>
+    )
+}
 
 
 
@@ -1075,6 +1109,7 @@ const App = () => {
             <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
             <Stack.Screen name="dataPage" component={fishDataPage} options={{ headerShown: false }}/>
             <Stack.Screen name="catchPage" component={catchFishPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="addFormCatchPage" component={addCatchEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="editFormPage" component={editFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
