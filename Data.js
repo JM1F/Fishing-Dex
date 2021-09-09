@@ -18,15 +18,32 @@ FishSchema.schema = {
         distribution: 'string?',
         notes: 'string?',
         index: 'int?',
+        catch: { type: "list", objectType: "Catches", default: [] }
     }
 };
 
-let realm = new Realm({ schema: [FishSchema], schemaVersion: 1 });
+class CatchSchema extends Realm.Object { }
+CatchSchema.schema = {
+    name: 'Catches',
+    embedded: true,
+    properties: {
+        size: 'string?',
+        name: 'string'
+    }
+};
+
+
+let realm = new Realm({ schema: [FishSchema, CatchSchema], schemaVersion: 1 });
+
+
 
 let returnAllFish = () => {
     return realm.objects('Fish');
 }
-
+let returnAllCatches = (fishIndex) => {
+    return returnAllFish()[fishIndex].catch
+}
+//console.log(returnAllFish()[0].catch[0].size)
 let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName = null, fishFamily = null, fishGenus = null, fishSpecies = null, fishDescription = null, fishSize = null, fishFeeding = null, fishDistribution = null, fishNotes = null, fishIndex = null) => {
     
     realm.write(() => {
@@ -43,8 +60,9 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
             feeding: fishFeeding,
             distribution: fishDistribution,
             notes: fishNotes,
-            index: fishIndex
+            index: fishIndex,
          })
+
     })
     
 }
@@ -118,5 +136,6 @@ export {
     deleteLastFish,
     deleteSecondToLastFish,
     deleteCurrentFish,
-    updateFishAtIndex
+    updateFishAtIndex,
+    returnAllCatches
 }

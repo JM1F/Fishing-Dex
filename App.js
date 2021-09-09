@@ -19,7 +19,8 @@ import realm, {
     deleteLastFish,
     deleteSecondToLastFish,
     deleteCurrentFish,
-    updateFishAtIndex
+    updateFishAtIndex,
+    returnAllCatches
 } from "./Data";
 import {
     SearchBar,
@@ -766,6 +767,13 @@ const fishDataPage = ({ route, navigation}) => {
                     <Text style={styles.knownAsSubHeader}>Known As</Text>
                     <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
 
+                    <TouchableOpacity style={{margin: scale(10), backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(100), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(10)}} 
+                    onPress={ () => {
+                        navigation.navigate("catchPage", {fishcatch: fishElement.catch, fishindex: fishElement.index})
+                    }}>
+                        <Text style={{color: "white", fontWeight: '700'}}>Catches</Text>
+                    </TouchableOpacity>
+
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
                     
                     <Text style={styles.entryFormSubHeader1}>Profile</Text>
@@ -937,6 +945,47 @@ const defualtPage = ({ navigation }) => {
     );
 };
 
+const catchFishPage = ({route, navigation}) => {
+    const {fishcatch, fishindex} = route.params
+    console.log(returnAllCatches(fishindex));
+
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity> 
+        )
+    }
+    let catchArr = fishcatch.map(  (element) => {
+        return(
+            <Text>{element.name}</Text>
+        )
+        
+    });
+    return(
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                <BackNavigateButton/>
+                {catchArr}
+
+            
+                
+
+            </ScrollView>
+
+            <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} >
+                <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
+
+        </SafeAreaView>
+    )
+}
+
+
+
+
+
+
 const Stack = createNativeStackNavigator();
  
 const App = () => {   
@@ -945,6 +994,7 @@ const App = () => {
         <Stack.Navigator initialRouteName="DefaultScreen">
             <Stack.Screen name="DefaultScreen" component={defualtPage} options={{ headerShown: false }} />
             <Stack.Screen name="dataPage" component={fishDataPage} options={{ headerShown: false }}/>
+            <Stack.Screen name="catchPage" component={catchFishPage} options={{ headerShown: false }}/>
             <Stack.Screen name="addFormPage" component={addFishEntryPage} options={{ headerShown: false }}/>
             <Stack.Screen name="editFormPage" component={editFishEntryPage} options={{ headerShown: false }}/>
         </Stack.Navigator>
