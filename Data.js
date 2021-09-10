@@ -29,6 +29,7 @@ CatchSchema.schema = {
     properties: {
         date: 'string',
         time: 'string',
+        encodedDate: 'string',
         image: 'string',
         location: 'string?',
         bait: 'string?',
@@ -75,10 +76,27 @@ let addFishData = (fishCoverPicImage, fishProfileImage, fishName, fishKnownAsNam
     })
     
 }
-let addCatchData = (defaultishIndex, dateCaught, timeCaught, coverImage, locationCaught = null, baitUsed = null, weatherWhenCaught = null, fishLength = null,  fishWeight = null, fishNotes = null, catchIndex = null) => {
+let addCatchData = (defaultFishIndex, dateCaught, timeCaught, encodedDate, coverImage, locationCaught = null, baitUsed = null, weatherWhenCaught = null, fishLength = null,  fishWeight = null, fishNotes = null, catchIndex = null) => {
     realm.write(() => {
-        returnAllCatches(defaultishIndex).push({date: dateCaught, time: timeCaught, image: coverImage, location: locationCaught, bait: baitUsed, weather: weatherWhenCaught, length: fishLength, weight: fishWeight, notes: fishNotes, index: catchIndex});
+        returnAllCatches(defaultFishIndex).push({date: dateCaught, time: timeCaught, encodedDate: encodedDate, image: coverImage, location: locationCaught, bait: baitUsed, weather: weatherWhenCaught, length: fishLength, weight: fishWeight, notes: fishNotes, index: catchIndex});
     })
+}
+let updateCatchAtIndex = (defaultFishIndex, catchIndex, dateCaught, timeCaught, encodedDate, coverImage, locationCaught, baitUsed, weatherWhenCaught, fishLength, fishWeight, fishNotes) => {
+    let catchObject = returnAllCatches(defaultFishIndex)[catchIndex];
+    realm.write(() => {
+        catchObject.date = dateCaught;
+        catchObject.time = timeCaught;
+        catchObject.encodedDate = encodedDate;
+        catchObject.image = coverImage;
+        catchObject.location = locationCaught;
+        catchObject.bait = baitUsed;
+        catchObject.weather = weatherWhenCaught;
+        catchObject.length = fishLength;
+        catchObject.weight = fishWeight;
+        catchObject.notes = fishNotes;
+
+    })
+    
 }
 let updateFishAtIndex = (Elementindex, fishCoverPicImage, fishProfileImage, fishName, fishKnownAsName, fishFamily, fishGenus, fishSpecies, fishDescription, fishSize, fishFeeding, fishDistribution, fishNotes) => {
     const fishData = realm.objects('Fish');
@@ -159,5 +177,6 @@ export {
     updateFishAtIndex,
     returnAllCatches,
     addCatchData,
-    deleteCurrentCatch
+    deleteCurrentCatch,
+    updateCatchAtIndex
 }

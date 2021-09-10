@@ -22,7 +22,8 @@ import realm, {
     updateFishAtIndex,
     returnAllCatches,
     addCatchData,
-    deleteCurrentCatch
+    deleteCurrentCatch,
+    updateCatchAtIndex
 } from "./Data";
 import {
     SearchBar,
@@ -966,9 +967,6 @@ const defualtPage = ({ navigation }) => {
 
 const catchFishPage = ({route, navigation}) => {
     const {fishcatch, fishindex} = route.params
-
-    console.log(returnAllCatches(fishindex));
-
     let colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
 
     const [data, setData] = useState(returnAllCatches(fishindex));
@@ -1024,7 +1022,7 @@ const catchFishPage = ({route, navigation}) => {
                         </View>
                         <TouchableOpacity style={{alignSelf: 'center', margin: scale(10),  marginRight: scale(5)}}
                         onPress={() => {
-                            navigation.navigate("editFormCatchPage", {catchElement: element})
+                            navigation.navigate("editFormCatchPage", {catchElement: element, fishindex: fishindex})
                         }}
                         >
                             <Image style={styles.subButtonCatchPage} source={require("./Images/writing.png")}/>
@@ -1097,6 +1095,7 @@ const addCatchEntryPage = ({route, navigation}) => {
             catchIndex, 
             date.toDateString(),
             date.toLocaleTimeString(),
+            date.toString(),
             coverPicImage,
             data.catchLocation,
             data.baitUsed,
@@ -1161,9 +1160,7 @@ const addCatchEntryPage = ({route, navigation}) => {
             console.log(err);
           });
     }
-    console.log(date)
     
-
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
              <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
@@ -1335,18 +1332,262 @@ const addCatchEntryPage = ({route, navigation}) => {
     )
 }
 const editCatchEntryPage = ({route, navigation}) => {
-    const {catchElement} = route.params;
+    const {catchElement, fishindex} = route.params;
+
+    const [coverPicImage, setCoverPicImage] = useState(catchElement.image);
+
+    const [date, setDate] = useState(new Date(catchElement.encodedDate));
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+
+    const {
+        control, 
+        handleSubmit, 
+        formState: {errors, isValid},
+    } = useForm({ mode: "onBlur", defaultValues: {
+        catchLocation: catchElement.location,
+        baitUsed: catchElement.bait,
+        weatherConditions: catchElement.weather,
+        fishLength: catchElement.length,
+        fishWeight: catchElement.weight,
+        fishNotes: catchElement.notes
+      }});
+    
+    const onSubmit = data => {
+        updateCatchAtIndex(
+            fishindex,
+            catchElement.index, 
+            date.toDateString(),
+            date.toLocaleTimeString(),
+            date.toString(),
+            coverPicImage,
+            data.catchLocation,
+            data.baitUsed,
+            data.weatherConditions,
+            data.fishLength,
+            data.fishWeight,
+            data.fishNotes
+            ),
+        navigation.goBack()
+        
+    }
+
+
+    const BackNavigateButton = () => {
+        return (
+            <TouchableOpacity onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
+                <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
+            </TouchableOpacity>
+        )
+    }
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+    
+    const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+    };
+
+    const showDatepicker = () => {
+    showMode('date');
+    };
+
+    const showTimepicker = () => {
+    showMode('time');
+    };
+    const takeCoverPicImage = () => {
+        ImagePicker.openCamera({
+            width: moderateScale(600),
+            height: verticalScale(300),
+            cropping: true,
+          }).then(image => {
+            setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
+          });
+    
+    }
+    const selectCoverPicImage = () => {
+        ImagePicker.openPicker({
+            width: moderateScale(600),
+            height: verticalScale(300),
+            cropping: true
+          }).then(image => {
+            setCoverPicImage(image.path);
+          }).catch(err => {
+            console.log(err);
+          });
+    }
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                <BackNavigateButton/>
+                <Text style={styles.entryFromPageTitle}>Edit Catch Entry</Text>
+                <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
+                <Text style={[styles.entryFormSubHeader1, {marginBottom: 0}]}>Edit Date/Time</Text>
+                <View style={{margin: scale(10)}}>
+                    <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Date Caught</Text>
+                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toDateString()}</Text>
+
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showDatepicker}>
+                        <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Edit date</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{margin: scale(10)}}>
+                    <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Time Caught</Text>
+                    
+                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString()}</Text>
+                    
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
+                        <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Edit time</Text>
+                    </TouchableOpacity>
+                    
+                </View>
+
+                {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    
+                />
+                )}
+
+                <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+                <Text style={[styles.entryFormSubHeader1, {marginBottom: 0}]}>Edit Image</Text>
+
+                <View style={styles.containerViewPictureEntry}>
+                    <TouchableOpacity style={{right: "100%"}} onPress={takeCoverPicImage}>
+                        <Text style={styles.textViewPictureEntry}>Take a photo</Text>
+                        <Icon size={scale(64)} name="camera"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{left: "100%"}} onPress={selectCoverPicImage}>
+                        <Text style={styles.textViewPictureEntry}>Add a photo</Text>
+                        <Icon size={scale(64)} name="image"  type="evilicon"  color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
+                <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
+                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                </View>
+                <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
+                <Text style={[styles.entryFormSubHeader1, {marginBottom: 0}]}>Edit Details</Text>
+
+                <Text style={styles.entryFormInputTitle}>Catch Location</Text>
+                <Controller        
+                    control={control}        
+                    name="catchLocation"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter location..."}
+                    />       
+                    )}
+                    
+                />
+
+                <Text style={styles.entryFormInputTitle}>Bait Used</Text>
+                <Controller        
+                    control={control}        
+                    name="baitUsed"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter bait used..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Weather Conditions</Text>
+                <Controller        
+                    control={control}        
+                    name="weatherConditions"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter weather conditions..."}
+                    />       
+                    )}
+                    
+                />
                 
+                <Text style={styles.entryFormInputTitle}>Fish Length</Text>
+                <Controller        
+                    control={control}        
+                    name="fishLength"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish length..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Weight</Text>
+                <Controller        
+                    control={control}        
+                    name="fishWeight"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.normalInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish weight..."}
+                    />       
+                    )}
+                    
+                />
+                <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
+                <Controller        
+                    control={control}        
+                    name="fishNotes"        
+                    render={({field: {onChange, value, onBlur}}) => (        
+                    <TextInput
+                    onBlur={onBlur}
+                    onChangeText={value => onChange(value)}
+                    value={value}
+                    style={[styles.largeInputForm, styles.mediumItemShadow]}
+                    placeholder={"Enter fish notes..."}
+                    multiline={true}
+                    />       
+                    )}
+                    
+                />
+
+                <TouchableOpacity disabled={!isValid} title="Submit"  
+                onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
+                        <Text style={styles.submitButtonText}>Submit</Text>
+                </TouchableOpacity>
+
             </ScrollView>
         </SafeAreaView>
     )
 }
+
 const catchDataPage = ({route, navigation}) => {
     const {catchElement} = route.params;
-    console.log(catchElement)
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity onPress={() => {navigation.goBack()}} style={[styles.backButtonDataScreen, styles.mediumItemShadow]}>
@@ -1360,6 +1601,45 @@ const catchDataPage = ({route, navigation}) => {
                 <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
                     <Image source={{ uri : catchElement.image}} style={styles.coverImageStyle} resizeMode={"cover"}/>
                     <BackNavigateButton/>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                    <View style={{width: moderateScale(175) }}>
+                        <Text style={{alignSelf: 'center', textAlign: 'center', color: "#367EA7", fontWeight: '700', fontSize: scale(14), marginTop: scale(20)}}>Date caught</Text>
+                        <Text style={{alignSelf: 'center', textAlign: 'center', fontWeight: '700', fontSize: scale(20), color: 'white'}}>{catchElement.date}</Text>
+                    </View>
+                    <View style={{width: moderateScale(175) }}>
+                        <Text style={{alignSelf: 'center', textAlign: 'center', color: "#367EA7", fontWeight: '700', fontSize: scale(14), marginTop: scale(20)}}>Time caught</Text>
+                        <Text style={{alignSelf: 'center', textAlign: 'center', fontWeight: '700', fontSize: scale(20), color: 'white'}}>{catchElement.time}</Text>
+                    </View>
+                </View>
+                
+                <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(30)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
+                
+                <Text style={styles.entryFormSubHeader1}>Details</Text>
+
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Location Caught</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.location ? catchElement.location : "N/A" }</Text>
+                </View>
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Bait Used</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.bait ? catchElement.bait : "N/A" }</Text>
+                </View>
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Weather Conditions</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.weather ? catchElement.weather : "N/A" }</Text>
+                </View>
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Length</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.length ? catchElement.length : "N/A" }</Text>
+                </View>
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Fish Weight</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.weight ? catchElement.weight : "N/A" }</Text>
+                </View>
+                <View style={styles.dataPageViewContainer}>
+                        <Text style={styles.dataPageHeaderTitle}>Catch Notes</Text>
+                        <Text style={styles.dataPageLargeText}>{catchElement.notes ? catchElement.notes : "N/A" }</Text>
                 </View>
 
             </ScrollView>  
