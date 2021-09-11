@@ -58,7 +58,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {useForm, Controller} from "react-hook-form";
 import ImagePicker from "react-native-image-crop-picker";
-import defautFishImage from "./Images/defaultFishProfile.png";
+import defautFishProfileImage from "./Images/defaultProfileImage.png";
+import defaultFishCoverImage from "./Images/defaultCoverImage.png"
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 LogBox.ignoreLogs([
@@ -430,10 +431,10 @@ const editFishEntryPage = ({route, navigation}) => {
 
 const addFishEntryPage = ({route, navigation}) => {
     
-    const defaultProfileImage = Image.resolveAssetSource(defautFishImage).uri;
+    const defaultProfileImage = Image.resolveAssetSource(defautFishProfileImage).uri;
     const [profileImage, setProfileImage] = useState(defaultProfileImage);
 
-    const defaultCoverPicImage = Image.resolveAssetSource(defautFishImage).uri;
+    const defaultCoverPicImage = Image.resolveAssetSource(defaultFishCoverImage).uri;
     const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
 
     const {
@@ -470,8 +471,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeProfileImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(300),
-            height: verticalScale(300),
+            width: moderateScale(1200),
+            height: verticalScale(1200),
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
@@ -482,8 +483,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectProfileImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(300),
-            height: verticalScale(300),
+            width: moderateScale(1200),
+            height: verticalScale(1200),
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
@@ -493,8 +494,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: moderateScale(2400),
+            height: verticalScale(1200),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -505,8 +506,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: moderateScale(2400),
+            height: verticalScale(1200),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -787,11 +788,11 @@ const fishDataPage = ({ route, navigation}) => {
                     <Text style={styles.knownAsSubHeader}>Known As</Text>
                     <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
 
-                    <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(10)}} 
+                    <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(20)}} 
                     onPress={ () => {
                         navigation.navigate("catchPage", {fishcatch: fishElement.catch, fishindex: fishElement.index})
                     }}>
-                        <Text style={{color: "white", fontWeight: '700', fontSize: scale(16)}}>Catches</Text>
+                        <Text style={{color: "white", fontWeight: '700', fontSize: scale(22)}}>Catches</Text>
                     </TouchableOpacity>
 
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
@@ -891,7 +892,8 @@ const defualtPage = ({ navigation }) => {
 
     const generateYesNoAlert = (element) => Alert.alert (
         "Delete Notification",
-        "Are you sure you want to delete?",
+        "Are you sure you want to delete? \nThis cannot be undone.",
+        
       [
         {text: "Yes", onPress: () => {
             deleteCurrentFish(element.index)
@@ -911,7 +913,11 @@ const defualtPage = ({ navigation }) => {
         })
         setData(dataArray);        
     }
-
+    let noFishData = () => {
+        return (
+            <Text style={{alignSelf: 'center', fontSize: scale(20), fontWeight: '700', color: 'grey', margin: scale(10)}}>Click '+' to add fish</Text> 
+        )
+    };
     return ( 
     <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
       <StatusBar barStyle="default" backgroundColor="rgb(43, 41, 44)"/>
@@ -941,14 +947,14 @@ const defualtPage = ({ navigation }) => {
                             height: verticalScale(50),
                             }, styles.mediumItemShadow]}
                             onChangeText={text => searchSetData(text)}
-                            placeholder={"Type fish here..."}
+                            placeholder={"Search fish..."}
                             autoCapitalize="none"
                             value={searchData}
                             onSubmitEditing={() => checkCardName(searchData)}
                             onClear={() => checkCardName("")}
                             />    
             </View>
-            { arr }
+            { arr.length ? arr : noFishData()}
         </View>
         
     </ScrollView>
@@ -981,7 +987,7 @@ const catchFishPage = ({route, navigation}) => {
 
     const generateYesNoAlertCatchPage = (elementIndex) => Alert.alert (
         "Delete Notification",
-        "Are you sure you want to delete?",
+        "Are you sure you want to delete? \nThis cannot be undone.",
       [
         {text: "Yes", onPress: () => {
             deleteCurrentCatch(elementIndex, fishindex)
@@ -1012,13 +1018,14 @@ const catchFishPage = ({route, navigation}) => {
     let catchArr = data.map(  (element) => {
         return(
             <View key={element.index}>
-                <TouchableOpacity style={[{width: "90%", height: verticalScale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: 'center', justifyContent: 'center', borderRadius: scale(10)}, styles.mediumItemShadow]} 
+                <TouchableOpacity style={[{width: "90%", height: scale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: 'center', justifyContent: 'center', borderRadius: scale(10)}, styles.mediumItemShadow]} 
                 onPress={() => {
                     navigation.navigate("catchDataPage", {catchElement: element})
                 }}>
                     <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-end'}}>
-                        <View style={{alignSelf: 'center', alignContent: 'center'}}>
-                            <Text style={{marginRight: scale(50), fontSize: scale(20), color: 'white', fontWeight: '700'}}>{element.date}</Text>
+                        <View style={{position: 'absolute', left: scale(10)}}>
+                            <Text style={{fontSize: scale(14)}}>Date</Text>
+                            <Text style={{fontSize: scale(20), color: 'white', fontWeight: '700'}}>{element.date}</Text>
                         </View>
                         <TouchableOpacity style={{alignSelf: 'center', margin: scale(10),  marginRight: scale(5)}}
                         onPress={() => {
@@ -1075,7 +1082,7 @@ const catchFishPage = ({route, navigation}) => {
 const addCatchEntryPage = ({route, navigation}) => {
 
     const {catchIndex} = route.params;
-    const defaultCoverPicImage = Image.resolveAssetSource(defautFishImage).uri;
+    const defaultCoverPicImage = Image.resolveAssetSource(defaultFishCoverImage).uri;
     const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
 
     var currentDate = new Date().getTime()
@@ -1139,8 +1146,8 @@ const addCatchEntryPage = ({route, navigation}) => {
 
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: moderateScale(2400),
+            height: verticalScale(1200),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1151,8 +1158,8 @@ const addCatchEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: moderateScale(2400),
+            height: verticalScale(1200),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1670,8 +1677,8 @@ const App = () => {
 
 const styles = StyleSheet.create({
     subButtonCatchPage: {
-        width: moderateScale(30),
-        height: verticalScale(30),
+        width: moderateScale(25),
+        height: verticalScale(25),
         alignSelf: 'center',
         justifyContent: 'center'
     },
