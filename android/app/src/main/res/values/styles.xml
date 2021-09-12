@@ -4,6 +4,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">#000000</item>
+        <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
+        <item name="android:timePickerDialogTheme">@style/Dialog.Theme</item>
     </style>
 
+    <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#00BAFF</item>
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
 </resources>

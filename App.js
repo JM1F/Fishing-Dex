@@ -138,8 +138,8 @@ const editFishEntryPage = ({route, navigation}) => {
     }
     const takeProfileImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(300),
-            height: verticalScale(300),
+            width: scale(300),
+            height: scale(300),
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
@@ -150,8 +150,8 @@ const editFishEntryPage = ({route, navigation}) => {
     }
     const selectProfileImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(300),
-            height: verticalScale(300),
+            width: scale(300),
+            height: scale(300),
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
@@ -161,8 +161,8 @@ const editFishEntryPage = ({route, navigation}) => {
     }
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: scale(600),
+            height: scale(300),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -173,8 +173,8 @@ const editFishEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: scale(600),
+            height: scale(300),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -211,7 +211,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
 
                 <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : profileImage }} style={[{width: scale(150), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -232,7 +232,7 @@ const editFishEntryPage = ({route, navigation}) => {
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
                 <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
@@ -471,8 +471,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeProfileImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(1200),
-            height: verticalScale(1200),
+            width: scale(1200),
+            height: scale(1200),
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
@@ -483,8 +483,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectProfileImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(1200),
-            height: verticalScale(1200),
+            width: scale(1200),
+            height: scale(1200),
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
@@ -494,8 +494,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(2400),
-            height: verticalScale(1200),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -506,8 +506,8 @@ const addFishEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(2400),
-            height: verticalScale(1200),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -544,7 +544,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
 
                 <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : profileImage }} style={[{width: moderateScale(150), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : profileImage }} style={[{width: scale(150), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -565,7 +565,7 @@ const addFishEntryPage = ({route, navigation}) => {
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
                 <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
@@ -788,7 +788,7 @@ const fishDataPage = ({ route, navigation}) => {
                     <Text style={styles.knownAsSubHeader}>Known As</Text>
                     <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
 
-                    <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: verticalScale(50), width: moderateScale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(20)}} 
+                    <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: scale(50), width: scale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(20)}} 
                     onPress={ () => {
                         navigation.navigate("catchPage", {fishcatch: fishElement.catch, fishindex: fishElement.index})
                     }}>
@@ -934,7 +934,7 @@ const defualtPage = ({ navigation }) => {
             <View style={[{width: "100%", padding: scale(20)}]}>
                 <SearchBar  inputContainerStyle={{backgroundColor: "white"}}
                             leftIconContainerStyle={{backgroundColor: "white"}}
-                            rightIconContainerStyle={{backgroundColor: 'white', width: moderateScale(40), height: verticalScale(40)}}
+                            rightIconContainerStyle={{backgroundColor: 'white', width: scale(40), height: scale(40)}}
                             searchIcon={{size: scale(16)}}
                             clearIcon={{size: scale(16)}}
                             inputStyle={{
@@ -944,7 +944,7 @@ const defualtPage = ({ navigation }) => {
                             backgroundColor: "white",
                             justifyContent: "space-around",
                             borderRadius: scale(10),
-                            height: verticalScale(50),
+                            height: scale(50),
                             }, styles.mediumItemShadow]}
                             onChangeText={text => searchSetData(text)}
                             placeholder={"Search fish..."}
@@ -1146,8 +1146,8 @@ const addCatchEntryPage = ({route, navigation}) => {
 
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(2400),
-            height: verticalScale(1200),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1158,8 +1158,8 @@ const addCatchEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(2400),
-            height: verticalScale(1200),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1182,7 +1182,7 @@ const addCatchEntryPage = ({route, navigation}) => {
                     <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Date Caught</Text>
                     <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toDateString()}</Text>
 
-                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showDatepicker}>
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showDatepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Choose date</Text>
                     </TouchableOpacity>
                 </View>
@@ -1191,7 +1191,7 @@ const addCatchEntryPage = ({route, navigation}) => {
                     
                     <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString()}</Text>
                     
-                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Choose time</Text>
                     </TouchableOpacity>
                     
@@ -1203,8 +1203,9 @@ const addCatchEntryPage = ({route, navigation}) => {
                     value={date}
                     mode={mode}
                     is24Hour={true}
-                    display="default"
+                    display={Platform.OS === 'ios' ? "spinner" : "default"}
                     onChange={onChange}
+                    style={{width: scale(500), height: scale(500)}}
                     
                 />
                 )}
@@ -1227,7 +1228,7 @@ const addCatchEntryPage = ({route, navigation}) => {
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
 
                 <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -1408,8 +1409,8 @@ const editCatchEntryPage = ({route, navigation}) => {
     };
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: scale(600),
+            height: scale(300),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1420,8 +1421,8 @@ const editCatchEntryPage = ({route, navigation}) => {
     }
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: moderateScale(600),
-            height: verticalScale(300),
+            width: scale(600),
+            height: scale(300),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -1440,7 +1441,7 @@ const editCatchEntryPage = ({route, navigation}) => {
                     <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Date Caught</Text>
                     <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toDateString()}</Text>
 
-                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showDatepicker}>
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showDatepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Edit date</Text>
                     </TouchableOpacity>
                 </View>
@@ -1449,7 +1450,7 @@ const editCatchEntryPage = ({route, navigation}) => {
                     
                     <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString()}</Text>
                     
-                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: moderateScale(200), height: verticalScale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
+                    <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Edit time</Text>
                     </TouchableOpacity>
                     
@@ -1484,7 +1485,7 @@ const editCatchEntryPage = ({route, navigation}) => {
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
-                    <Image source={{ uri : coverPicImage }} style={[{width: moderateScale(300), height: verticalScale(150)}, styles.entryFormImage]}></Image>
+                    <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
                 <Divider orientation="horizontal" width={scale(5)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
                 <Text style={[styles.entryFormSubHeader1, {marginBottom: 0}]}>Edit Details</Text>
@@ -1610,11 +1611,11 @@ const catchDataPage = ({route, navigation}) => {
                     <BackNavigateButton/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                    <View style={{width: moderateScale(175) }}>
+                    <View style={{width: scale(175) }}>
                         <Text style={{alignSelf: 'center', textAlign: 'center', color: "#367EA7", fontWeight: '700', fontSize: scale(14), marginTop: scale(20)}}>Date caught</Text>
                         <Text style={{alignSelf: 'center', textAlign: 'center', fontWeight: '700', fontSize: scale(20), color: 'white'}}>{catchElement.date}</Text>
                     </View>
-                    <View style={{width: moderateScale(175) }}>
+                    <View style={{width: scale(175) }}>
                         <Text style={{alignSelf: 'center', textAlign: 'center', color: "#367EA7", fontWeight: '700', fontSize: scale(14), marginTop: scale(20)}}>Time caught</Text>
                         <Text style={{alignSelf: 'center', textAlign: 'center', fontWeight: '700', fontSize: scale(20), color: 'white'}}>{catchElement.time}</Text>
                     </View>
@@ -1677,8 +1678,8 @@ const App = () => {
 
 const styles = StyleSheet.create({
     subButtonCatchPage: {
-        width: moderateScale(25),
-        height: verticalScale(25),
+        width: scale(25),
+        height: scale(25),
         alignSelf: 'center',
         justifyContent: 'center'
     },
@@ -1730,8 +1731,8 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     coverImageContainer: {
-        width: moderateScale(300), 
-        height: verticalScale(150),
+        width: scale(300), 
+        height: scale(150),
         margin: scale(10),
         alignSelf: "center", 
         borderRadius: scale(10),
@@ -1739,8 +1740,8 @@ const styles = StyleSheet.create({
     profileImageContainer: {
         alignSelf: "center", 
         borderRadius: scale(10),
-        width: moderateScale(150), 
-        height: verticalScale(150),
+        width: scale(150), 
+        height: scale(150),
         margin: scale(10),
     },
     backButtonDataScreen: {
@@ -1776,8 +1777,8 @@ const styles = StyleSheet.create({
         right: scale(25), 
     },
     fishButtonStyle: {
-        width: moderateScale(150),
-        height: verticalScale(150),
+        width: scale(150),
+        height: scale(150),
         margin: scale(10),
         borderRadius: scale(10),
         alignItems: "center",
@@ -1800,7 +1801,7 @@ const styles = StyleSheet.create({
     },
     coverImageContainerDataPage: {
         width: "100%",
-        height: verticalScale(200),
+        height: scale(200),
         borderBottomLeftRadius: scale(30), 
         borderBottomRightRadius: scale(30)
     },
@@ -1813,8 +1814,8 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.25)",
     },
     subButtonImageStyle: {
-        width: moderateScale(20),
-        height: verticalScale(20),
+        width: scale(20),
+        height: scale(20),
     },
     subButton: {
         position: "absolute",
@@ -1876,7 +1877,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white", 
         margin: scale(10), 
         borderRadius: scale(10), 
-        height: verticalScale(150), 
+        height: scale(150), 
         textAlignVertical: "top",
         fontSize: scale(12)
     },
@@ -1892,7 +1893,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#00BAFF", 
         margin: scale(10), 
         borderRadius: scale(10), 
-        height: verticalScale(50), 
+        height: scale(50), 
         justifyContent: "center"
     },
     submitButtonText: {
