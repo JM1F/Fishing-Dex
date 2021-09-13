@@ -1101,7 +1101,7 @@ const addCatchEntryPage = ({route, navigation}) => {
         addCatchData(
             catchIndex, 
             date.toDateString(),
-            date.toLocaleTimeString(),
+            date.toLocaleTimeString().substr(0 ,date.toLocaleTimeString().length - 3),
             date.toString(),
             coverPicImage,
             data.catchLocation,
@@ -1189,7 +1189,7 @@ const addCatchEntryPage = ({route, navigation}) => {
                 <View style={{margin: scale(10)}}>
                     <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Time Caught</Text>
                     
-                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString()}</Text>
+                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString().substr(0 ,date.toLocaleTimeString().length - 3)}</Text>
                     
                     <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Choose time</Text>
@@ -1341,13 +1341,14 @@ const addCatchEntryPage = ({route, navigation}) => {
 }
 const editCatchEntryPage = ({route, navigation}) => {
     const {catchElement, fishindex} = route.params;
-
+    
     const [coverPicImage, setCoverPicImage] = useState(catchElement.image);
 
     const [date, setDate] = useState(new Date(catchElement.encodedDate));
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-
+    let test = 
+    console.log(test)
     const {
         control, 
         handleSubmit, 
@@ -1366,7 +1367,7 @@ const editCatchEntryPage = ({route, navigation}) => {
             fishindex,
             catchElement.index, 
             date.toDateString(),
-            date.toLocaleTimeString(),
+            date.toLocaleTimeString().substr(0 ,date.toLocaleTimeString().length - 3),
             date.toString(),
             coverPicImage,
             data.catchLocation,
@@ -1448,7 +1449,7 @@ const editCatchEntryPage = ({route, navigation}) => {
                 <View style={{margin: scale(10)}}>
                     <Text style={{alignSelf: 'center', fontWeight: '700', color: "#367EA7", fontSize: scale(16), margin: scale(10)}}>Time Caught</Text>
                     
-                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString()}</Text>
+                    <Text style={{color: 'white', alignSelf: 'center', fontWeight: '700', fontSize: scale(18), marginBottom: scale(10) }}>{date.toLocaleTimeString().substr(0 ,date.toLocaleTimeString().length - 3)}</Text>
                     
                     <TouchableOpacity style={[{alignSelf: 'center', backgroundColor: "#00BAFF", width: scale(200), height: scale(30), borderRadius: scale(10), justifyContent: 'center', alignItems: 'center'}, styles.mediumItemShadow]} onPress={showTimepicker}>
                         <Text style={{color: 'white', fontSize: scale(12), fontWeight: '700'}}>Edit time</Text>
@@ -1462,7 +1463,7 @@ const editCatchEntryPage = ({route, navigation}) => {
                     value={date}
                     mode={mode}
                     is24Hour={true}
-                    display="default"
+                    display={Platform.OS === "ios" ? "spinner" : "default"}
                     onChange={onChange}
                     
                 />
