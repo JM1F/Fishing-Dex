@@ -16,10 +16,11 @@ import Realm from "realm";
  * @exports addCatchData
  * @exports deleteCurrentCatch
  * @exports updateCatchAtIndex
+ * 
+ * @author JM1F
 }
  * 
  */
-
 
 // Declare Fish Scheme
 class FishSchema extends Realm.Object { }
@@ -69,15 +70,15 @@ let realm = new Realm({ schema: [FishSchema, CatchSchema], schemaVersion: 1 });
  */
 let returnAllFish = () => {
     return realm.objects("Fish");
-}
+};
 /**
  * Returns all the current catches of the parent "Fish" field.
  * @param {int} fishIndex Index of parent field
  * @returns All "catch" objects
  */
 let returnAllCatches = (fishIndex) => {
-    return returnAllFish()[fishIndex].catch
-}
+    return returnAllFish()[fishIndex].catch;
+};
 /**
  * This function writes data to local storage via realm where different parameters are parsed in by the user.
  * @param {string} fishCoverPicImage URI cover image
@@ -215,7 +216,6 @@ let deleteAllFish = () => {
 let deleteLastFish = () => {
     realm.write(() => {
         if (returnAllFish()[0] != null) {
-            
             realm.delete(realm.objects("Fish")[returnAllFish().length - 1]);
         }   
         }  
@@ -251,7 +251,6 @@ let deleteCurrentFish = (index) => {
  * @param {int} fishIndex Index of the parent "Fish" object
  */
 let deleteCurrentCatch = (elementIndex, fishIndex) => {
-    console.log(elementIndex)
     realm.write(() => {
         returnAllCatches(fishIndex).splice(elementIndex, 1);
     })

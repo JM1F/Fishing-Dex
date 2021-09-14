@@ -5,6 +5,7 @@
  *
  * @format
  * @flow strict-local
+ * @author JM1F
  */
 
 // Imports
@@ -66,7 +67,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 // Ignores react-native warnings where null values are parsed through navigation stack
 LogBox.ignoreLogs([
     "Non-serializable values were found in the navigation state",
-  ]);
+]);
 /**
  * Amends the fish array when data is added or removed.
  */
@@ -127,7 +128,7 @@ const editFishEntryPage = ({route, navigation}) => {
           fishFeeding: fishElement.feeding,
           fishDistribution: fishElement.distribution,
           fishNotes: fishElement.notes
-        }})
+    }});
     /**
      * Called when the submit button is clicked.
      * @param {Object} data Current form data
@@ -151,7 +152,7 @@ const editFishEntryPage = ({route, navigation}) => {
             ),
         // Navigates back to the default screen
         navigation.navigate("DefaultScreen")
-    }
+    };
     /**
      * Generates a back button to navigate to a previous page.
      * @returns JSX Back Button
@@ -163,7 +164,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
         )
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to take profile image from phone camera.
      */
@@ -177,8 +178,7 @@ const editFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select profile image from phone gallery.
      */
@@ -192,7 +192,7 @@ const editFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to take cover image from phone camera.
      */
@@ -206,8 +206,7 @@ const editFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select cover image from phone gallery.
      */
@@ -221,7 +220,7 @@ const editFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
@@ -324,7 +323,6 @@ const editFishEntryPage = ({route, navigation}) => {
                     placeholder={"Edit also known as..."}
                     />       
                     )}
-                    
                 />
                 
                 <Divider orientation="horizontal" width={scale(4)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -344,8 +342,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish family..."}
                     />       
-                    )}
-                    
+                    )} 
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
                 {/* Edit input form for fish genus */}
@@ -360,8 +357,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish genus..."}
                     />       
-                    )}
-                    
+                    )}  
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Species</Text>
                 {/* Edit input form for fish species */}
@@ -376,8 +372,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish species..."}
                     />       
-                    )}
-                    
+                    )} 
                 />
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -398,8 +393,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     placeholder={"Edit fish description..."}
                     multiline={true}
                     />       
-                    )}
-                    
+                    )} 
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Size</Text>
                 {/* Edit input form for fish size */}
@@ -415,7 +409,6 @@ const editFishEntryPage = ({route, navigation}) => {
                     placeholder={"Edit fish size..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
                 {/* Edit input form for fish feeding */}
@@ -430,8 +423,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish feeding habbits or bait..."}
                     />       
-                    )}
-                    
+                    )}   
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
                 {/* Edit input form for fish distribution */}
@@ -446,8 +438,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish distribution or location..."}
                     />       
-                    )}
-                    
+                    )} 
                 />
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -469,7 +460,6 @@ const editFishEntryPage = ({route, navigation}) => {
                     multiline={true}
                     />       
                     )}
-                    
                 />
                 {/* Submit button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
@@ -480,7 +470,7 @@ const editFishEntryPage = ({route, navigation}) => {
         </SafeAreaView>
     )
     
-}
+};
 /**
  * Add page that takes inputs about fish data.
  * @param {Navigation} param0 Parse route and navigation stack
@@ -500,7 +490,7 @@ const addFishEntryPage = ({route, navigation}) => {
         control, 
         handleSubmit, 
         formState: {errors, isValid},
-      } = useForm({ mode: "onBlur"})
+      } = useForm({ mode: "onBlur"});
     /**
      * Called when the submit button is clicked.
      * @param {Object} data Current form data
@@ -525,7 +515,7 @@ const addFishEntryPage = ({route, navigation}) => {
         amendArray(),
         // Navigate to default screen
         navigation.navigate("DefaultScreen")
-    }
+    };
     /**
      * Generates a back button to navigate to a previous page.
      * @returns JSX Back Button
@@ -536,7 +526,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
         )
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to take profile image from phone camera.
      */
@@ -550,7 +540,7 @@ const addFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select profile image from phone gallery.
      */
@@ -564,7 +554,7 @@ const addFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to take cover image from phone camera.
      */
@@ -579,7 +569,7 @@ const addFishEntryPage = ({route, navigation}) => {
             console.log(err);
           });
     
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select cover image from phone gallery.
      */
@@ -593,7 +583,7 @@ const addFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
@@ -696,7 +686,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Also known as..."}
                     />       
                     )}
-                    
                 />
                 
                 <Divider orientation="horizontal" width={scale(4)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -717,7 +706,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish family..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
                 {/* Input form for fish genus */}
@@ -733,7 +721,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish genus..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Species</Text>
                 {/* Input form for fish species */}
@@ -749,7 +736,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish species..."}
                     />       
                     )}
-                    
                 />
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -771,7 +757,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     multiline={true}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Size</Text>
                 {/* Input form for fish size */}
@@ -787,7 +772,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish size..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
                 {/* Input form for fish feeding */}
@@ -803,7 +787,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish feeding habbits or bait..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
                 {/* Input form for fish distribution */}
@@ -819,7 +802,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish distribution or location..."}
                     />       
                     )}
-                    
                 />
 
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
@@ -841,7 +823,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     multiline={true}
                     />       
                     )}
-                    
                 />
                 {/* Submit button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
@@ -850,7 +831,7 @@ const addFishEntryPage = ({route, navigation}) => {
             </ScrollView>
         </SafeAreaView>
     )
-}
+};
 
 /**
  * A page that displays the inputted data about the fish.
@@ -870,7 +851,7 @@ const fishDataPage = ({ route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity> 
         )
-    }
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)"> 
@@ -950,7 +931,8 @@ const fishDataPage = ({ route, navigation}) => {
                 </View>
             </ScrollView>
         </SafeAreaView> 
-    )};
+    )
+};
 
 /**
  * A page that displays an overview of all the fish inputted.
@@ -976,7 +958,7 @@ const defualtPage = ({ navigation }) => {
         return <TouchableOpacity key={element.index} style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
             {/* Navigate to the data page of the fish and parsing the fishElement data */}
             navigation.navigate("dataPage", {fishElement: element});
-        }} >
+        }}>
                 <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={"cover"}>
                     <Text style={styles.mainButtonTextStyle}>{element.name}</Text>
 
@@ -993,7 +975,7 @@ const defualtPage = ({ navigation }) => {
                     </TouchableOpacity>  
                 </ImageBackground> 
             </TouchableOpacity>
-    } )
+    });
     /**
      * Generates an alert asking if the user wants to delete the fish data
      * @param {Object} element Fish data element
@@ -1002,13 +984,12 @@ const defualtPage = ({ navigation }) => {
     const generateYesNoAlert = (element) => Alert.alert (
         "Delete Notification",
         "Are you sure you want to delete? \nThis cannot be undone.",
-        
       [
         // Deletes data when "yes" is pressed
         {text: "Yes", onPress: () => {
-            deleteCurrentFish(element.index)
-            amendArray()
-            setData(returnAllFish())
+            deleteCurrentFish(element.index);
+            amendArray();
+            setData(returnAllFish());
         } },
         { text: "No"}
       ]
@@ -1023,12 +1004,12 @@ const defualtPage = ({ navigation }) => {
             // Checks to see if any of the element names include the inputted data in the search bar
             if (element.name.toUpperCase().includes(data.toUpperCase())) {
                 // Pushes element into array 
-                dataArray.push(element)
+                dataArray.push(element);
             }
         })
         // Sets the data of the default screen to that in the array
         setData(dataArray);        
-    }
+    };
     /**
      * Checks to see what message to display if no data is inputted.
      * @returns No data message
@@ -1037,10 +1018,10 @@ const defualtPage = ({ navigation }) => {
         let pageString = "";
         // Checks to see if there is fish data
         if (returnAllFish().length == 0) {
-            pageString = "Click '+' to add fish"
+            pageString = "Click '+' to add fish";
         }
         else {
-            pageString = "No matched results"
+            pageString = "No matched results";
         }
         return (
             <Text style={styles.noFishDataText}>{pageString}</Text> 
@@ -1107,7 +1088,7 @@ const defualtPage = ({ navigation }) => {
  */
 const catchFishPage = ({route, navigation}) => {
     // Set route data
-    const {fishcatch, fishindex} = route.params
+    const {fishcatch, fishindex} = route.params;
     // Set colour scheme array
     let colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
     // Data hook
@@ -1130,9 +1111,9 @@ const catchFishPage = ({route, navigation}) => {
       [
         // If "yes" is pressed the catch data will be deleted
         {text: "Yes", onPress: () => {
-            deleteCurrentCatch(elementIndex, fishindex)
-            amendCatchArray(fishindex)
-            setData(returnAllCatches(fishindex))
+            deleteCurrentCatch(elementIndex, fishindex);
+            amendCatchArray(fishindex);
+            setData(returnAllCatches(fishindex));
         } },
         { text: "No"}
       ]
@@ -1148,7 +1129,7 @@ const catchFishPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity> 
         )
-    }
+    };
     /**
      * Generates a colour for each catch report in a gradient style.
      * @returns Hex Colour Code
@@ -1159,7 +1140,7 @@ const catchFishPage = ({route, navigation}) => {
             colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
         }
         // Sets current colour
-        const currentColour = colourSchemeColours[(colourSchemeColours.length - 1)]
+        const currentColour = colourSchemeColours[(colourSchemeColours.length - 1)];
         // Removes current colour
         colourSchemeColours.pop();
     
@@ -1173,7 +1154,7 @@ const catchFishPage = ({route, navigation}) => {
             <View key={element.index}>
                 <TouchableOpacity style={[{width: "90%", height: scale(60) ,margin: scale(10),  backgroundColor: generateColour(), alignSelf: "center", justifyContent: "center", borderRadius: scale(10)}, styles.mediumItemShadow]} 
                 onPress={() => {
-                    navigation.navigate("catchDataPage", {catchElement: element})
+                    navigation.navigate("catchDataPage", {catchElement: element});
                 }}>
                     <View style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "flex-end"}}>
                         <View style={{position: "absolute", left: scale(10)}}>
@@ -1182,7 +1163,7 @@ const catchFishPage = ({route, navigation}) => {
                         </View>
                         <TouchableOpacity style={{alignSelf: "center", margin: scale(10),  marginRight: scale(5)}}
                         onPress={() => {
-                            navigation.navigate("editFormCatchPage", {catchElement: element, fishindex: fishindex})
+                            navigation.navigate("editFormCatchPage", {catchElement: element, fishindex: fishindex});
                         }}
                         >
                             <Image style={styles.subButtonCatchPage} source={require("./Images/writing.png")}/>
@@ -1190,7 +1171,7 @@ const catchFishPage = ({route, navigation}) => {
 
                         <TouchableOpacity style={{alignSelf: "center", margin: scale(10), marginLeft: scale(5)}} 
                         onPress={() => {
-                            generateYesNoAlertCatchPage(element.index)
+                            generateYesNoAlertCatchPage(element.index);
                         }}>
                             <Image style={styles.subButtonCatchPage} source={require("./Images/trash.png")}/>
                         </TouchableOpacity>
@@ -1235,7 +1216,7 @@ const catchFishPage = ({route, navigation}) => {
 
         </SafeAreaView>
     )
-}
+};
 /**
  * Allows the user to add catches with specific data of said catches.
  * @param {Navigation} param0 Parse route and navigation stack
@@ -1248,7 +1229,7 @@ const addCatchEntryPage = ({route, navigation}) => {
     const defaultCoverPicImage = Image.resolveAssetSource(defaultFishCoverImage).uri;
     const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
     // Get time in seconds at the current time
-    var currentDate = new Date().getTime()
+    var currentDate = new Date().getTime();
     // Date picker hooks
     const [date, setDate] = useState(new Date(currentDate));
     const [mode, setMode] = useState("date");
@@ -1281,9 +1262,8 @@ const addCatchEntryPage = ({route, navigation}) => {
             data.fishNotes
             ),
         amendCatchArray(catchIndex),
-        navigation.goBack()
-        
-    }
+        navigation.goBack() 
+    };
     /**
      * Handles the on change event.
      * @param {Object} event 
@@ -1320,7 +1300,7 @@ const addCatchEntryPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
         )
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to take cover image from phone camera.
      */
@@ -1334,7 +1314,7 @@ const addCatchEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select cover image from phone gallery.
      */
@@ -1348,7 +1328,7 @@ const addCatchEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
@@ -1430,7 +1410,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Enter location..."}
                     />       
                     )}
-                    
                 />
 
                 <Text style={styles.entryFormInputTitle}>Bait Used</Text>
@@ -1447,7 +1426,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Enter bait used..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Weather Conditions</Text>
                 {/* Input form for weather conditions */}
@@ -1463,7 +1441,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Enter weather conditions..."}
                     />       
                     )}
-                    
                 />
                 
                 <Text style={styles.entryFormInputTitle}>Fish Length</Text>
@@ -1480,7 +1457,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish length..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Weight</Text>
                 {/* Input form for fish weight */}
@@ -1496,7 +1472,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Enter fish weight..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
                 {/* Input form for fish notes */}
@@ -1513,7 +1488,6 @@ const addCatchEntryPage = ({route, navigation}) => {
                     multiline={true}
                     />       
                     )}
-                    
                 />
                 {/* Submit Button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  
@@ -1524,7 +1498,7 @@ const addCatchEntryPage = ({route, navigation}) => {
             </ScrollView>
         </SafeAreaView>
     )
-}
+};
 /**
  * Allows the user to edit their catches, like the edit for the fish data.
  * @param {Navigation} param0 Parse route and navigation stack
@@ -1552,7 +1526,7 @@ const editCatchEntryPage = ({route, navigation}) => {
         fishLength: catchElement.length,
         fishWeight: catchElement.weight,
         fishNotes: catchElement.notes
-      }});
+    }});
     /**
      * Called when the submit button is clicked.
      * @param {Object} data Current form data
@@ -1576,7 +1550,7 @@ const editCatchEntryPage = ({route, navigation}) => {
             ),
         // Navigate to the previous screen
         navigation.goBack() 
-    }
+    };
     /**
      * Generates a back button to navigate to a previous page.
      * @returns JSX Back Button
@@ -1587,7 +1561,7 @@ const editCatchEntryPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity>
         )
-    }
+    };
     /**
      * Handles the on change event.
      * @param {Object} event 
@@ -1627,7 +1601,7 @@ const editCatchEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     /**
      * Opens react-native-image-crop-picker to select cover image from phone gallery.
      */
@@ -1641,7 +1615,7 @@ const editCatchEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    }
+    };
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
@@ -1717,7 +1691,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Edit location..."}
                     />       
                     )}
-                    
                 />
 
                 <Text style={styles.entryFormInputTitle}>Bait Used</Text>
@@ -1734,7 +1707,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Edit bait used..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Weather Conditions</Text>
                 {/* Edit input form for weather conditions */}
@@ -1750,7 +1722,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Edit weather conditions..."}
                     />       
                     )}
-                    
                 />
                 
                 <Text style={styles.entryFormInputTitle}>Fish Length</Text>
@@ -1767,7 +1738,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Edit fish length..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Weight</Text>
                 {/* Edit input form for fish weight */}
@@ -1783,7 +1753,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     placeholder={"Edit fish weight..."}
                     />       
                     )}
-                    
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
                 {/* Edit input form for fish notes */}
@@ -1800,7 +1769,6 @@ const editCatchEntryPage = ({route, navigation}) => {
                     multiline={true}
                     />       
                     )}
-                    
                 />
                 {/* Submit Button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  
@@ -1810,7 +1778,7 @@ const editCatchEntryPage = ({route, navigation}) => {
             </ScrollView>
         </SafeAreaView>
     )
-}
+};
 /**
  * A page that allows the user to look at all the inputted data of their catch report.
  * @param {Navigation} param0 Parse route and navigation stack 
@@ -1830,7 +1798,7 @@ const catchDataPage = ({route, navigation}) => {
                 <Icon size={scale(32)} name="arrow-back-outline"  type="ionicon"  color="white" />
             </TouchableOpacity> 
         )
-    }
+    };
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
@@ -1889,7 +1857,7 @@ const catchDataPage = ({route, navigation}) => {
             </ScrollView>  
         </SafeAreaView>
     )
-}
+};
 
 // Create stack navigator
 const Stack = createNativeStackNavigator();
@@ -1913,7 +1881,7 @@ const App = () => {
 
     </NavigationContainer>
   );
-}
+};
 
 /**
  * Style sheet for all elements.
