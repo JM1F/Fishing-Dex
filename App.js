@@ -1947,7 +1947,7 @@ const styles = StyleSheet.create({
         fontSize: scale(16), 
         margin: scale(10)
     },
-    noFishData: {
+    noFishDataText: {
         alignSelf: "center", 
         fontSize: scale(20), 
         fontWeight: "700", 
