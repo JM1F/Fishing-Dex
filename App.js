@@ -1,12 +1,13 @@
 
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Fishing Dex React Native App
+ * https://github.com/JM1F/Fishing-Dex
  *
  * @format
  * @flow strict-local
  */
 
+// Imports
 import React, { 
     useState, 
     setState, 
@@ -62,43 +63,60 @@ import defautFishProfileImage from "./Images/defaultProfileImage.png";
 import defaultFishCoverImage from "./Images/defaultCoverImage.png"
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+// Ignores react-native warnings where null values are parsed through navigation stack
 LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
   ]);
-
+/**
+ * Amends the fish array when data is added or removed.
+ */
 let amendArray = () => { 
     let count = 0;
+    // Maps each data element
     returnAllFish().map ( (element) => {
-    
+    // Writes current count to the data element's index
     realm.write(() => {
         element.index = count;
-        
     })
+    // Increment count by 1
     count += 1;
 
 })};
+/**
+ * Amends the catch array when catch data is added or removed.
+ * @param {Object} fishIndex Index of fish data
+ */
 let amendCatchArray = (fishIndex) => {
     let count = 0;
+    // Maps each data element
     returnAllCatches(fishIndex).map( (element) => {
+        // Writes current count to the data element's index
         realm.write(() => {
             element.index = count;
         })
+        // Increment count by 1
         count += 1;
     })
 };
 
-
+/**
+ * Edit page for the data already added to the fish data
+ * @param {Navigation} param0 Parse route and navigation stack
+ * @returns editPage
+ */
 const editFishEntryPage = ({route, navigation}) => {
-
+    // Parsed fish data
     const {fishElement} = route.params;
+    // Hooks 
     const [profileImage, setProfileImage] = useState(fishElement.profileImage);
     const [coverPicImage, setCoverPicImage] = useState(fishElement.coverImage);
-
+    // Form setup details
     const {
         control, 
         handleSubmit, 
         formState: {errors, isValid},
       } = useForm({ mode: "onBlur", defaultValues: {
+          // Sets default form values
           knownAsName: fishElement.knowasName, 
           fishName: fishElement.name,
           fishFamily: fishElement.family,
@@ -110,8 +128,12 @@ const editFishEntryPage = ({route, navigation}) => {
           fishDistribution: fishElement.distribution,
           fishNotes: fishElement.notes
         }})
-
+    /**
+     * Called when the submit button is clicked.
+     * @param {Object} data Current form data
+     */
     const onSubmit = data => {
+        // Updates the data entries
         updateFishAtIndex(
             fishElement.index,
             coverPicImage,
@@ -127,8 +149,14 @@ const editFishEntryPage = ({route, navigation}) => {
             data.fishDistribution,
             data.fishNotes,
             ),
+        // Navigates back to the default screen
         navigation.navigate("DefaultScreen")
     }
+    /**
+     * Generates a back button to navigate to a previous page.
+     * @returns JSX Back Button
+     * 
+     */
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
@@ -136,10 +164,13 @@ const editFishEntryPage = ({route, navigation}) => {
             </TouchableOpacity>
         )
     }
+    /**
+     * Opens react-native-image-crop-picker to take profile image from phone camera.
+     */
     const takeProfileImage = () => {
         ImagePicker.openCamera({
-            width: scale(300),
-            height: scale(300),
+            width: scale(1200),
+            height: scale(1200),
             cropping: true,
           }).then(image => {
             setProfileImage(image.path);
@@ -148,10 +179,13 @@ const editFishEntryPage = ({route, navigation}) => {
           });
     
     }
+    /**
+     * Opens react-native-image-crop-picker to select profile image from phone gallery.
+     */
     const selectProfileImage = () => {
         ImagePicker.openPicker({
-            width: scale(300),
-            height: scale(300),
+            width: scale(1200),
+            height: scale(1200),
             cropping: true
           }).then(image => {
             setProfileImage(image.path);
@@ -159,10 +193,13 @@ const editFishEntryPage = ({route, navigation}) => {
             console.log(err);
           });
     }
+    /**
+     * Opens react-native-image-crop-picker to take cover image from phone camera.
+     */
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
-            width: scale(600),
-            height: scale(300),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true,
           }).then(image => {
             setCoverPicImage(image.path);
@@ -171,10 +208,13 @@ const editFishEntryPage = ({route, navigation}) => {
           });
     
     }
+    /**
+     * Opens react-native-image-crop-picker to select cover image from phone gallery.
+     */
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
-            width: scale(600),
-            height: scale(300),
+            width: scale(2400),
+            height: scale(1200),
             cropping: true
           }).then(image => {
             setCoverPicImage(image.path);
@@ -185,7 +225,8 @@ const editFishEntryPage = ({route, navigation}) => {
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">    
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                {/* Back Button */}
                 <BackNavigateButton/>
 
                 <Text style={styles.entryFromPageTitle}>Edit Fish Entry</Text>
@@ -195,7 +236,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Images</Text>
                     
                 <Text style={styles.entryFormSubHeader2}>Edit Profile Image</Text>
-
+                {/* Profile image selection area */}
                 <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: "100%"}} onPress={takeProfileImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
@@ -209,7 +250,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 </View>
 
                 <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
-
+                {/* View of selected image */}
                 <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
                     <Image source={{ uri : profileImage }} style={[{width: scale(150), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
@@ -217,7 +258,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader2}>Edit Cover Photo Image</Text>
-
+                {/* Cover image selection area */}
                 <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: "100%"}} onPress={takeCoverPicImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
@@ -231,6 +272,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 </View>
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
+                {/* View of selected image */}
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
                     <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
@@ -239,7 +281,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Edit Names</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Name *</Text>
-
+                {/* Edit input form for fish name */}
                 <Controller        
                     control={control}        
                     name="fishName"        
@@ -250,7 +292,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish name..."}
-                    />       
+                    />   
                     )}
                     rules={{
                     required: {
@@ -258,7 +300,8 @@ const editFishEntryPage = ({route, navigation}) => {
                     }
                     }}
                 />
-
+                {/* ^ Input field is required to have a value */}
+                {/* Generate error if field is not filled in */}
                 {errors.fishName?.type === "required" &&
                 
                 <Text style={styles.errorFormText}>
@@ -268,7 +311,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 }
 
                 <Text style={styles.entryFormInputTitle}>Known As</Text>
-
+                {/* Edit input form for known as name */}
                 <Controller        
                     control={control}        
                     name="knownAsName"        
@@ -289,7 +332,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Edit Profile</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Family</Text>
-
+                {/* Edit input form for fish family */}
                 <Controller        
                     control={control}        
                     name="fishFamily"        
@@ -305,6 +348,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
+                {/* Edit input form for fish genus */}
                 <Controller        
                     control={control}        
                     name="fishGenus"        
@@ -320,6 +364,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Species</Text>
+                {/* Edit input form for fish species */}
                 <Controller        
                     control={control}        
                     name="fishSpecies"        
@@ -340,6 +385,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Edit Description</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Description</Text>
+                {/* Edit input form for fish description */}
                 <Controller        
                     control={control}        
                     name="fishDescription"        
@@ -356,6 +402,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Size</Text>
+                {/* Edit input form for fish size */}
                 <Controller        
                     control={control}        
                     name="fishSize"        
@@ -371,6 +418,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
+                {/* Edit input form for fish feeding */}
                 <Controller        
                     control={control}        
                     name="fishFeeding"        
@@ -386,6 +434,7 @@ const editFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
+                {/* Edit input form for fish distribution */}
                 <Controller        
                     control={control}        
                     name="fishDistribution"        
@@ -406,6 +455,7 @@ const editFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Edit Notes</Text>
                 
                 <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
+                {/* Edit input form for fish notes */}
                 <Controller        
                     control={control}        
                     name="fishNotes"        
@@ -416,34 +466,47 @@ const editFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={[styles.largeInputForm, styles.mediumItemShadow]}
                     placeholder={"Edit fish notes..."}
+                    multiline={true}
                     />       
                     )}
                     
                 />
+                {/* Submit button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
                     <Text style={styles.submitButtonText}>Submit</Text>
                 </TouchableOpacity>
+
             </ScrollView>
         </SafeAreaView>
     )
     
 }
-
+/**
+ * Add page that takes inputs about fish data.
+ * @param {Navigation} param0 Parse route and navigation stack
+ * @returns addFishPage
+ */
 const addFishEntryPage = ({route, navigation}) => {
-    
+    // Get uri path of default image
     const defaultProfileImage = Image.resolveAssetSource(defautFishProfileImage).uri;
+    // Profile image hook
     const [profileImage, setProfileImage] = useState(defaultProfileImage);
-
+    // Get uri path of default image
     const defaultCoverPicImage = Image.resolveAssetSource(defaultFishCoverImage).uri;
+    // Cover image hook
     const [coverPicImage, setCoverPicImage] = useState(defaultCoverPicImage);
-
+    // Form setup details
     const {
         control, 
         handleSubmit, 
         formState: {errors, isValid},
       } = useForm({ mode: "onBlur"})
-
+    /**
+     * Called when the submit button is clicked.
+     * @param {Object} data Current form data
+     */
     const onSubmit = data => {
+        // Calls function to add fish data
         addFishData(
         coverPicImage,
         profileImage, 
@@ -458,10 +521,15 @@ const addFishEntryPage = ({route, navigation}) => {
         data.fishDistribution,
         data.fishNotes,
         ),
+        // Amend array with new updated data
         amendArray(),
-        
+        // Navigate to default screen
         navigation.navigate("DefaultScreen")
     }
+    /**
+     * Generates a back button to navigate to a previous page.
+     * @returns JSX Back Button
+     */
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonEntryScreen}>
@@ -469,6 +537,9 @@ const addFishEntryPage = ({route, navigation}) => {
             </TouchableOpacity>
         )
     }
+    /**
+     * Opens react-native-image-crop-picker to take profile image from phone camera.
+     */
     const takeProfileImage = () => {
         ImagePicker.openCamera({
             width: scale(1200),
@@ -479,8 +550,10 @@ const addFishEntryPage = ({route, navigation}) => {
           }).catch(err => {
             console.log(err);
           });
-    
     }
+    /**
+     * Opens react-native-image-crop-picker to select profile image from phone gallery.
+     */
     const selectProfileImage = () => {
         ImagePicker.openPicker({
             width: scale(1200),
@@ -492,6 +565,9 @@ const addFishEntryPage = ({route, navigation}) => {
             console.log(err);
           });
     }
+    /**
+     * Opens react-native-image-crop-picker to take cover image from phone camera.
+     */
     const takeCoverPicImage = () => {
         ImagePicker.openCamera({
             width: scale(2400),
@@ -504,6 +580,9 @@ const addFishEntryPage = ({route, navigation}) => {
           });
     
     }
+    /**
+     * Opens react-native-image-crop-picker to select cover image from phone gallery.
+     */
     const selectCoverPicImage = () => {
         ImagePicker.openPicker({
             width: scale(2400),
@@ -518,7 +597,8 @@ const addFishEntryPage = ({route, navigation}) => {
     return (
         
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
-            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">    
+            <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                {/* Back Button */}  
                 <BackNavigateButton/>
 
                 <Text style={styles.entryFromPageTitle}>Fish Entry</Text>
@@ -528,7 +608,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Images</Text>
                     
                 <Text style={styles.entryFormSubHeader2}>Profile Image</Text>
-
+                {/* Profile image selection area */}
                 <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: "100%"}} onPress={takeProfileImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
@@ -542,7 +622,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 </View>
 
                 <Text style={ [styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen profile image</Text>
-
+                {/* View of selected image */}
                 <View style={[styles.profileImageContainer, styles.mediumItemShadow]}>
                     <Image source={{ uri : profileImage }} style={[{width: scale(150), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
@@ -550,7 +630,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Divider orientation="horizontal" width={scale(3)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.smallItemShadow}/>
 
                 <Text style={styles.entryFormSubHeader2}>Cover Photo Image</Text>
-
+                {/* Cover image selection area */}
                 <View style={styles.containerViewPictureEntry}>
                     <TouchableOpacity style={{right: "100%"}} onPress={takeCoverPicImage}>
                         <Text style={styles.textViewPictureEntry}>Take a photo</Text>
@@ -564,6 +644,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 </View>
 
                 <Text style={[styles.textViewPictureEntry, {alignSelf: "center"}]}>Chosen cover photo image</Text>
+                {/* View of selected image */}
                 <View style={[styles.coverImageContainer, styles.mediumItemShadow]}>
                     <Image source={{ uri : coverPicImage }} style={[{width: scale(300), height: scale(150)}, styles.entryFormImage]}></Image>
                 </View>
@@ -572,7 +653,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Name</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Name *</Text>
-
+                {/* Input form for fish name */}
                 <Controller        
                     control={control}        
                     name="fishName"        
@@ -583,7 +664,6 @@ const addFishEntryPage = ({route, navigation}) => {
                     value={value}
                     style={[styles.normalInputForm, styles.mediumItemShadow]}
                     placeholder={"Enter fish name..."}
-                    multiline={true}
                     />       
                     )}
                     rules={{
@@ -592,7 +672,8 @@ const addFishEntryPage = ({route, navigation}) => {
                     }
                     }}
                 />
-
+                {/* ^ Input field is required to have a value */}
+                {/* Generate error if field is not filled in */}
                 {errors.fishName?.type === "required" &&
                 
                 <Text style={styles.errorFormText}>
@@ -602,7 +683,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 }
 
                 <Text style={styles.entryFormInputTitle}>Known As</Text>
-
+                {/* Input form for known as name */}
                 <Controller        
                     control={control}        
                     name="knownAsName"        
@@ -623,7 +704,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Profile</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Family</Text>
-
+                {/* Input form for fish family */}
                 <Controller        
                     control={control}        
                     name="fishFamily"        
@@ -639,6 +720,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Genus</Text>
+                {/* Input form for fish genus */}
                 <Controller        
                     control={control}        
                     name="fishGenus"        
@@ -654,6 +736,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Species</Text>
+                {/* Input form for fish species */}
                 <Controller        
                     control={control}        
                     name="fishSpecies"        
@@ -674,6 +757,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Description</Text>
 
                 <Text style={styles.entryFormInputTitle}>Fish Description</Text>
+                {/* Input form for fish description */}
                 <Controller        
                     control={control}        
                     name="fishDescription"        
@@ -690,6 +774,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Size</Text>
+                {/* Input form for fish size */}
                 <Controller        
                     control={control}        
                     name="fishSize"        
@@ -705,6 +790,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Feeding (Bait)</Text>
+                {/* Input form for fish feeding */}
                 <Controller        
                     control={control}        
                     name="fishFeeding"        
@@ -720,6 +806,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     
                 />
                 <Text style={styles.entryFormInputTitle}>Fish Distribution</Text>
+                {/* Input form for fish distribution */}
                 <Controller        
                     control={control}        
                     name="fishDistribution"        
@@ -740,6 +827,7 @@ const addFishEntryPage = ({route, navigation}) => {
                 <Text style={styles.entryFormSubHeader1}>Notes</Text>
                 
                 <Text style={styles.entryFormInputTitle}>Fish Notes</Text>
+                {/* Input form for fish notes */}
                 <Controller        
                     control={control}        
                     name="fishNotes"        
@@ -755,6 +843,7 @@ const addFishEntryPage = ({route, navigation}) => {
                     )}
                     
                 />
+                {/* Submit button */}
                 <TouchableOpacity disabled={!isValid} title="Submit"  onPress={ handleSubmit(onSubmit)} style={[styles.submitButton, styles.mediumItemShadow]} >
                     <Text style={styles.submitButtonText}>Submit</Text>
                 </TouchableOpacity>
@@ -763,10 +852,18 @@ const addFishEntryPage = ({route, navigation}) => {
     )
 }
 
-
+/**
+ * A page that displays the inputted data about the fish.
+ * @param {Navigation} param0 Parse route and navigation stack
+ * @returns dataPage
+ */
 const fishDataPage = ({ route, navigation}) => {
+    
     const {fishElement} = route.params;
-
+    /**
+     * Generates a back button to navigate to a previous page.
+     * @returns JSX Back Button
+     */
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity onPress={() => {navigation.navigate("DefaultScreen")}} style={styles.backButtonDataScreen}>
@@ -778,6 +875,7 @@ const fishDataPage = ({ route, navigation}) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)"> 
                 <View>
+                    {/*Image displayed at the top of the page */}
                     <View style={[styles.coverImageContainerDataPage, styles.mediumItemShadow]}>
                         <Image source={{ uri : fishElement.coverImage}} style={styles.coverImageStyle} resizeMode={"cover"}/>
                         <BackNavigateButton/>
@@ -786,29 +884,33 @@ const fishDataPage = ({ route, navigation}) => {
                     <Text style={styles.fishTextTitle} >{fishElement.name}</Text>
 
                     <Text style={styles.knownAsSubHeader}>Known As</Text>
+                    {/* Gets data from the parsed element, if the element is null it defaults to N/A (Works for all non-required inputs)*/}
                     <Text style={styles.knownAsNameStyle}>{fishElement.knowasName ? fishElement.knowasName : "N/A" }</Text>
-
+                    {/* Takes the user to the catch page for the specific fish */}
                     <TouchableOpacity style={{marginTop: scale(25 ), marginBottom: 0, backgroundColor: "#00BAFF", height: scale(50), width: scale(200), justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: scale(20)}} 
                     onPress={ () => {
                         navigation.navigate("catchPage", {fishcatch: fishElement.catch, fishindex: fishElement.index})
                     }}>
-                        <Text style={{color: "white", fontWeight: '700', fontSize: scale(22)}}>Catches</Text>
+                        <View style={{flexDirection: 'row', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{color: "white", fontWeight: '700', fontSize: scale(24), marginRight: scale(10), alignSelf: 'center'}}>Catches</Text>
+                            <Icon size={scale(34)} name="return-down-forward-outline"  type="ionicon"  color="white" />
+                        </View>
                     </TouchableOpacity>
 
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
                     
                     <Text style={styles.entryFormSubHeader1}>Profile</Text>
-
+                    {/* Fish family data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Family</Text>
                         <Text style={styles.dataPageLargeText}>{fishElement.family ? fishElement.family : "N/A" }</Text>
                     </View>
-
+                    {/* Fish genus data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Genus</Text>
                         <Text style={styles.dataPageLargeText}>{fishElement.genus ? fishElement.genus : "N/A" }</Text>
                     </View>
-
+                    {/* Fish species data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Species</Text>
                         <Text style={styles.dataPageLargeText}>{fishElement.species ? fishElement.species : "N/A" }</Text>
@@ -817,57 +919,62 @@ const fishDataPage = ({ route, navigation}) => {
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
 
                     <Text style={styles.entryFormSubHeader1}>Description</Text>
-
+                    {/* Fish description data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Description</Text>
                         <Text style={styles.dataPageMediumText}>{fishElement.description ? fishElement.description : "N/A" }</Text>
                     </View>
-
+                    {/* Fish size data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Size</Text>
                         <Text style={styles.dataPageMediumText}>{fishElement.size ? fishElement.size : "N/A" }</Text>
                     </View>
-
+                    {/* Fish feeding data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Feeding</Text>
                         <Text style={styles.dataPageMediumText}>{fishElement.feeding ? fishElement.feeding : "N/A" }</Text>
                     </View>
-
+                    {/* Fish distribution data */}
                     <View style={styles.dataPageViewContainer}>
                         <Text style={styles.dataPageHeaderTitle}>Fish Distribution</Text>
                         <Text style={styles.dataPageMediumText}>{fishElement.distribution ? fishElement.distribution : "N/A" }</Text>
                     </View>
 
                     <Divider  orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} marginTop={scale(20)} marginBottom={scale(20)} borderRadius={scale(10)} style={styles.mediumItemShadow}/>
-
                     <Text style={styles.entryFormSubHeader1}>Extra Notes</Text>
+                    {/* Fish notes data */}
+                    <View style={styles.dataPageViewContainer}>
+                        <Text style={[styles.dataPageMediumText, {marginBottom: scale(20)}]}>{fishElement.notes ? fishElement.notes : "N/A" }</Text>
+                    </View>
 
-                    <Text style={[styles.dataPageMediumText, {marginBottom: scale(20)}]}>{fishElement.notes ? fishElement.notes : "N/A" }</Text>
-                    
                 </View>
             </ScrollView>
         </SafeAreaView> 
     )};
 
-
-
-
-
+/**
+ * 
+ * @param {Navigation} param0 Parses navigation stack 
+ * @returns defaultPage
+ */
 const defualtPage = ({ navigation }) => {
+    // Data and hooks
     const dataArray = [];
     const [data, setData] = useState(returnAllFish());
     const [searchData, searchSetData] = useState("");
-
+    // Adds a listener to see if the default page is currently open
     useEffect(() => {
         const focusDefaultPage = navigation.addListener("focus", () => {
           setData(returnAllFish());
-          
         });
         return focusDefaultPage;
       }, [navigation]);
-    
+    /**
+     * An array variable is made to map the data to each of the default buttons on the main page
+     */
     let arr = data.map(  (element) => { 
         return <TouchableOpacity key={element.index} style={[styles.fishButtonStyle, styles.mediumItemShadow]} onPress={() => {
+            {/* Navigate to the data page of the fish and parsing the fishElement data */}
             navigation.navigate("dataPage", {fishElement: element});
         }} >
                 <ImageBackground source={{uri : element.profileImage}} style={styles.fishButtonImageBackgroundStyle} resizeMode={"cover"}>
@@ -879,22 +986,25 @@ const defualtPage = ({ navigation }) => {
                         <Image style={styles.subButtonImageStyle} source={require("./Images/trash.png")}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.subButton, {left: "5%"}, styles.mediumItemShadow]} onPress={ () => {
+                        {/* Navigate to the edit page and parsing fishElement data */}
                         navigation.navigate("editFormPage", {fishElement: element})
                     }}>
                         <Image style={styles.subButtonImageStyle} source={require("./Images/writing.png")}/> 
                     </TouchableOpacity>  
-
-                </ImageBackground>
-                
-                
+                </ImageBackground> 
             </TouchableOpacity>
     } )
-
+    /**
+     * Generates an alert asking if the user wants to delete the fish data
+     * @param {Object} element Fish data element
+     * @returns Display delete notification
+     */
     const generateYesNoAlert = (element) => Alert.alert (
         "Delete Notification",
         "Are you sure you want to delete? \nThis cannot be undone.",
         
       [
+        // Deletes data when "yes" is pressed
         {text: "Yes", onPress: () => {
             deleteCurrentFish(element.index)
             amendArray()
@@ -903,19 +1013,37 @@ const defualtPage = ({ navigation }) => {
         { text: "No"}
       ]
     );
-    
+    /**
+     * Used for the search bar to filter out the fish data.
+     * @param {string} data Search bar data
+     */
     let checkCardName = (data) => {
-        
+        // Maps fish data
         returnAllFish().map( (element) => {
+            // Checks to see if any of the element names include the inputted data in the search bar
             if (element.name.toUpperCase().includes(data.toUpperCase())) {
+                // Pushes element into array 
                 dataArray.push(element)
             }
         })
+        // Sets the data of the default screen to that in the array
         setData(dataArray);        
     }
+    /**
+     * Checks to see what message to display if no data is inputted.
+     * @returns No data message
+     */
     let noFishData = () => {
+        let pageString = "";
+        // Checks to see if there is fish data
+        if (returnAllFish().length == 0) {
+            pageString = "Click '+' to add fish"
+        }
+        else {
+            pageString = "No matched results"
+        }
         return (
-            <Text style={{alignSelf: 'center', fontSize: scale(20), fontWeight: '700', color: 'grey', margin: scale(10)}}>Click '+' to add fish</Text> 
+            <Text style={{alignSelf: 'center', fontSize: scale(20), fontWeight: '700', color: 'grey', margin: scale(10)}}>{pageString}</Text> 
         )
     };
     return ( 
@@ -932,6 +1060,7 @@ const defualtPage = ({ navigation }) => {
                 backgroundColor: "#2B292C", flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap",
         }}>
             <View style={[{width: "100%", padding: scale(20)}]}>
+                {/* Search bar  */}
                 <SearchBar  inputContainerStyle={{backgroundColor: "white"}}
                             leftIconContainerStyle={{backgroundColor: "white"}}
                             rightIconContainerStyle={{backgroundColor: 'white', width: scale(40), height: scale(40)}}
@@ -954,41 +1083,52 @@ const defualtPage = ({ navigation }) => {
                             onClear={() => checkCardName("")}
                             />    
             </View>
+            {/* Checks arr length if emtpy use whats returned in noFishData() */}
             { arr.length ? arr : noFishData()}
         </View>
         
     </ScrollView>
     <View>
-            <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} onPress={() => {
-                navigation.navigate("addFormPage")
-            }}>
-                <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
-            </TouchableOpacity>
+        {/* Add button */}
+        <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} onPress={() => {
+            navigation.navigate("addFormPage")
+        }}>
+            <Icon size={scale(32)} name="add-outline"  type="ionicon"  color="white" />
+        </TouchableOpacity>
     </View>
       
     </SafeAreaView>
-    
     );
 };
-
+/**
+ * Page to see all catch data of that specific fish.
+ * @param {Navigation} param0 Parse route and navigation stack
+ * @returns catchPage
+ */
 const catchFishPage = ({route, navigation}) => {
+    // Set route data
     const {fishcatch, fishindex} = route.params
+    // Set colour scheme array
     let colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
-
+    // Data hook
     const [data, setData] = useState(returnAllCatches(fishindex));
-
+    // Adds a listener to see if the catch page is currently open
     useEffect(() => {
         const focusDefaultCatchPage = navigation.addListener("focus", () => {
           setData(returnAllCatches(fishindex));
-          
         });
         return focusDefaultCatchPage;
       }, [navigation]);
-
+    /**
+     * Generates an alert asking if the user wants to delete the catch data
+     * @param {string} elementIndex Element index number
+     * @returns Display delete notification
+     */
     const generateYesNoAlertCatchPage = (elementIndex) => Alert.alert (
         "Delete Notification",
         "Are you sure you want to delete? \nThis cannot be undone.",
       [
+        // If "yes" is pressed the catch data will be deleted
         {text: "Yes", onPress: () => {
             deleteCurrentCatch(elementIndex, fishindex)
             amendCatchArray(fishindex)
@@ -997,7 +1137,11 @@ const catchFishPage = ({route, navigation}) => {
         { text: "No"}
       ]
     );
-
+    /**
+     * Generates a back button to navigate to a previous page.
+     * @returns JSX Back Button
+     * 
+     */
     const BackNavigateButton = () => {
         return (
             <TouchableOpacity  onPress={() => {navigation.goBack()}} style={styles.backButtonEntryScreen}>
@@ -1005,16 +1149,25 @@ const catchFishPage = ({route, navigation}) => {
             </TouchableOpacity> 
         )
     }
+    /**
+     * Generates a colour for each catch report in a gradient style.
+     * @returns Hex Colour Code
+     */
     let generateColour = () => {
         if (colourSchemeColours.length == 0) {
+            // Adds the colours if the array is emtpy
             colourSchemeColours = ["#002e64", "#004d89", "#0070af", "#0094d6"];
         }
+        // Sets current colour
         const currentColour = colourSchemeColours[(colourSchemeColours.length - 1)]
+        // Removes current colour
         colourSchemeColours.pop();
     
         return currentColour;
     };
-
+    /**
+     * catchArr acts the same as {arr}, which displays catch data.
+     */
     let catchArr = data.map(  (element) => {
         return(
             <View key={element.index}>
@@ -1049,6 +1202,10 @@ const catchFishPage = ({route, navigation}) => {
         )
         
     });
+    /**
+     * Returns JSX Text element when there is no catch data.
+     * @returns No data message
+     */
     let noCatchData = () => {
         return (
             <Text style={{alignSelf: 'center', fontSize: scale(20), fontWeight: '700', color: 'grey', margin: scale(10)}}>No current catches</Text> 
@@ -1057,16 +1214,17 @@ const catchFishPage = ({route, navigation}) => {
     return(
         <SafeAreaView style={{ flex: 1, backgroundColor: "#2B292C"}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic" backgroundColor="rgb(43, 41, 44)">
+                {/* Back Button */}
                 <BackNavigateButton/>
                 <Text style={styles.entryFromPageTitle}>Catches</Text>
             
                 <Divider orientation="horizontal" width={scale(10)} color={"#384955"} margin={scale(10)} borderRadius={scale(10)} style={styles.mediumItemShadow} />
-
+                {/* Checks length of catch data, if empty call noCatchData(), if not display catches */}
                 {fishcatch.length ? catchArr : noCatchData()}
 
             
             </ScrollView>
-
+            {/* Add Button */}
             <TouchableOpacity style={[styles.addButton, styles.mediumItemShadow]} 
             onPress={() => {
                 navigation.navigate("addFormCatchPage", {catchIndex: fishindex});
@@ -1078,7 +1236,11 @@ const catchFishPage = ({route, navigation}) => {
         </SafeAreaView>
     )
 }
-
+/**
+ * 
+ * @param {Navigation} param0 Parse route and navigation stack
+ * @returns addCatchPage
+ */
 const addCatchEntryPage = ({route, navigation}) => {
 
     const {catchIndex} = route.params;
@@ -1347,8 +1509,6 @@ const editCatchEntryPage = ({route, navigation}) => {
     const [date, setDate] = useState(new Date(catchElement.encodedDate));
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-    let test = 
-    console.log(test)
     const {
         control, 
         handleSubmit, 
@@ -1656,9 +1816,9 @@ const catchDataPage = ({route, navigation}) => {
     )
 }
 
-
+// Create stack navigator
 const Stack = createNativeStackNavigator();
- 
+
 const App = () => {   
   return (
     <NavigationContainer>
@@ -1677,6 +1837,9 @@ const App = () => {
   );
 }
 
+/**
+ * Style sheet for all elements.
+ */
 const styles = StyleSheet.create({
     subButtonCatchPage: {
         width: scale(25),
@@ -1694,6 +1857,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: scale(18),
         textAlign: 'center',
+        margin: scale(10)
     },
     dataPageLargeText: {
         alignSelf: 'center', 
