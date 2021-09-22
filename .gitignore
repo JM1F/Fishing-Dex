@@ -59,3 +59,4 @@ buck-out/
 /ios/Pods/
 /.vs
 /react-native run-android.bat
+android/gradle.properties

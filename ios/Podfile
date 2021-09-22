@@ -18,6 +18,8 @@ target 'FishingDex' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'FishingDexTests' do
     inherit! :complete
     # Pods for testing

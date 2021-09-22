@@ -81,6 +81,8 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -96,7 +98,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -134,9 +136,12 @@ android {
         applicationId "com.fishingdex"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+        ndk {
+            debugSymbolLevel 'SYMBOL_TABLE'
+        }
     }
     splits {
         abi {
@@ -153,6 +158,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                 keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                 keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+             }
+        }
     }
     buildTypes {
         debug {
@@ -164,7 +177,12 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
+    }
+    packagingOptions {
+        pickFirst '**/libjsc.so'
+        pickFirst '**/libc++_shared.so'
     }
 
     // applicationVariants are e.g. debug, release
@@ -185,10 +203,11 @@ android {
 }
 
 dependencies {
+    implementation'com.facebook.soloader:soloader:0.9.0+'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
