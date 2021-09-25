@@ -17,7 +17,7 @@ This app allows you to generate and store a fish profile where you can enter det
 
 # Preview
 
-<img  src="https://thumbs.gfycat.com/PerfumedDentalHogget-size_restricted.gif">
+<img align="center"  src="https://thumbs.gfycat.com/PerfumedDentalHogget-size_restricted.gif">
 <img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/71614127/134788219-164976dd-2fea-4129-a48f-c8b6135471c7.png">
 
 ## App Store: Notice
