@@ -4,7 +4,7 @@
 
 A cross-platform, cross-device fish index that displays fish data for any fish species you input along with a catch report to input all your catches.  
 
-The app is available on [Google Play](https://play.google.com/store/apps/details?id=com.fishingdex), sadly not currently available on the App Store ([See Notice](##App-Store-Notice))
+The app is available on [Google Play](https://play.google.com/store/apps/details?id=com.fishingdex), sadly not currently available on the App Store ([See Notice](#App-Store-Notice))
 <a href='https://play.google.com/store/apps/details?id=com.fishingdex&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="100"/></a>  
 <br/>
 
@@ -20,6 +20,7 @@ This app allows you to generate and store a fish profile where you can enter det
 <img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/71614127/134788219-164976dd-2fea-4129-a48f-c8b6135471c7.png">
 
 ## App Store: Notice
-Unfortunately, the app is currently not available on the app store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as im a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
+<b>Unfortunately, the app is currently not available on the app store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as im a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
 
 Sorry for any inconvenience this may have caused.
+</b>
