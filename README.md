@@ -33,7 +33,7 @@ This app allows you to generate and store a fish profile where you can enter det
 <img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/71614127/134788219-164976dd-2fea-4129-a48f-c8b6135471c7.png"> 
 
 ## App Store: Notice
-<b>Unfortunately, the app is currently not available on the App Store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as i'm a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
+<b>Unfortunately, the app is currently not available on the App Store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as I'm a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
 
 Sorry for any inconvenience this may have caused.
 </b>  
