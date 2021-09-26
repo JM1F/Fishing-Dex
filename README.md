@@ -1,5 +1,13 @@
 ![FishingDex Feature Graphic](https://user-images.githubusercontent.com/71614127/133943317-9f0eaa95-ce9e-42cf-ba07-6ad3972ecbb1.png)
+
+<p align="center">
+  <a href="https://opensource.org/licenses/GPL-3.0"><img alt="License" src="https://img.shields.io/github/license/JM1F/Fishing-Dex"/></a>
+  <a href="https://github.com/JM1F/Fishing-Dex/blob/master/package.json"><img alt="License" src="https://img.shields.io/david/dev/JM1F/Fishing-Dex"/></a>
+  <a href="https://github.com/JM1F/Fishing-Dex/releases"><img alt="Release" src="https://img.shields.io/github/v/release/JM1F/Fishing-Dex"/></a>  
+</p>
+
 ***
+
 <img align="left" src="https://user-images.githubusercontent.com/71614127/133944497-59e6e107-e56e-4ef9-9aaf-ef98359538c6.png">
 
 A cross-platform, cross-device fish index that displays fish data for any fish species you input along with a catch report to input all your catches.  
@@ -16,12 +24,43 @@ This app allows you to generate and store a fish profile where you can enter det
 ![GitHub picture feature](https://user-images.githubusercontent.com/71614127/133947177-d861aff9-f91e-4ac1-b036-b1fbefc733b6.png)  
 
 # Preview
+<p align="center">
+<img src="https://thumbs.gfycat.com/PerfumedDentalHogget-size_restricted.gif">
+</p>
 
-<img align="center"  src="https://thumbs.gfycat.com/PerfumedDentalHogget-size_restricted.gif">
-<img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/71614127/134788219-164976dd-2fea-4129-a48f-c8b6135471c7.png">
+***
+
+<img align="left" width="300" height="300" src="https://user-images.githubusercontent.com/71614127/134788219-164976dd-2fea-4129-a48f-c8b6135471c7.png"> 
 
 ## App Store: Notice
-<b>Unfortunately, the app is currently not available on the app store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as im a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
+<b>Unfortunately, the app is currently not available on the App Store as there is a yearly fee of $99 to publish it, sadly I am unable to afford this as i'm a solo developer (and a student). Despite this, development will still go ahead with the ios build and may be released in the future.  
 
 Sorry for any inconvenience this may have caused.
-</b>
+</b>  
+<br/>
+<br/>
+<br/>
+<br/>
+# Libaries & Tech Stack
+
+- <b><a href="https://github.com/react-native-datetimepicker/datetimepicker">@react-native-community/datetimepicker</a>: ^3.5.2</b> 
+
+- <b><a href="https://reactnavigation.org/">@react-navigation/native</a>: ^6.0.2</b>  
+
+- <b><a href="https://reactnavigation.org/">@react-navigation/native-stack</a>: ^6.1.0</b>  
+
+- <b><a href="https://reactjs.org/">react</a>: 17.0.1</b>  
+
+- <b><a href="https://react-hook-form.com/">react-hook-form</a>: ^7.14.1</b>  
+
+- <b><a href="https://reactnative.dev/">react-native</a>: 0.64.2</b>    
+
+- <b><a href="https://reactnativeelements.com/">react-native-elements</a>: ^3.4.2</b> 
+
+- <b><a href="https://github.com/itinance/react-native-fs">react-native-fs</a>: ^2.18.0</b>  
+
+- <b><a href="https://github.com/ivpusic/react-native-image-crop-picker">react-native-image-crop-picker</a>: ^0.36.2</b>  
+
+- <b><a href="https://github.com/oblador/react-native-vector-icons">react-native-vector-icons</a>: ^8.1.0</b>  
+
+- <b><a href="https://realm.io/">realm</a>: ^10.8.0</b>
